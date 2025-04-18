@@ -8,14 +8,14 @@ import {
   BottomSheetModalProvider,
   type BottomSheetProps,
 } from '@gorhom/bottom-sheet';
-import React, { useCallback } from 'react';
+import React, { useCallback, type JSX } from 'react';
 
 import type { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { ConditionalWrapper } from './ConditionalWrapper';
 import { PortalProvider } from '@gorhom/portal';
 
 interface BottomSheetInterface extends BottomSheetProps {
-  innerRef: React.RefObject<BottomSheetModalMethods>;
+  innerRef: React.RefObject<BottomSheetModalMethods | null>;
   modalParent?: boolean;
   onDismiss?: () => void;
   touchBackdropBehavior?: BackdropPressBehavior;
