@@ -1,6 +1,6 @@
 {
   "name": "@react-native-hello/common",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A React Native library for apps.",
   "author": "ajp8164",
   "license": "MIT",
@@ -85,5 +85,5 @@
       ]
     ]
   },
-  "gitHead": "cfa4d3bca3023e76e7d41c4c41d614544fcc408d"
+  "gitHead": "a395e66b211f9257ba93d57a7404dd9b5db9921e"
 }
