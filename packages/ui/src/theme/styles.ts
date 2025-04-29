@@ -10,11 +10,11 @@ export const fontFamilyMedium = 'WorkSans-Medium';
 export const fontFamilySemiBold = 'WorkSans-SemiBold';
 
 export const fontSizes = {
-  tiny: 12,
-  small: 14,
+  tiny: 10,
+  small: 12,
   normal: 16,
   large: 18,
-  xl: 26,
+  XL: 20,
   headingXL: 45,
   heading1: 30,
   heading2: 26,
@@ -54,6 +54,9 @@ export const useStyles = makeStyles(
         },
       }),
     },
+    navigationBottomTabBar: {
+      height: 83, // iOS constant for use outside of nav container
+    },
     statusBar: {
       ...Platform.select({
         android: {
@@ -64,6 +67,92 @@ export const useStyles = makeStyles(
         },
       }),
     },
+
+    /**
+     * Buttons
+     */
+
+      button: {
+        backgroundColor: theme.colors.button,
+        borderRadius: 10,
+        height: 48,
+        paddingHorizontal: 15,
+        width: '100%',
+        alignSelf: 'center',
+      },
+      buttonTitle: {
+        fontSize: fontSizes.normal,
+        fontFamily,
+        color: theme.colors.buttonText,
+        fontWeight: '600',
+        ...Platform.select({
+          ios: {
+            marginTop: 0,
+          },
+          android: {
+            marginTop: -2,
+          },
+        }),
+      },
+      buttonDisabled: {
+        opacity: 0.4,
+      },
+      buttonOutline: {
+        backgroundColor: theme.colors.transparent,
+        borderColor: theme.colors.button,
+        borderWidth: 2,
+      },
+      buttonOutlineTitle: {
+        fontSize: fontSizes.normal,
+        fontWeight: '400',
+        fontFamily,
+        color: theme.colors.button,
+      },
+      buttonOutlineDisabled: {
+        backgroundColor: theme.colors.transparent,
+        opacity: 0.4,
+      },
+      buttonScreenHeader: {
+        backgroundColor: theme.colors.transparent,
+        height: 40,
+        paddingHorizontal: 0,
+        minWidth: 0,
+        justifyContent: 'flex-start',
+      },
+      buttonScreenHeaderTitle: {
+        color: theme.colors.screenHeaderButtonText,
+        fontSize: fontSizes.normal,
+        fontFamily,
+        ...Platform.select({
+          ios: {
+            marginTop: 0,
+          },
+          android: {
+            marginTop: -2,
+          },
+        }),
+      },
+      buttonScreenHeaderDisabled: {
+        backgroundColor: theme.colors.transparent,
+        opacity: 0.4,
+      },
+      buttonSmall: {
+        width: 'auto',
+        height: 35,
+        padding: 0,
+      },
+      buttonSmallContainer: {
+        alignSelf: 'center',
+        marginTop: 20,
+        minWidth: 0,
+      },
+      buttonSmallTitle: {
+        fontSize: fontSizes.small,
+        fontFamily,
+        fontWeight: '500',
+        lineHeight: 14,
+        color: theme.colors.buttonText,
+      },
 
     /**
      * Text
@@ -113,7 +202,7 @@ export const useStyles = makeStyles(
     },
     textXL: {
       color: theme.colors.text,
-      fontSize: fontSizes.xl,
+      fontSize: fontSizes.XL,
       fontFamily,
       fontWeight: 'normal',
     },

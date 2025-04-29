@@ -4,13 +4,13 @@ import { useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { useTheme } from '@rneui/themed';
 
-interface Props {
+export interface ColorModeSwitchProps {
   children: ReactNode;
   themeSettings: { followDevice: boolean; app: string };
 }
 
 // Handles device level changes filtered by app settings.
-const ColorModeSwitch = ({ children, themeSettings }: Props) => {
+const ColorModeSwitch = ({ children, themeSettings }: ColorModeSwitchProps) => {
   const { updateTheme } = useTheme();
   const colorScheme = useColorScheme();
 
@@ -22,7 +22,7 @@ const ColorModeSwitch = ({ children, themeSettings }: Props) => {
     updateTheme({
       mode: control === 'dark' ? 'dark' : 'light',
     });
-  }, [colorScheme, updateTheme]);
+  }, [colorScheme, themeSettings, updateTheme]);
 
   return <>{children}</>;
 };

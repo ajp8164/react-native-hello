@@ -4,5 +4,6 @@ export * from './logger';
 export * from './network';
 export * from './string';
 export * from './url';
+export * from './uuidv4';
 
-export { config as ReactNativeHello } from './ElementsConfig';
+export { config as ReactNativeHello } from './HelloConfig';

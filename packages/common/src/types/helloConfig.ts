@@ -1,6 +1,6 @@
 import type { SVGImages } from './image';
 
-export type ElementsConfig = {
+export type HelloConfig = {
   buildEnvironment?: string;
   sentryEndpoint?: string;
   sentryLoggingEnabled?: boolean;

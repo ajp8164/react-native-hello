@@ -5,9 +5,23 @@ export type Styles = {
 
   headerBar: ViewStyle;
   headerBarLarge: ViewStyle;
+  navigationBottomTabBar: ViewStyle;
   statusBar: ViewStyle;
 
   // Styles
+
+  button: ViewStyle;
+  buttonTitle: TextStyle;
+  buttonDisabled: ViewStyle | TextStyle;
+  buttonOutline: ViewStyle;
+  buttonOutlineTitle: TextStyle;
+  buttonOutlineDisabled: ViewStyle | TextStyle;
+  buttonScreenHeader: ViewStyle;
+  buttonScreenHeaderTitle: TextStyle;
+  buttonScreenHeaderDisabled: ViewStyle | TextStyle;
+  buttonSmall: ViewStyle;
+  buttonSmallContainer: ViewStyle;
+  buttonSmallTitle: TextStyle;
 
   textHeadingXL: TextStyle;
   textHeading1: TextStyle;

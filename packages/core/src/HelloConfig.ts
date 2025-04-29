@@ -1,12 +1,12 @@
-import type { ElementsConfig as ElementsConfigObj } from '@react-native-hello/common';
+import type { HelloConfig as HelloConfigObj } from '@react-native-hello/common';
 import lodash from 'lodash';
 import { init as initLog } from './logger';
 
-class ElementsConfig<ElementsConfigObj> {
+class HelloConfig<HelloConfigObj> {
   variables;
 
   public constructor() {
-    this.variables = <ElementsConfigObj>{};
+    this.variables = <HelloConfigObj>{};
   }
 
   /**
@@ -14,7 +14,7 @@ class ElementsConfig<ElementsConfigObj> {
    * @param name the name of the configuration items
    * @returns the value of the configuration item
    */
-  public get<T>(name: keyof ElementsConfigObj) {
+  public get<T>(name: keyof HelloConfigObj) {
     return <T>(<unknown>this.variables[name]);
   }
 
@@ -22,7 +22,7 @@ class ElementsConfig<ElementsConfigObj> {
    * Initialize with a configuration.
    * @param config - configuration key/value pairs
    */
-  public init(config: ElementsConfigObj) {
+  public init(config: HelloConfigObj) {
     lodash.assign(this.variables, config);
     // @ts-ignore
     initLog(config.userId);
@@ -32,10 +32,10 @@ class ElementsConfig<ElementsConfigObj> {
    * Set a configuration item.
    * @param config - configuration key/value pairs
    */
-  public set(config: ElementsConfigObj) {
+  public set(config: HelloConfigObj) {
     lodash.merge(this.variables, config);
   }
 }
 
-const config = new ElementsConfig<ElementsConfigObj>();
+const config = new HelloConfig<HelloConfigObj>();
 export { config };

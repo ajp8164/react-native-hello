@@ -19,7 +19,7 @@ type AccessoryState = {
   previousDisabled: boolean;
 };
 
-export interface KeyboardAccessory {
+export interface KeyboardAccessoryProps {
   disabledDone?: boolean;
   disabledTitleStyle?: TextStyle | TextStyle[];
   doneText?: string;
@@ -35,7 +35,7 @@ export interface KeyboardAccessorylMethods {
 
 const KeyboardAccessory = forwardRef<
   KeyboardAccessorylMethods,
-  KeyboardAccessory
+  KeyboardAccessoryProps
 >(({
   disabledDone,
   disabledTitleStyle,
@@ -43,7 +43,7 @@ const KeyboardAccessory = forwardRef<
   fieldRefs,
   id,
   onDone
-}: KeyboardAccessory, ref) => {
+}: KeyboardAccessoryProps, ref) => {
   // Only iOS.
   if (Platform.OS !== 'ios') return null;
 

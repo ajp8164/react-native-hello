@@ -15,6 +15,8 @@ export const theme: CreateThemeOptions = {
     hintGray: '#101010',
     wispGray: '#101010',
 
+    assertive: '#ff1f1f',
+
     blackTransparentDarker: 'rgba(255, 255, 255, 0.9)',
     blackTransparentDark: 'rgba(255, 255, 255, 0.7)',
     blackTransparentMid: 'rgba(255, 255, 255, 0.5)',
@@ -27,10 +29,40 @@ export const theme: CreateThemeOptions = {
     whiteTransparentLight: 'rgba(0, 0, 0, 0.2)',
     whiteTransparentSubtle: 'rgba(0, 0, 0, 0.1)',
 
+    button: '#0078fe',
+    buttonText: '#ffffff',
+
+    checkboxActive: '#0078fe',
+    checkboxInactive: '#0078fe',
+
+    collapsibleBackground: '#000000',
+
+    datePickerAccent: '#0078fe',
+
     kbAccessoryButtonText: '#0078fe',
 
+    listItem: '#303030',
+    listItemBorder: '#1b1b1b',
+    listItemIcon: '#0078fe',
+    listItemIconNav: '#ffffff',
+
+    screenHeaderBackground: '#202020',
+    screenHeaderButtonText: '#ffffff',
+
+    segmentActive: '#787878',
+    segmentBackground: '#1a1a17',
+    segmentBorder: '#303030',
+
+    switchOffThumb: '#ffffff',
+    switchOffTrack: '#787878',
+    switchOnThumb: '#ffffff',
+    switchOnTrack: '#0078fe',
+
     text: '#ffffffde',
+    textInv: '#000000',
+    textLight: '#878787',
     textLink: '#0078fe',
+    textPlaceholder: '#878787',
 
     viewBackground: '#000000',
     viewAltBackground: '#000000',
@@ -50,6 +82,8 @@ export const theme: CreateThemeOptions = {
     hintGray: '#f0f0f0',
     wispGray: '#f8f8f8',
 
+    assertive: '#ff1f1f',
+
     blackTransparentDarker: 'rgba(0, 0, 0, 0.8)',
     blackTransparentDark: 'rgba(0, 0, 0, 0.7)',
     blackTransparentMid: 'rgba(0, 0, 0, 0.4)',
@@ -62,10 +96,40 @@ export const theme: CreateThemeOptions = {
     whiteTransparentLight: 'rgba(255, 255, 255, 0.3)',
     whiteTransparentSubtle: 'rgba(255, 255, 255, 0.05)',
 
+    button: '#0078fe',
+    buttonText: '#ffffff',
+
+    checkboxActive: '#0078fe',
+    checkboxInactive: '#0078fe',
+
+    collapsibleBackground: '#f0f0f0',
+
+    datePickerAccent: '#0078fe',
+
     kbAccessoryButtonText: '#0078fe',
 
+    listItem: '#ffffff',
+    listItemBorder: '#e5e5e5',
+    listItemIcon: '#0078fe',
+    listItemIconNav: '#000000',
+
+    screenHeaderBackground: '#ffffff',
+    screenHeaderButtonText: '#000000',
+
+    segmentActive: '#ffffff',
+    segmentBackground: '#e2e1e6',
+    segmentBorder: '#d5d4d9',
+
+    switchOffThumb: '#ffffff',
+    switchOffTrack: '#f2f2f2',
+    switchOnThumb: '#ffffff',
+    switchOnTrack: '#0078fe',
+
     text: '#303030',
+    textInv: '#ffffff',
+    textLight: '#787878',
     textLink: '#0078fe',
+    textPlaceholder: '#878787',
 
     viewBackground: '#f0f0f0',
     viewAltBackground: '#ffffff',
