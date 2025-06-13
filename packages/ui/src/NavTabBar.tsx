@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { type NavigationRoute, type ParamListBase, useLinkBuilder } from '@react-navigation/native';
 import { Text, PlatformPressable } from '@react-navigation/elements';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { type AppTheme, useTheme, viewport } from './theme';
 import { type BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React from 'react';

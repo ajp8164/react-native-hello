@@ -1,6 +1,6 @@
 import React, { useImperativeHandle } from 'react';
 import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { View, type ViewStyle } from 'react-native';
 import RNACarousel, { type ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
 import { useSharedValue } from 'react-native-reanimated';

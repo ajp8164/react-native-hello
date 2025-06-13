@@ -4,7 +4,7 @@ import SVG, { Circle } from 'react-native-svg';
 import Animated, { useSharedValue, useAnimatedProps, withTiming } from 'react-native-reanimated';
 import { useEffect } from 'react';
 import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 

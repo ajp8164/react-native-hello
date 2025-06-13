@@ -2,7 +2,7 @@ import { type AppTheme, useTheme } from '../theme';
 
 import React, { useRef, useState } from 'react';
 import { WebView as RNWebView } from 'react-native-webview';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { Pressable, View, type ViewStyle } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 

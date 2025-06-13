@@ -2,7 +2,7 @@ import React, { type ReactNode } from 'react';
 
 import { useColorScheme } from 'react-native';
 import { useEffect } from 'react';
-import { useTheme } from '@rneui/themed';
+import { useTheme } from '@rn-vui/themed';
 
 export interface ColorModeSwitchProps {
   children: ReactNode;

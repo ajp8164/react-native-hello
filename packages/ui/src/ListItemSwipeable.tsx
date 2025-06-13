@@ -1,7 +1,7 @@
 import { type AppTheme, useTheme } from './theme';
 import React from 'react';
 import ListItem, { type ListItemProps } from './ListItem';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { AppleStyleSwipeableRow, type SwipeableAction } from './swipeableRow/apple';
 
 export interface ListItemSwipeableProps extends ListItemProps {

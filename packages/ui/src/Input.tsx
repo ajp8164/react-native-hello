@@ -1,7 +1,7 @@
 import { type LayoutChangeEvent, Text, TextInput, type TextStyle, View, type ViewStyle } from 'react-native';
 import MaskInput, { type MaskInputProps } from 'react-native-mask-input';
 import { type AppTheme, fontFamily, fontSizes, useTheme } from './theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import React, { useState } from 'react';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import Animated, { FadeInDown } from 'react-native-reanimated';

@@ -1,4 +1,4 @@
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import React, { useState } from 'react';
 import { type AppTheme, fontFamily, fontSizes ,useTheme } from './theme';
 import RNSegmentedControl, {

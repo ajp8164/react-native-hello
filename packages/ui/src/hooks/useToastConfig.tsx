@@ -1,5 +1,5 @@
 import { type AppTheme, useTheme } from '../theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { ActivityIndicator, Text, View } from 'react-native';
 import type { ToastConfigParams } from 'react-native-toast-message';
 import React from 'react';

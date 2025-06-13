@@ -2,7 +2,7 @@ import {
   type Colors,
   type Theme,
   useTheme as useRNETheme,
-} from '@rneui/themed';
+} from '@rn-vui/themed';
 import {
   type EdgeInsets,
   useSafeAreaInsets,

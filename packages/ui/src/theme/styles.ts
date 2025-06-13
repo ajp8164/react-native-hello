@@ -1,7 +1,7 @@
 import { Dimensions, Platform } from 'react-native';
 
 import type { Styles } from './types/Styles';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 
 export const fontFamily = 'WorkSans-Regular';
 export const fontFamilyBold = 'WorkSans-Bold';

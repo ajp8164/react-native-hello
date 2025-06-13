@@ -1,9 +1,10 @@
 import React, { useImperativeHandle, useRef, useState } from 'react';
 import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rneui/themed';
-import { SearchBar as RNESearchBar } from '@rneui/base';
+import { makeStyles } from '@rn-vui/themed';
+import { SearchBar as RNESearchBar } from '@rn-vui/base';
 import { Search } from 'lucide-react-native';
 import { type ViewStyle } from 'react-native';
+import type { SearchBarRef } from '@rn-vui/base/dist/SearchBar/SearchBar';
 
 export interface SearchBarProps {
   containerStyle?: ViewStyle | ViewStyle[];
@@ -15,7 +16,6 @@ export interface SearchBarMethods {
   cancel: () => void;
   clear: () => void;
   focus: () => void;
-  render: () => void;
 }
 
 const SearchBar = React.forwardRef<SearchBarMethods, SearchBarProps>((props, ref) => {
@@ -25,7 +25,7 @@ const SearchBar = React.forwardRef<SearchBarMethods, SearchBarProps>((props, ref
   const s = useStyles(theme);
 
   const [search, setSearch] = useState('');
-  const innerRef = useRef<RNESearchBar>(null);
+  const innerRef = useRef<SearchBarRef>(null);
 
   useImperativeHandle(ref, () => ({
     // These functions exposed to the parent component through the ref.
@@ -33,7 +33,6 @@ const SearchBar = React.forwardRef<SearchBarMethods, SearchBarProps>((props, ref
     clear: () => innerRef.current?.clear(),
     cancel: () => innerRef.current?.cancel(),
     focus: () => innerRef.current?.focus(),
-    render: () => innerRef.current?.render(),
   }));
 
   const onChange = (text?: string) => {
@@ -43,7 +42,6 @@ const SearchBar = React.forwardRef<SearchBarMethods, SearchBarProps>((props, ref
 
   return (
     <RNESearchBar
-      // @ts-expect-error ref not typed
       ref={innerRef}
       platform={'ios'}
       placeholder={'Search transactions'}

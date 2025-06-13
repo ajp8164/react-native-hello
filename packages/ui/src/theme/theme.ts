@@ -1,4 +1,4 @@
-import { type CreateThemeOptions, createTheme } from '@rneui/themed';
+import { type CreateThemeOptions, createTheme } from '@rn-vui/themed';
 
 export const theme: CreateThemeOptions = {
   darkColors: {

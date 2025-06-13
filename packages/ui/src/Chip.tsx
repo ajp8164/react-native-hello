@@ -1,7 +1,7 @@
 import { type AppTheme, useTheme } from './theme';
 
 import { type ColorValue, Text, View, type ViewStyle } from 'react-native';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import React from 'react';
 
 export interface ChipProps {

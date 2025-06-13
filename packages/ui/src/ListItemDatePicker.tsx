@@ -1,7 +1,7 @@
 import { type AppTheme, useTheme } from './theme';
 import { View, type ViewStyle } from 'react-native';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import ListItem, { type ListItemProps } from './ListItem';
 import { CollapsibleView } from './CollapsibleView';
 import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';

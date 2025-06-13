@@ -1,5 +1,5 @@
 import { type AppTheme, useTheme } from '../theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { Pressable, type ViewStyle } from 'react-native';
 import React, { type ReactElement } from 'react';
 import Animated, {

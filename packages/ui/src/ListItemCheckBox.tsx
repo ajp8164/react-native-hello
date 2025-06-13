@@ -2,7 +2,7 @@ import { type AppTheme, useTheme } from './theme';
 import React from 'react';
 import ListItem, { type ListItemProps } from './ListItem';
 import CheckBox from './CheckBox';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { Check } from 'lucide-react-native';
 
 export interface ListItemCheckBoxProps extends ListItemProps {

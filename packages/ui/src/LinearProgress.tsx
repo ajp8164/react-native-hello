@@ -1,8 +1,8 @@
 import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import React, { type ReactElement } from 'react';
 import { Text, View } from 'react-native';
-import { LinearProgress as RNELinearProgress } from '@rneui/base';
+import { LinearProgress as RNELinearProgress } from '@rn-vui/base';
 
 export interface LinearProgressProps {
   marker?: ReactElement;

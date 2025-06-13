@@ -3,7 +3,7 @@ import React, { useImperativeHandle, useRef, useState } from 'react';
 
 import { type BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Modal } from '..';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { type WebViewModalMethods, type WebViewModalProps } from './types';
 import WebView from './WebView';
 

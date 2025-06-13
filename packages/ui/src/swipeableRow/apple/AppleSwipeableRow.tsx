@@ -2,7 +2,7 @@ import React, { type ReactNode, useCallback, useEffect, useRef, useState } from 
 import { View, type ViewStyle, Animated, type LayoutChangeEvent } from 'react-native';
 import { type SharedValue } from 'react-native-reanimated';
 import Swipeable, { type SwipeableMethods } from 'react-native-gesture-handler/ReanimatedSwipeable';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { type AppTheme, useTheme } from '../../theme';
 import { type SwipeableAction } from '.';
 import { LeftAction } from './LeftAction';

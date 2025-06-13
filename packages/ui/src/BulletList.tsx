@@ -2,7 +2,7 @@ import { type AppTheme, useTheme } from './theme';
 import { Text, type TextStyle, View, type ViewStyle } from 'react-native';
 
 import React from 'react';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { Circle } from 'lucide-react-native';
 
 export type BulletItem = {

@@ -1,8 +1,8 @@
 import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { type GestureResponderEvent, type ViewStyle } from 'react-native';
 import React from 'react';
-import { CheckBox as RNECheckBox, type CheckBoxProps as RNECheckBoxProps } from '@rneui/base';
+import { CheckBox as RNECheckBox, type CheckBoxProps as RNECheckBoxProps } from '@rn-vui/base';
 import { Square, SquareCheckBig } from 'lucide-react-native';
 
 export interface CheckBoxProps extends Omit<RNECheckBoxProps, 'children'> {

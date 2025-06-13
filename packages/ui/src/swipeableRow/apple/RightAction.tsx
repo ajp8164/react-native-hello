@@ -4,7 +4,7 @@ import { type LayoutChangeEvent, Text, View } from 'react-native';
 import { type SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import { type AppTheme, useTheme, viewport } from '../../theme';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { useState } from 'react';
 import React from 'react';
 

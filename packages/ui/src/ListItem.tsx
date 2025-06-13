@@ -9,7 +9,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import React, { type ReactElement, useState } from 'react';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { ChevronDown, ChevronRight, ChevronUp } from 'lucide-react-native';
 
 export interface ListItemProps {

@@ -1,4 +1,4 @@
-import '@rneui/themed';
+import '@rn-vui/themed';
 
 export interface ColorSet {
   readonly white: string;
@@ -53,7 +53,7 @@ export interface ColorSet {
   readonly viewInvBackground: string;
 }
 
-declare module '@rneui/themed' {
+declare module '@rn-vui/themed' {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface Colors extends ColorSet {}
 }

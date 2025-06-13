@@ -3,7 +3,7 @@ import { type ReactNode } from 'react';
 
 import React from 'react';
 import RNCollapsibleView from '@eliav2/react-native-collapsible-view';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 
 export interface CollapsibleViewProps {
   children: ReactNode | ReactNode[];

@@ -1,7 +1,7 @@
 import { useTheme } from './theme';
 import { type GestureResponderEvent, type TextStyle, type ViewStyle } from 'react-native';
 import React from 'react';
-import { type ButtonProps as RNEButtonProps, Button as RNEButton } from '@rneui/themed';
+import { type ButtonProps as RNEButtonProps, Button as RNEButton } from '@rn-vui/themed';
 
 export interface ButtonProps extends Omit<RNEButtonProps, 'buttonStyle' | 'disabledStyle' | 'titleStyle'> {
   buttonStyle?: ViewStyle;

@@ -1,7 +1,7 @@
 import { type AppTheme, useTheme } from './theme';
 import { type LayoutChangeEvent, Text, View, type ViewStyle } from 'react-native';
 import React, { useState } from 'react';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles } from '@rn-vui/themed';
 import { DateTime } from 'luxon';
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

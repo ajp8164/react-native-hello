@@ -1,7 +1,7 @@
 import { useTheme } from './theme';
 import React from 'react';
 import ListItem, { type ListItemProps } from './ListItem';
-import { Switch } from '@rneui/base';
+import { Switch } from '@rn-vui/base';
 
 export interface ListItemSwitchProps extends Omit<ListItemProps, 'value'> {
   disabled?: boolean;
