@@ -58,8 +58,8 @@
   "peerDependencies": {
     "@sentry/react-native": "^6.5.0",
     "eventemitter3": "^5.0.1",
-    "react": ">=18.3.1",
-    "react-native": ">=0.76.5",
+    "react": ">=18",
+    "react-native": ">=0.70",
     "react-native-device-info": "^14.0.2",
     "react-native-logs": "^5.3.0"
   },
