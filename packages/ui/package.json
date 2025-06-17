@@ -71,7 +71,7 @@
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
     "lodash": "^4.17.21",
-    "lucide-react-native": "^0.503.0",
+    "lucide-react-native": "^0.516.0",
     "luxon": "^3.5.0",
     "react": ">=18",
     "react-native": ">=0.70",
