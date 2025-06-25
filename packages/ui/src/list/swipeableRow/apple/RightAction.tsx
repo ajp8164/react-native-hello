@@ -1,9 +1,13 @@
-import Animated, { interpolate, type SharedValue, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, {
+  interpolate,
+  type SharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import { type SwipeableAction } from '.';
 import { type LayoutChangeEvent, Text, View } from 'react-native';
 import { type SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
 import { RectButton } from 'react-native-gesture-handler';
-import { type AppTheme, useTheme, viewport } from '../../theme';
+import { type AppTheme, useTheme, viewport } from '../../../theme';
 import { makeStyles } from '@rn-vui/themed';
 import { useState } from 'react';
 import React from 'react';
@@ -26,7 +30,11 @@ const RightAction = (props: RightActionProps) => {
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateX: interpolate(dragX.value, [0, -config.totalWidth!], [config.x!, 0]),
+        translateX: interpolate(
+          dragX.value,
+          [0, -config.totalWidth!],
+          [config.x!, 0],
+        ),
       },
     ],
   }));
@@ -43,7 +51,11 @@ const RightAction = (props: RightActionProps) => {
           config.onPress();
           swipeableRef.current?.close();
         }}>
-        <View style={{ position: 'absolute', left: (buttonWidth - buttonContentWidth) / 2 }}>
+        <View
+          style={{
+            position: 'absolute',
+            left: (buttonWidth - buttonContentWidth) / 2,
+          }}>
           <View style={{ alignItems: 'center' }} onLayout={onLayout}>
             {config.ButtonComponent ? config.ButtonComponent : null}
             {config.text && <Text style={s.text}>{config.text}</Text>}

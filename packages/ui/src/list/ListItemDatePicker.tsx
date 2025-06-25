@@ -1,13 +1,16 @@
-import { type AppTheme, useTheme } from './theme';
+import { type AppTheme, useTheme } from '../theme';
 import { View, type ViewStyle } from 'react-native';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
 import { makeStyles } from '@rn-vui/themed';
-import ListItem, { type ListItemProps } from './ListItem';
-import { CollapsibleView } from './CollapsibleView';
-import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { ListItem } from './ListItem';
+import { CollapsibleView } from '../CollapsibleView';
+import DateTimePicker, {
+  type DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 import { DateTime } from 'luxon';
 
-export interface ListItemDatePickerProps extends Omit<ListItemProps, 'title' | 'style' | 'value'> {
+export interface ListItemDatePicker
+  extends Omit<ListItem, 'title' | 'style' | 'value'> {
   expanded?: boolean;
   minimumDate?: Date;
   maximumDate?: Date;
@@ -21,7 +24,10 @@ export interface ListItemDatePickerMethods {
   collapse: () => void;
 }
 
-const ListItemDatePicker = React.forwardRef<ListItemDatePickerMethods, ListItemDatePickerProps>((props, ref) => {
+const ListItemDatePicker = React.forwardRef<
+  ListItemDatePickerMethods,
+  ListItemDatePicker
+>((props, ref) => {
   const {
     expanded: initExpanded,
     minimumDate,
@@ -36,7 +42,9 @@ const ListItemDatePicker = React.forwardRef<ListItemDatePickerMethods, ListItemD
   const theme = useTheme();
   const s = useStyles(theme);
 
-  const [expanded, setExpanded] = useState(initExpanded !== undefined ? initExpanded : false);
+  const [expanded, setExpanded] = useState(
+    initExpanded !== undefined ? initExpanded : false,
+  );
   const [expandedStyle, setExpandedStyle] = useState<ViewStyle>({});
 
   // Restore list item bottom border when collapsible has finished animation.
@@ -79,7 +87,9 @@ const ListItemDatePicker = React.forwardRef<ListItemDatePickerMethods, ListItemD
         onPress={() => setExpanded(!expanded)}
         {...rest}
       />
-      <CollapsibleView expanded={expanded} duration={initExpanded === true ? 0 : undefined}>
+      <CollapsibleView
+        expanded={expanded}
+        duration={initExpanded === true ? 0 : undefined}>
         <View style={s.collapsibleContainer}>
           <DateTimePicker
             mode={'date'}
@@ -92,13 +102,17 @@ const ListItemDatePicker = React.forwardRef<ListItemDatePickerMethods, ListItemD
             // See https://stackoverflow.com/questions/71025060/react-native-datetimepicker-datetimepicker-is-1-day-off
             timeZoneName={Intl.DateTimeFormat().resolvedOptions().timeZone}
             value={value ? value : new Date()}
-            onChange={(_event: DateTimePickerEvent, date?: Date) => onChangeDate(date)}
+            onChange={(_event: DateTimePickerEvent, date?: Date) =>
+              onChangeDate(date)
+            }
           />
         </View>
         <View
           style={[
             s.footer,
-            rest.position?.includes('last') ? s.collapsibleContainerLastExpanded : {},
+            rest.position?.includes('last')
+              ? s.collapsibleContainerLastExpanded
+              : {},
           ]}
         />
       </CollapsibleView>
@@ -149,4 +163,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default ListItemDatePicker;
+export { ListItemDatePicker };

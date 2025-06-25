@@ -1,11 +1,11 @@
-import { type AppTheme, useTheme } from './theme';
+import { type AppTheme, useTheme } from '../theme';
 import React from 'react';
-import ListItem, { type ListItemProps } from './ListItem';
-import CheckBox from './CheckBox';
+import CheckBox from '../CheckBox';
 import { makeStyles } from '@rn-vui/themed';
 import { Check } from 'lucide-react-native';
+import { ListItem } from './ListItem';
 
-export interface ListItemCheckBoxProps extends ListItemProps {
+interface ListItemCheckBox extends ListItem {
   disabled?: boolean;
   checked: boolean;
   checkedIcon?: JSX.Element;
@@ -13,8 +13,9 @@ export interface ListItemCheckBoxProps extends ListItemProps {
   uncheckedIcon?: JSX.Element;
 }
 
-const ListItemCheckBox = (props: ListItemCheckBoxProps) => {
-  const { checkedIcon, checked, disabled, onChange, uncheckedIcon, ...rest } = props;
+const ListItemCheckBox = (props: ListItemCheckBox) => {
+  const { checkedIcon, checked, disabled, onChange, uncheckedIcon, ...rest } =
+    props;
 
   const theme = useTheme();
   const s = useStyles(theme);
@@ -25,7 +26,13 @@ const ListItemCheckBox = (props: ListItemCheckBoxProps) => {
         <CheckBox
           center
           checked={checked}
-          checkedIcon={checkedIcon ? checkedIcon : <Check color={theme.colors.listItemIcon} />}
+          checkedIcon={
+            checkedIcon ? (
+              checkedIcon
+            ) : (
+              <Check color={theme.colors.listItemIcon} />
+            )
+          }
           uncheckedIcon={uncheckedIcon ? uncheckedIcon : <></>}
           checkedColor={theme.colors.checkboxActive}
           uncheckedColor={theme.colors.checkboxInactive}
@@ -47,4 +54,4 @@ const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
   },
 }));
 
-export default ListItemCheckBox;
+export { ListItemCheckBox };

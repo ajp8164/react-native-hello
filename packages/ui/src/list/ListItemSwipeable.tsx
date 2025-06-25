@@ -1,17 +1,25 @@
-import { type AppTheme, useTheme } from './theme';
+import { type AppTheme, useTheme } from '../theme';
 import React from 'react';
-import ListItem, { type ListItemProps } from './ListItem';
+import { ListItem } from './ListItem';
 import { makeStyles } from '@rn-vui/themed';
-import { AppleStyleSwipeableRow, type SwipeableAction } from './swipeableRow/apple';
+import {
+  AppleStyleSwipeableRow,
+  type SwipeableAction,
+} from './swipeableRow/apple';
 
-export interface ListItemSwipeableProps extends ListItemProps {
+export interface ListItemSwipeable extends ListItem {
   buttonWidth?: number;
   swipeableActionsLeft?: SwipeableAction[];
   swipeableActionsRight?: SwipeableAction[];
 }
 
-const ListItemSwipeable = (props: ListItemSwipeableProps) => {
-  const { buttonWidth = 70, swipeableActionsLeft, swipeableActionsRight, ...rest } = props;
+const ListItemSwipeable = (props: ListItemSwipeable) => {
+  const {
+    buttonWidth = 70,
+    swipeableActionsLeft,
+    swipeableActionsRight,
+    ...rest
+  } = props;
 
   const theme = useTheme();
   const s = useStyles(theme);
@@ -65,4 +73,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default ListItemSwipeable;
+export { ListItemSwipeable };

@@ -1,14 +1,27 @@
-import React, { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { View, type ViewStyle, Animated, type LayoutChangeEvent } from 'react-native';
+import React, {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import {
+  View,
+  type ViewStyle,
+  Animated,
+  type LayoutChangeEvent,
+} from 'react-native';
 import { type SharedValue } from 'react-native-reanimated';
-import Swipeable, { type SwipeableMethods } from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Swipeable, {
+  type SwipeableMethods,
+} from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { makeStyles } from '@rn-vui/themed';
-import { type AppTheme, useTheme } from '../../theme';
+import { type AppTheme, useTheme } from '../../../theme';
 import { type SwipeableAction } from '.';
 import { LeftAction } from './LeftAction';
 import { RightAction } from './RightAction';
-import { useAlert } from '../../hooks';
-import { LayoutAwareView } from '../../LayoutAwareView';
+import { useAlert } from '../../../hooks';
+import { LayoutAwareView } from '../../../LayoutAwareView';
 
 export interface AppleStyleSwipeableRowProps {
   buttonWidth?: number;
@@ -19,7 +32,13 @@ export interface AppleStyleSwipeableRowProps {
 }
 
 const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRowProps) => {
-  const { buttonWidth = 64, containerStyle, children, leftActions, rightActions } = props;
+  const {
+    buttonWidth = 64,
+    containerStyle,
+    children,
+    leftActions,
+    rightActions,
+  } = props;
 
   const theme = useTheme();
   const s = useStyles(theme);
@@ -164,16 +183,23 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRowProps) => {
   );
 
   const onLayout = (event: LayoutChangeEvent) => {
-    animatedMaxHeight.current = new Animated.Value(event.nativeEvent.layout.height);
+    animatedMaxHeight.current = new Animated.Value(
+      event.nativeEvent.layout.height,
+    );
   };
 
   return (
     <Animated.View
-      style={[enabled ? { maxHeight: animatedMaxHeight.current } : {}, s.container]}
+      style={[
+        enabled ? { maxHeight: animatedMaxHeight.current } : {},
+        s.container,
+      ]}
       onLayout={onLayout}>
       <LayoutAwareView
         onLayout={event => {
-          animatedMaxHeight.current = new Animated.Value(event.nativeEvent.layout.height);
+          animatedMaxHeight.current = new Animated.Value(
+            event.nativeEvent.layout.height,
+          );
         }}>
         <Swipeable
           ref={swipeableRow}

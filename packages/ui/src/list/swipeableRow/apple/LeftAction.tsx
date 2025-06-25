@@ -1,7 +1,7 @@
 import { makeStyles } from '@rn-vui/themed';
 import { type SwipeableAction } from '.';
 import { Text, type TextStyle, View, type ViewStyle } from 'react-native';
-import { type AppTheme, useTheme } from '../../theme';
+import { type AppTheme, useTheme } from '../../../theme';
 import Animated, {
   Extrapolation,
   interpolate,

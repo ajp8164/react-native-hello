@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme } from './theme';
+import { type AppTheme, useTheme } from '../theme';
 import {
   type LayoutChangeEvent,
   Pressable,
@@ -12,7 +12,7 @@ import React, { type ReactElement, useState } from 'react';
 import { makeStyles } from '@rn-vui/themed';
 import { ChevronDown, ChevronRight, ChevronUp } from 'lucide-react-native';
 
-export interface ListItemProps {
+interface ListItem {
   bottomDividerColor?: string;
   bottomDividerForceHide?: boolean;
   bottomDividerLeft?: number;
@@ -55,7 +55,7 @@ const getContent = (key: string, theme: AppTheme) => {
   }
 };
 
-const ListItem = (props: ListItemProps) => {
+const ListItem = (props: ListItem) => {
   const {
     bottomDividerColor,
     bottomDividerForceHide,
@@ -87,7 +87,8 @@ const ListItem = (props: ListItemProps) => {
   const theme = useTheme();
   const s = useStyles(theme);
 
-  const _bottomDividerColor = bottomDividerColor || (s.border.borderColor as string);
+  const _bottomDividerColor =
+    bottomDividerColor || (s.border.borderColor as string);
   const _bottomDividerLeft = bottomDividerLeft || (s.border.left as number);
   const _bottomDividerRight = bottomDividerRight || (s.border.right as number);
 
@@ -111,7 +112,9 @@ const ListItem = (props: ListItemProps) => {
   const [valueX, setValueX] = useState<number>(0);
 
   const rightX =
-    valueX && rightContentX ? Math.min(valueX, rightContentX) : valueX || rightContentX || 0;
+    valueX && rightContentX
+      ? Math.min(valueX, rightContentX)
+      : valueX || rightContentX || 0;
   const titleWidth = titleW - Math.min(titleEndX - rightX + 5);
   const subtitleWidth = subtitleW - Math.min(subtitleEndX - rightX + 20);
 
@@ -165,21 +168,32 @@ const ListItem = (props: ListItemProps) => {
       ]}
       onPress={onPress}>
       <View>
-        <View style={[s.innerContainer, subtitle ? s.itemWithSubtitle : {}, style]}>
+        <View
+          style={[s.innerContainer, subtitle ? s.itemWithSubtitle : {}, style]}>
           {leftContent && (
-            <View style={[s.leftContent, s.leftContentElement, leftContentStyle]}>
+            <View
+              style={[s.leftContent, s.leftContentElement, leftContentStyle]}>
               {leftContent}
             </View>
           )}
           {mainContent ? (
-            <View style={[s.mainContent, mainContentStyle, { paddingLeft: mainOffset }]}>
+            <View
+              style={[
+                s.mainContent,
+                mainContentStyle,
+                { paddingLeft: mainOffset },
+              ]}>
               {mainContent}
             </View>
           ) : (
             <>
               <View>
                 <Text
-                  style={[s.title, { marginLeft: titleOffset, width: titleWidth }, titleStyle]}
+                  style={[
+                    s.title,
+                    { marginLeft: titleOffset, width: titleWidth },
+                    titleStyle,
+                  ]}
                   allowFontScaling={false}
                   onLayout={onLayoutTitle}
                   numberOfLines={titleLines || 1}
@@ -201,7 +215,12 @@ const ListItem = (props: ListItemProps) => {
                   </Text>
                 )}
                 {subtitle && subtitleIsElement && (
-                  <View style={[s.subtitleElement, { marginLeft: subtitleOffset }, subtitleStyle]}>
+                  <View
+                    style={[
+                      s.subtitleElement,
+                      { marginLeft: subtitleOffset },
+                      subtitleStyle,
+                    ]}>
                     {subtitle}
                   </View>
                 )}
@@ -239,7 +258,9 @@ const ListItem = (props: ListItemProps) => {
             </View>
           )}
         </View>
-        {footerContent && <View style={s.footerContentElement}>{footerContent}</View>}
+        {footerContent && (
+          <View style={s.footerContentElement}>{footerContent}</View>
+        )}
         {!bottomDividerForceHide && !position?.includes('last') ? (
           <View
             style={[
@@ -347,4 +368,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default ListItem;
+export { ListItem };

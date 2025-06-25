@@ -1,4 +1,4 @@
-import { type AlertConfig } from '../../hooks';
+import { type AlertConfig } from '../../../hooks';
 import { type ReactElement } from 'react';
 
 export * from './AppleSwipeableRow';
