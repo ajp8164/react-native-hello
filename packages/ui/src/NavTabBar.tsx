@@ -1,5 +1,9 @@
 import { View } from 'react-native';
-import { type NavigationRoute, type ParamListBase, useLinkBuilder } from '@react-navigation/native';
+import {
+  type NavigationRoute,
+  type ParamListBase,
+  useLinkBuilder,
+} from '@react-navigation/native';
 import { Text, PlatformPressable } from '@react-navigation/elements';
 import { makeStyles } from '@rn-vui/themed';
 import { type AppTheme, useTheme, viewport } from './theme';
@@ -11,7 +15,6 @@ import React from 'react';
  *
  * <Tab.Navigator
  *   tabBar={props => <AppTabBar {...props} />}>
- *
  */
 const NavTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const theme = useTheme();
@@ -19,7 +22,10 @@ const NavTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
 
   const { buildHref } = useLinkBuilder();
 
-  const onPress = (route: NavigationRoute<ParamListBase, string>, isFocused: boolean) => {
+  const onPress = (
+    route: NavigationRoute<ParamListBase, string>,
+    isFocused: boolean,
+  ) => {
     const event = navigation.emit({
       type: 'tabPress',
       target: route.key,
@@ -53,8 +59,16 @@ const NavTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             onPress={() => onPress(route, isFocused)}
             style={s.button}>
-            {icon ? icon({ color: theme.colors.buttonText, focused: isFocused, size: 0 }) : null}
-            <Text style={[s.label, { opacity: isFocused ? 1 : 0.5 }]}>{label}</Text>
+            {icon
+              ? icon({
+                  color: theme.colors.buttonText,
+                  focused: isFocused,
+                  size: 0,
+                })
+              : null}
+            <Text style={[s.label, { opacity: isFocused ? 1 : 0.5 }]}>
+              {label}
+            </Text>
           </PlatformPressable>
         );
       })}
@@ -89,4 +103,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default NavTabBar;
+export { NavTabBar };

@@ -3,11 +3,11 @@ import { useContext, useEffect } from 'react';
 import Toast, { type ToastShowParams } from 'react-native-toast-message';
 import { NetworkContext } from '@react-native-hello/core';
 
-export interface NetworkConnectionBarProps {
+interface NetworkConnectionBar {
   toastProps?: ToastShowParams;
 }
 
-const NetworkConnectionBar = ({ toastProps }: NetworkConnectionBarProps) => {
+const NetworkConnectionBar = ({ toastProps }: NetworkConnectionBar) => {
   const network = useContext(NetworkContext);
 
   useEffect(() => {

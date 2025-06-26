@@ -5,40 +5,42 @@ import { type BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescrip
 import { Modal } from '..';
 import { makeStyles } from '@rn-vui/themed';
 import { type WebViewModalMethods, type WebViewModalProps } from './types';
-import WebView from './WebView';
+import { WebView } from './WebView';
 
 type WebViewModal = WebViewModalMethods;
 
-const WebViewModal = React.forwardRef<WebViewModal, WebViewModalProps>((props, ref) => {
-  const { snapPoints = ['92%'] } = props;
+const WebViewModal = React.forwardRef<WebViewModal, WebViewModalProps>(
+  (props, ref) => {
+    const { snapPoints = ['92%'] } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+    const theme = useTheme();
+    const s = useStyles(theme);
 
-  const [url, setUrl] = useState('');
-  const innerRef = useRef<BottomSheetModalMethods>(null);
+    const [url, setUrl] = useState('');
+    const innerRef = useRef<BottomSheetModalMethods>(null);
 
-  useImperativeHandle(ref, () => ({
-    // These functions exposed to the parent component through the ref.
-    present,
-  }));
+    useImperativeHandle(ref, () => ({
+      // These functions exposed to the parent component through the ref.
+      present,
+    }));
 
-  const present = (url: string) => {
-    setUrl(url);
-    innerRef.current?.present();
-  };
+    const present = (url: string) => {
+      setUrl(url);
+      innerRef.current?.present();
+    };
 
-  return (
-    <Modal
-      ref={innerRef}
-      snapPoints={snapPoints}
-      backgroundStyle={s.modalBackground}
-      enableDynamicSizing={false}
-      handleIndicatorStyle={s.handleIndicator}>
-      <WebView url={url} navBarStyle={s.navBar} />
-    </Modal>
-  );
-});
+    return (
+      <Modal
+        ref={innerRef}
+        snapPoints={snapPoints}
+        backgroundStyle={s.modalBackground}
+        enableDynamicSizing={false}
+        handleIndicatorStyle={s.handleIndicator}>
+        <WebView url={url} navBarStyle={s.navBar} />
+      </Modal>
+    );
+  },
+);
 
 const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   modalBackground: {

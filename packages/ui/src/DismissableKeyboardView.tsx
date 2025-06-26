@@ -1,14 +1,14 @@
 import { Keyboard, Pressable } from 'react-native';
 import React, { type ReactNode } from 'react';
 
-export interface DismissableKeyboardViewProps {
+interface DismissableKeyboardView {
   children: ReactNode;
 }
 
 /**
  * Dismisses the keyboard on touch outside. Touching an input will not dismiss the keyboard.
  */
-const DismissableKeyboardView = ({ children }: DismissableKeyboardViewProps) => {
+const DismissableKeyboardView = ({ children }: DismissableKeyboardView) => {
   return (
     <Pressable onPress={Keyboard.dismiss} accessible={false}>
       {children}
@@ -16,4 +16,4 @@ const DismissableKeyboardView = ({ children }: DismissableKeyboardViewProps) => 
   );
 };
 
-export default DismissableKeyboardView;
+export { DismissableKeyboardView };

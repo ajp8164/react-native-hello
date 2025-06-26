@@ -7,7 +7,7 @@ import {
   type SwipeableAction,
 } from './swipeableRow/apple';
 
-export interface ListItemSwipeable extends ListItem {
+interface ListItemSwipeable extends ListItem {
   buttonWidth?: number;
   swipeableActionsLeft?: SwipeableAction[];
   swipeableActionsRight?: SwipeableAction[];

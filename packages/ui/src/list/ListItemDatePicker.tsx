@@ -9,7 +9,7 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import { DateTime } from 'luxon';
 
-export interface ListItemDatePicker
+interface ListItemDatePicker
   extends Omit<ListItem, 'title' | 'style' | 'value'> {
   expanded?: boolean;
   minimumDate?: Date;

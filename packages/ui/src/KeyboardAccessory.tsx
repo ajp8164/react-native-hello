@@ -19,7 +19,7 @@ type AccessoryState = {
   previousDisabled: boolean;
 };
 
-export interface KeyboardAccessoryProps {
+interface KeyboardAccessory {
   disabledDone?: boolean;
   disabledTitleStyle?: TextStyle | TextStyle[];
   doneText?: string;
@@ -35,124 +35,133 @@ export interface KeyboardAccessorylMethods {
 
 const KeyboardAccessory = forwardRef<
   KeyboardAccessorylMethods,
-  KeyboardAccessoryProps
->(({
-  disabledDone,
-  disabledTitleStyle,
-  doneText,
-  fieldRefs,
-  id,
-  onDone
-}: KeyboardAccessoryProps, ref) => {
-  // Only iOS.
-  if (Platform.OS !== 'ios') return null;
+  KeyboardAccessory
+>(
+  (
+    {
+      disabledDone,
+      disabledTitleStyle,
+      doneText,
+      fieldRefs,
+      id,
+      onDone,
+    }: KeyboardAccessory,
+    ref,
+  ) => {
+    // Only iOS.
+    if (Platform.OS !== 'ios') return null;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+    const theme = useTheme();
+    const s = useStyles(theme);
 
-  useImperativeHandle(ref, () => ({
-    //  These functions exposed to the parent component through the ref.
-    focusedField,
-  }));
+    useImperativeHandle(ref, () => ({
+      //  These functions exposed to the parent component through the ref.
+      focusedField,
+    }));
 
-  const [editorState, setEditorState] = useState<AccessoryState>({
-    fieldCount: fieldRefs.length,
-    focusedField: 0,
-    nextDisabled: fieldRefs.length === 0,
-    previousDisabled: true,
-  });
-
-  const focusedField = (field: number) => {
-    const nextDisabled = field === fieldRefs.length - 1;
-    const previousDisabled = field === 0;
-    setEditorState(prevState => {
-      return {
-        ...prevState,
-        focusedField: field,
-        nextDisabled,
-        previousDisabled,
-      };
+    const [editorState, setEditorState] = useState<AccessoryState>({
+      fieldCount: fieldRefs.length,
+      focusedField: 0,
+      nextDisabled: fieldRefs.length === 0,
+      previousDisabled: true,
     });
-  };
 
-  const next = () => {
-    if (editorState.focusedField === undefined) return;
-    const nextField = editorState.focusedField + 1;
-    const nextDisabled = nextField === fieldRefs.length - 1;
-    const previousDisabled = nextField === 0;
-    fieldRefs[nextField]?.focus();
-    setEditorState(prevState => {
-      return {
-        ...prevState,
-        focusedField: nextField,
-        nextDisabled,
-        previousDisabled,
-      };
-    });
-  };
+    const focusedField = (field: number) => {
+      const nextDisabled = field === fieldRefs.length - 1;
+      const previousDisabled = field === 0;
+      setEditorState(prevState => {
+        return {
+          ...prevState,
+          focusedField: field,
+          nextDisabled,
+          previousDisabled,
+        };
+      });
+    };
 
-  const previous = () => {
-    if (editorState.focusedField === undefined) return;
-    const nextField = editorState.focusedField - 1;
-    const nextDisabled = nextField === fieldRefs.length;
-    const previousDisabled = nextField === 0;
-    fieldRefs[nextField]?.focus();
-    setEditorState(prevState => {
-      return {
-        ...prevState,
-        nextField,
-        nextDisabled,
-        previousDisabled,
-      };
-    });
-  };
+    const next = () => {
+      if (editorState.focusedField === undefined) return;
+      const nextField = editorState.focusedField + 1;
+      const nextDisabled = nextField === fieldRefs.length - 1;
+      const previousDisabled = nextField === 0;
+      fieldRefs[nextField]?.focus();
+      setEditorState(prevState => {
+        return {
+          ...prevState,
+          focusedField: nextField,
+          nextDisabled,
+          previousDisabled,
+        };
+      });
+    };
 
-  return (
-    <InputAccessoryView nativeID={id}>
-      <View style={s.container}>
-        <Button
-          type={'clear'}
-          icon={
-            <Icon
-              name="chevron-up-outline"
-              type={'ionicon'}
-              color={theme.colors.kbAccessoryButtonText}
-              size={28}
-              disabled={editorState.previousDisabled}
-              disabledStyle={s.fieldNavButton}
-            />
-          }
-          disabled={editorState.previousDisabled}
-          onPress={previous}
-        />
-        <Button
-          type={'clear'}
-          icon={
-            <Icon
-              name="chevron-down-outline"
-              type={'ionicon'}
-              color={theme.colors.kbAccessoryButtonText}
-              size={28}
-              disabled={editorState.nextDisabled}
-              disabledStyle={s.fieldNavButton}
-            />
-          }
-          disabled={editorState.nextDisabled}
-          onPress={next}
-        />
-        <Button
-          type={'clear'}
-          title={doneText || 'Done'}
-          containerStyle={s.doneContainer}
-          titleStyle={s.doneTitle}
-          disabled={disabledDone}
-          disabledTitleStyle={[s.doneTitle, s.doneDisabled, disabledTitleStyle]}
-          onPress={onDone || Keyboard.dismiss}
-        />
-      </View>
-    </InputAccessoryView>
-  );
-});
+    const previous = () => {
+      if (editorState.focusedField === undefined) return;
+      const nextField = editorState.focusedField - 1;
+      const nextDisabled = nextField === fieldRefs.length;
+      const previousDisabled = nextField === 0;
+      fieldRefs[nextField]?.focus();
+      setEditorState(prevState => {
+        return {
+          ...prevState,
+          nextField,
+          nextDisabled,
+          previousDisabled,
+        };
+      });
+    };
+
+    return (
+      <InputAccessoryView nativeID={id}>
+        <View style={s.container}>
+          <Button
+            type={'clear'}
+            icon={
+              <Icon
+                name="chevron-up-outline"
+                type={'ionicon'}
+                color={theme.colors.kbAccessoryButtonText}
+                size={28}
+                disabled={editorState.previousDisabled}
+                disabledStyle={s.fieldNavButton}
+              />
+            }
+            disabled={editorState.previousDisabled}
+            onPress={previous}
+          />
+          <Button
+            type={'clear'}
+            icon={
+              <Icon
+                name="chevron-down-outline"
+                type={'ionicon'}
+                color={theme.colors.kbAccessoryButtonText}
+                size={28}
+                disabled={editorState.nextDisabled}
+                disabledStyle={s.fieldNavButton}
+              />
+            }
+            disabled={editorState.nextDisabled}
+            onPress={next}
+          />
+          <Button
+            type={'clear'}
+            title={doneText || 'Done'}
+            containerStyle={s.doneContainer}
+            titleStyle={s.doneTitle}
+            disabled={disabledDone}
+            disabledTitleStyle={[
+              s.doneTitle,
+              s.doneDisabled,
+              disabledTitleStyle,
+            ]}
+            onPress={onDone || Keyboard.dismiss}
+          />
+        </View>
+      </InputAccessoryView>
+    );
+  },
+);
 
 const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   container: {

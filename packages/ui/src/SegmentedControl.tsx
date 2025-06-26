@@ -1,6 +1,6 @@
 import { makeStyles } from '@rn-vui/themed';
 import React, { useState } from 'react';
-import { type AppTheme, fontFamily, fontSizes ,useTheme } from './theme';
+import { type AppTheme, fontFamily, fontSizes, useTheme } from './theme';
 import RNSegmentedControl, {
   type SegmentedControlProps as RNSegmentedControlProps,
 } from '@react-native-segmented-control/segmented-control';
@@ -8,13 +8,13 @@ import { View, type ViewStyle } from 'react-native';
 
 const controlHeight = 28;
 
-export interface SegmentedControlProps extends Omit<RNSegmentedControlProps, 'onChange'> {
+interface SegmentedControl extends Omit<RNSegmentedControlProps, 'onChange'> {
   containerStyle?: ViewStyle | ViewStyle[];
   initialIndex?: number;
   onChange: (index: number) => void;
 }
 
-const SegmentedControl = (props: SegmentedControlProps) => {
+const SegmentedControl = (props: SegmentedControl) => {
   const { containerStyle, initialIndex, onChange, ...rest } = props;
 
   const theme = useTheme();
@@ -72,4 +72,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default SegmentedControl;
+export { SegmentedControl };

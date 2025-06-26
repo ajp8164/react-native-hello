@@ -1,7 +1,7 @@
 import { Keyboard } from 'react-native';
 import { useEffect } from 'react';
 
-export interface AutoDismissKeyboardProps {
+interface AutoDismissKeyboard {
   dismissWhen: () => boolean;
   onDismiss?: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,7 +11,11 @@ export interface AutoDismissKeyboardProps {
 /**
  * Will dismiss the keyboard when a watched value changes and the result of dismissOn() is true.
  */
-const AutoDismissKeyboard = ({ onDismiss, dismissWhen, watchValue }: AutoDismissKeyboardProps) => {
+const AutoDismissKeyboard = ({
+  onDismiss,
+  dismissWhen,
+  watchValue,
+}: AutoDismissKeyboard) => {
   useEffect(() => {
     if (dismissWhen()) {
       Keyboard.dismiss();
@@ -22,4 +26,4 @@ const AutoDismissKeyboard = ({ onDismiss, dismissWhen, watchValue }: AutoDismiss
   return null;
 };
 
-export default AutoDismissKeyboard;
+export { AutoDismissKeyboard };

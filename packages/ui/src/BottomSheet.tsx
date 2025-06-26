@@ -14,7 +14,7 @@ import type { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescrip
 import { ConditionalWrapper } from './ConditionalWrapper';
 import { PortalProvider } from '@gorhom/portal';
 
-export interface BottomSheetProps extends RNBottomSheetProps {
+interface BottomSheet extends RNBottomSheetProps {
   innerRef: React.RefObject<BottomSheetModalMethods | null>;
   modalParent?: boolean;
   onDismiss?: () => void;
@@ -28,7 +28,7 @@ const BottomSheet = ({
   onDismiss,
   touchBackdropBehavior = 'close',
   ...bottomSheetModalProps
-}: BottomSheetProps) => {
+}: BottomSheet) => {
   const renderBackdrop = useCallback(
     (props: JSX.IntrinsicAttributes & BottomSheetDefaultBackdropProps) => (
       <BottomSheetBackdrop

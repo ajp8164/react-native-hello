@@ -1,6 +1,6 @@
-import type { JSX } from "react";
+import type { JSX } from 'react';
 
-export interface ConditionalWrapperProps {
+interface ConditionalWrapper {
   condition: boolean;
   wrapper: (children: JSX.Element) => JSX.Element;
   children: JSX.Element;
@@ -11,6 +11,6 @@ const ConditionalWrapper = ({
   condition,
   wrapper,
   children,
-}: ConditionalWrapperProps) => (condition ? wrapper(children) : children);
+}: ConditionalWrapper) => (condition ? wrapper(children) : children);
 
 export { ConditionalWrapper };

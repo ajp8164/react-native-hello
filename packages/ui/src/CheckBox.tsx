@@ -2,16 +2,19 @@ import { type AppTheme, useTheme } from './theme';
 import { makeStyles } from '@rn-vui/themed';
 import { type GestureResponderEvent, type ViewStyle } from 'react-native';
 import React from 'react';
-import { CheckBox as RNECheckBox, type CheckBoxProps as RNECheckBoxProps } from '@rn-vui/base';
+import {
+  CheckBox as RNECheckBox,
+  type CheckBoxProps as RNECheckBoxProps,
+} from '@rn-vui/base';
 import { Square, SquareCheckBig } from 'lucide-react-native';
 
-export interface CheckBoxProps extends Omit<RNECheckBoxProps, 'children'> {
+interface CheckBox extends Omit<RNECheckBoxProps, 'children'> {
   checked: boolean;
   containerStyle?: ViewStyle | ViewStyle[];
   onPress: (event: GestureResponderEvent) => void;
 }
 
-const CheckBox = ({ checked, containerStyle, onPress, ...rest }: CheckBoxProps) => {
+const CheckBox = ({ checked, containerStyle, onPress, ...rest }: CheckBox) => {
   const theme = useTheme();
   const s = useStyles(theme);
 
@@ -57,4 +60,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default CheckBox;
+export { CheckBox };

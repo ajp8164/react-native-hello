@@ -1,15 +1,18 @@
 import { makeStyles } from '@rn-vui/themed';
 import React, { type ReactNode, useState } from 'react';
 import { type AppTheme, useTheme, viewport } from './theme';
-import { Tooltip as RNTooltip, type TooltipProps as RNETooltipProps} from '@rn-vui/base';
+import {
+  Tooltip as RNTooltip,
+  type TooltipProps as RNETooltipProps,
+} from '@rn-vui/base';
 import { Text, View } from 'react-native';
 
-export interface TooltipProps extends RNETooltipProps {
+interface Tooltip extends RNETooltipProps {
   text: string;
   children: ReactNode;
 }
 
-const Tooltip = ({ ...props }: TooltipProps) => {
+const Tooltip = ({ ...props }: Tooltip) => {
   const theme = useTheme();
   const s = useStyles(theme);
 
@@ -58,4 +61,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default Tooltip;
+export { Tooltip };

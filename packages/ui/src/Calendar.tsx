@@ -16,7 +16,7 @@ export type DotDetail = {
 };
 export type DayDots = Record<number, DotDetail>; // day, count
 
-export interface CalendarProps {
+interface Calendar {
   containerStyle?: ViewStyle | ViewStyle[];
   dayDots?: DayDots;
   subtitle?: string;
@@ -25,7 +25,7 @@ export interface CalendarProps {
 }
 
 // Fixed two week calendar.
-const Calendar = (props: CalendarProps) => {
+const Calendar = (props: Calendar) => {
   const { containerStyle, dayDots, subtitle, title, todayColor } = props;
 
   const theme = useTheme();
@@ -199,4 +199,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default Calendar;
+export { Calendar };

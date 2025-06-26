@@ -14,7 +14,7 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 export { Masks } from './lib';
 
-export interface InputProps extends Omit<MaskInputProps, 'style'> {
+interface Input extends Omit<MaskInputProps, 'style'> {
   errorMessage?: string;
   infoMessage?: string;
   insideModal?: boolean;
@@ -27,7 +27,7 @@ export interface InputProps extends Omit<MaskInputProps, 'style'> {
   onChangeText: (text1: string, text2: string, text3: string) => void;
 }
 
-const Input = React.forwardRef<TextInput, InputProps>(
+const Input = React.forwardRef<TextInput, Input>(
   (
     {
       errorMessage,
@@ -40,7 +40,7 @@ const Input = React.forwardRef<TextInput, InputProps>(
       style,
       onChangeText,
       ...rest
-    }: InputProps,
+    }: Input,
     ref,
   ) => {
     const theme = useTheme();
@@ -131,4 +131,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default Input;
+export { Input };

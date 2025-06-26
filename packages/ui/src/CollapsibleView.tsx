@@ -19,7 +19,7 @@ export type MakePropsOptional<T> = {
   [K in keyof T]?: T[K];
 };
 
-interface CollapsibleViewProps {
+interface CollapsibleView {
   children: React.ReactNode;
   title?: string | React.ReactNode;
   initExpanded?: boolean;
@@ -58,7 +58,7 @@ const CollapsibleView = ({
   titleStyle = {},
   touchableWrapperStyle = {},
   touchableWrapperProps = {},
-}: CollapsibleViewProps) => {
+}: CollapsibleView) => {
   const theme = useTheme();
   const s = useStyles(theme);
 

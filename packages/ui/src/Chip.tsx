@@ -4,7 +4,7 @@ import { type ColorValue, Text, View, type ViewStyle } from 'react-native';
 import { makeStyles } from '@rn-vui/themed';
 import React from 'react';
 
-export interface ChipProps {
+interface Chip {
   color?: ColorValue;
   style?: ViewStyle | ViewStyle[];
   text?: string;
@@ -12,7 +12,7 @@ export interface ChipProps {
   visible?: boolean;
 }
 
-const Chip = (props: ChipProps) => {
+const Chip = (props: Chip) => {
   const { color, style, text, textColor, visible = true } = props;
 
   const theme = useTheme();

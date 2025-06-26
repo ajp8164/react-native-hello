@@ -12,7 +12,7 @@ export type BulletItem = {
   hide?: boolean;
 };
 
-export interface BulletListProps {
+interface BulletList {
   type?: 'ordered' | 'unordered';
   bulletOffset?: number;
   bulletSize?: number;
@@ -38,7 +38,7 @@ const BulletList = ({
   itemStyle,
   subItemStyle,
   bulletStyle,
-}: BulletListProps) => {
+}: BulletList) => {
   const theme = useTheme();
   const s = useStyles(theme);
 

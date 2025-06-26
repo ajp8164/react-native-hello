@@ -1,9 +1,17 @@
 import { useTheme } from './theme';
-import { type GestureResponderEvent, type TextStyle, type ViewStyle } from 'react-native';
+import {
+  type GestureResponderEvent,
+  type TextStyle,
+  type ViewStyle,
+} from 'react-native';
 import React from 'react';
-import { type ButtonProps as RNEButtonProps, Button as RNEButton } from '@rn-vui/themed';
+import {
+  type ButtonProps as RNEButtonProps,
+  Button as RNEButton,
+} from '@rn-vui/themed';
 
-export interface ButtonProps extends Omit<RNEButtonProps, 'buttonStyle' | 'disabledStyle' | 'titleStyle'> {
+interface Button
+  extends Omit<RNEButtonProps, 'buttonStyle' | 'disabledStyle' | 'titleStyle'> {
   buttonStyle?: ViewStyle;
   clear?: boolean;
   containerStyle?: ViewStyle | ViewStyle[];
@@ -17,7 +25,7 @@ export interface ButtonProps extends Omit<RNEButtonProps, 'buttonStyle' | 'disab
   titleStyle?: TextStyle;
 }
 
-const Button = (props: ButtonProps) => {
+const Button = (props: Button) => {
   const {
     buttonStyle,
     containerStyle,
@@ -64,9 +72,14 @@ const Button = (props: ButtonProps) => {
         theme.styles.buttonDisabled,
         disabledStyle,
       ]}
-      containerStyle={[small ? theme.styles.buttonSmallContainer : {}, containerStyle]}
+      containerStyle={[
+        small ? theme.styles.buttonSmallContainer : {},
+        containerStyle,
+      ]}
       disabled={disabled}
-      loadingProps={{ color: outline ? theme.colors.button : theme.colors.stickyWhite }}
+      loadingProps={{
+        color: outline ? theme.colors.button : theme.colors.stickyWhite,
+      }}
       loading={loading}
       onPress={onPress}
       {...rest}
@@ -74,4 +87,4 @@ const Button = (props: ButtonProps) => {
   );
 };
 
-export default Button;
+export { Button };

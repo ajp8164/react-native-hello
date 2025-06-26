@@ -12,7 +12,7 @@ import { makeStyles } from '@rn-vui/themed';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-export interface ProgressRingProps {
+interface ProgressRing {
   arc?: number;
   color?: string;
   containerStyle?: ViewStyle;
@@ -33,7 +33,7 @@ export interface ProgressRingProps {
   InfoComponent?: JSX.Element | null;
 }
 
-const ProgressRing = (props: ProgressRingProps) => {
+const ProgressRing = (props: ProgressRing) => {
   const {
     arc = 0.6,
     color,
@@ -203,4 +203,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default ProgressRing;
+export { ProgressRing };

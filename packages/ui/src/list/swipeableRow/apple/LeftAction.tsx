@@ -12,7 +12,7 @@ import { type SwipeableMethods } from 'react-native-gesture-handler/lib/typescri
 import { RectButton } from 'react-native-gesture-handler';
 import React from 'react';
 
-export interface LeftActionsProps {
+interface LeftAction {
   buttonStyle?: ViewStyle;
   buttonWidth: number;
   config: SwipeableAction;
@@ -21,7 +21,7 @@ export interface LeftActionsProps {
   textStyle?: TextStyle;
 }
 
-const LeftAction = (props: LeftActionsProps) => {
+const LeftAction = (props: LeftAction) => {
   const { buttonWidth, config, dragX, swipeableRef } = props;
 
   const theme = useTheme();

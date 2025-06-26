@@ -17,14 +17,14 @@ export type FABButton = {
   onPress: () => void;
 };
 
-export interface FABMenuProps {
+interface FABMenu {
   animate?: boolean;
   buttons?: FABButton[];
   label?: string | ReactElement;
   onPress?: () => void;
-};
+}
 
-const FABMenu = (props: FABMenuProps) => {
+const FABMenu = (props: FABMenu) => {
   const { animate = true, buttons, label, onPress } = props;
 
   const theme = useTheme();
@@ -43,7 +43,10 @@ const FABMenu = (props: FABMenuProps) => {
     const rotateValue = isExpanded.value ? '45deg' : '0deg';
 
     return {
-      transform: [{ translateX: translateValue }, { rotate: withTiming(rotateValue) }],
+      transform: [
+        { translateX: translateValue },
+        { rotate: withTiming(rotateValue) },
+      ],
     };
   });
 

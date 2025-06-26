@@ -3,7 +3,7 @@ import React from 'react';
 import { ListItem } from './ListItem';
 import { Switch } from '@rn-vui/base';
 
-export interface ListItemSwitch extends Omit<ListItem, 'value'> {
+interface ListItemSwitch extends Omit<ListItem, 'value'> {
   disabled?: boolean;
   value: boolean;
   onValueChange: (value: boolean) => void;

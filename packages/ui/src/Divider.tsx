@@ -5,7 +5,7 @@ import { Divider as RNEDivider } from '@rn-vui/base';
 import React from 'react';
 import { makeStyles } from '@rn-vui/themed';
 
-export interface DividerProps {
+interface Divider {
   color?: string;
   orientation?: 'vertical' | 'horizontal' | undefined;
   rightComponent?: JSX.Element | null;
@@ -27,7 +27,7 @@ const Divider = ({
   subHeaderStyle,
   text,
   width,
-}: DividerProps) => {
+}: Divider) => {
   const theme = useTheme();
   const s = useStyles(theme);
 

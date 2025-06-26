@@ -32,7 +32,7 @@ export type WheelPickerItem = {
 
 export type WheelPickerWidth = string | number;
 
-export interface WheelPickerProps {
+interface WheelPicker {
   androidDialogPrompt?: string;
   androidMode?: 'dialog' | 'dropdown';
   androidOnBlur?: () => void;
@@ -80,7 +80,7 @@ const WheelPicker = ({
   value,
   wheelVisible = true,
   onValueChange,
-}: WheelPickerProps) => {
+}: WheelPicker) => {
   const theme = useTheme();
   const s = useStyles(theme);
 

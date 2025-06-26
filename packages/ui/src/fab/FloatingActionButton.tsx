@@ -20,15 +20,15 @@ const SPRING_CONFIG = {
 
 const OFFSET = 60;
 
-export interface FloatingActionButtonProps {
+interface FloatingActionButton {
   buttonContent: string | ReactElement;
   index: number;
   isExpanded: SharedValue<boolean>;
   style?: ViewStyle | ViewStyle[];
   onPress: () => void;
-};
+}
 
-const FloatingActionButton = (props: FloatingActionButtonProps) => {
+const FloatingActionButton = (props: FloatingActionButton) => {
   const { buttonContent, index, isExpanded, style, onPress } = props;
 
   const theme = useTheme();
@@ -51,7 +51,9 @@ const FloatingActionButton = (props: FloatingActionButtonProps) => {
   });
 
   return (
-    <AnimatedPressable style={[animatedStyles, s.shadow, s.button, style]} onPress={onPress}>
+    <AnimatedPressable
+      style={[animatedStyles, s.shadow, s.button, style]}
+      onPress={onPress}>
       <Animated.Text style={s.content}>{buttonContent}</Animated.Text>
     </AnimatedPressable>
   );

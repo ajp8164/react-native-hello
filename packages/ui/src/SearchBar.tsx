@@ -6,7 +6,7 @@ import { Search } from 'lucide-react-native';
 import { type ViewStyle } from 'react-native';
 import type { SearchBarRef } from '@rn-vui/base/dist/SearchBar/SearchBar';
 
-export interface SearchBarProps {
+interface SearchBar {
   containerStyle?: ViewStyle | ViewStyle[];
   onChangeText: (text: string) => void;
 }
@@ -18,47 +18,49 @@ export interface SearchBarMethods {
   focus: () => void;
 }
 
-const SearchBar = React.forwardRef<SearchBarMethods, SearchBarProps>((props, ref) => {
-  const { containerStyle, onChangeText } = props;
+const SearchBar = React.forwardRef<SearchBarMethods, SearchBar>(
+  (props, ref) => {
+    const { containerStyle, onChangeText } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+    const theme = useTheme();
+    const s = useStyles(theme);
 
-  const [search, setSearch] = useState('');
-  const innerRef = useRef<SearchBarRef>(null);
+    const [search, setSearch] = useState('');
+    const innerRef = useRef<SearchBarRef>(null);
 
-  useImperativeHandle(ref, () => ({
-    // These functions exposed to the parent component through the ref.
-    blur: () => innerRef.current?.blur(),
-    clear: () => innerRef.current?.clear(),
-    cancel: () => innerRef.current?.cancel(),
-    focus: () => innerRef.current?.focus(),
-  }));
+    useImperativeHandle(ref, () => ({
+      // These functions exposed to the parent component through the ref.
+      blur: () => innerRef.current?.blur(),
+      clear: () => innerRef.current?.clear(),
+      cancel: () => innerRef.current?.cancel(),
+      focus: () => innerRef.current?.focus(),
+    }));
 
-  const onChange = (text?: string) => {
-    setSearch(text ? text : '');
-    onChangeText(text ? text : '');
-  };
+    const onChange = (text?: string) => {
+      setSearch(text ? text : '');
+      onChangeText(text ? text : '');
+    };
 
-  return (
-    <RNESearchBar
-      ref={innerRef}
-      platform={'ios'}
-      placeholder={'Search transactions'}
-      placeholderTextColor={theme.colors.textPlaceholder}
-      searchIcon={<Search color={theme.colors.textPlaceholder} size={20} />}
-      clearIcon={{ name: 'close-circle' }}
-      containerStyle={[s.container, containerStyle]}
-      inputContainerStyle={s.inputContainer}
-      inputStyle={s.input}
-      cancelButtonProps={{ buttonTextStyle: s.cancelButton }}
-      value={search}
-      onChangeText={text => onChange(text)}
-      onCancel={() => onChange()}
-      onClear={() => onChange()}
-    />
-  );
-});
+    return (
+      <RNESearchBar
+        ref={innerRef}
+        platform={'ios'}
+        placeholder={'Search transactions'}
+        placeholderTextColor={theme.colors.textPlaceholder}
+        searchIcon={<Search color={theme.colors.textPlaceholder} size={20} />}
+        clearIcon={{ name: 'close-circle' }}
+        containerStyle={[s.container, containerStyle]}
+        inputContainerStyle={s.inputContainer}
+        inputStyle={s.input}
+        cancelButtonProps={{ buttonTextStyle: s.cancelButton }}
+        value={search}
+        onChangeText={text => onChange(text)}
+        onCancel={() => onChange()}
+        onClear={() => onChange()}
+      />
+    );
+  },
+);
 
 const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   cancelButton: {
@@ -81,4 +83,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default SearchBar;
+export { SearchBar };

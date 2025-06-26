@@ -1,12 +1,12 @@
 import React, { type ReactNode, useCallback } from 'react';
 import { type LayoutChangeEvent, View } from 'react-native';
 
-export interface LayoutAwareViewProps {
+interface LayoutAwareView {
   children: ReactNode;
   onLayout: (event: LayoutChangeEvent) => void;
-};
+}
 
-export const LayoutAwareView = (props: LayoutAwareViewProps) => {
+const LayoutAwareView = (props: LayoutAwareView) => {
   const { children, onLayout } = props;
 
   const handleLayout = useCallback((event: LayoutChangeEvent) => {
@@ -15,3 +15,5 @@ export const LayoutAwareView = (props: LayoutAwareViewProps) => {
 
   return <View onLayout={handleLayout}>{children}</View>;
 };
+
+export { LayoutAwareView };

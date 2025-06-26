@@ -4,13 +4,13 @@ import { useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { useTheme } from '@rn-vui/themed';
 
-export interface ColorModeSwitchProps {
+interface ColorModeSwitch {
   children: ReactNode;
   themeSettings: { followDevice: boolean; app: string };
 }
 
 // Handles device level changes filtered by app settings.
-const ColorModeSwitch = ({ children, themeSettings }: ColorModeSwitchProps) => {
+const ColorModeSwitch = ({ children, themeSettings }: ColorModeSwitch) => {
   const { updateTheme } = useTheme();
   const colorScheme = useColorScheme();
 

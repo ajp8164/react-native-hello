@@ -1,11 +1,11 @@
 import { makeStyles } from '@rn-vui/themed';
-import Button from './Button';
+import { Button } from './Button';
 
 import React, { type ReactElement } from 'react';
 import { Text, View } from 'react-native';
 import { type AppTheme, useTheme } from './theme';
 
-export interface ModalHeaderProps {
+interface ModalHeader {
   buttonLeftDisabled?: boolean;
   buttonLeftLabel?: string | ReactElement;
   buttonLeftVisible?: boolean;
@@ -15,9 +15,9 @@ export interface ModalHeaderProps {
   onButtonLeftPress?: () => void;
   onButtonRightPress?: () => void;
   title?: string;
-};
+}
 
-const ModalHeader = (props: ModalHeaderProps) => {
+const ModalHeader = (props: ModalHeader) => {
   const {
     buttonLeftDisabled,
     buttonLeftVisible = true,
@@ -42,7 +42,9 @@ const ModalHeader = (props: ModalHeaderProps) => {
       {buttonLeftVisible && (
         <Button
           title={buttonLeftIsElement ? undefined : (buttonLeftLabel as string)}
-          icon={buttonLeftIsElement ? (buttonLeftLabel as ReactElement) : undefined}
+          icon={
+            buttonLeftIsElement ? (buttonLeftLabel as ReactElement) : undefined
+          }
           titleStyle={theme.styles.buttonScreenHeaderTitle}
           buttonStyle={s.buttonLeft}
           disabledStyle={s.buttonLeft}
@@ -52,8 +54,14 @@ const ModalHeader = (props: ModalHeaderProps) => {
       )}
       {buttonRightVisible && (
         <Button
-          title={buttonRightIsElement ? undefined : (buttonRightLabel as string)}
-          icon={buttonRightIsElement ? (buttonRightLabel as ReactElement) : undefined}
+          title={
+            buttonRightIsElement ? undefined : (buttonRightLabel as string)
+          }
+          icon={
+            buttonRightIsElement
+              ? (buttonRightLabel as ReactElement)
+              : undefined
+          }
           titleStyle={theme.styles.buttonScreenHeaderTitle}
           buttonStyle={s.buttonRight}
           disabledStyle={s.buttonRight}
@@ -100,4 +108,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default ModalHeader;
+export { ModalHeader };

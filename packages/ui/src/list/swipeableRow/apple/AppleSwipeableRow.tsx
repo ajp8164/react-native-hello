@@ -23,7 +23,7 @@ import { RightAction } from './RightAction';
 import { useAlert } from '../../../hooks';
 import { LayoutAwareView } from '../../../LayoutAwareView';
 
-export interface AppleStyleSwipeableRowProps {
+interface AppleStyleSwipeableRow {
   buttonWidth?: number;
   children?: ReactNode;
   containerStyle?: ViewStyle | ViewStyle[];
@@ -31,7 +31,7 @@ export interface AppleStyleSwipeableRowProps {
   rightActions?: SwipeableAction[];
 }
 
-const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRowProps) => {
+const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
   const {
     buttonWidth = 64,
     containerStyle,

@@ -4,7 +4,7 @@ import React, { type ReactElement } from 'react';
 import { Text, View } from 'react-native';
 import { LinearProgress as RNELinearProgress } from '@rn-vui/base';
 
-export interface LinearProgressProps {
+interface LinearProgress {
   marker?: ReactElement;
   markerPercent?: number;
   percent: number;
@@ -13,7 +13,7 @@ export interface LinearProgressProps {
   valueRight?: string;
 }
 
-const LinearProgress = (props: LinearProgressProps) => {
+const LinearProgress = (props: LinearProgress) => {
   const {
     marker,
     markerPercent = 0,
@@ -75,4 +75,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default LinearProgress;
+export { LinearProgress };

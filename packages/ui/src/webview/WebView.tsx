@@ -6,12 +6,12 @@ import { makeStyles } from '@rn-vui/themed';
 import { Pressable, View, type ViewStyle } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 
-export interface WebViewProps {
+interface WebView {
   navBarStyle?: ViewStyle | ViewStyle[];
   url: string;
 }
 
-const WebView = ({ navBarStyle, url }: WebViewProps) => {
+const WebView = ({ navBarStyle, url }: WebView) => {
   const theme = useTheme();
   const s = useStyles(theme);
 
@@ -85,4 +85,4 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
 }));
 
-export default WebView;
+export { WebView };

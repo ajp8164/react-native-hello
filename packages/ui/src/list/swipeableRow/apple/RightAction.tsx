@@ -12,14 +12,14 @@ import { makeStyles } from '@rn-vui/themed';
 import { useState } from 'react';
 import React from 'react';
 
-export interface RightActionProps {
+interface RightAction {
   buttonWidth: number;
   config: SwipeableAction;
   dragX: SharedValue<number>;
   swipeableRef: React.RefObject<SwipeableMethods | null>;
 }
 
-const RightAction = (props: RightActionProps) => {
+const RightAction = (props: RightAction) => {
   const { buttonWidth, config, dragX, swipeableRef } = props;
 
   const theme = useTheme();

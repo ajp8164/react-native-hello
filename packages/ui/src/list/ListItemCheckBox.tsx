@@ -1,6 +1,6 @@
 import { type AppTheme, useTheme } from '../theme';
 import React from 'react';
-import CheckBox from '../CheckBox';
+import { CheckBox } from '../CheckBox';
 import { makeStyles } from '@rn-vui/themed';
 import { Check } from 'lucide-react-native';
 import { ListItem } from './ListItem';
