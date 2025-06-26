@@ -60,7 +60,6 @@ export const theme: CreateThemeOptions = {
 
     text: '#ffffffde',
     textInv: '#000000',
-    textLight: '#878787',
     textLink: '#0078fe',
     textPlaceholder: '#878787',
 
@@ -127,7 +126,6 @@ export const theme: CreateThemeOptions = {
 
     text: '#303030',
     textInv: '#ffffff',
-    textLight: '#787878',
     textLink: '#0078fe',
     textPlaceholder: '#878787',
 

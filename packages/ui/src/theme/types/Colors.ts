@@ -45,7 +45,6 @@ export interface ColorSet {
   readonly switchOnTrack: string;
   readonly text: string;
   readonly textInv: string;
-  readonly textLight: string;
   readonly textLink: string;
   readonly textPlaceholder: string;
   readonly viewBackground: string;
