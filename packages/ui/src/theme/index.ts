@@ -8,6 +8,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
+import { ReactNativeHello } from '@react-native-hello/core';
 import type { Styles } from './types/Styles';
 import { useStyles } from './styles';
 
@@ -28,13 +29,17 @@ export { useStyles } from './styles';
 
 export const useTheme = () => {
   const { theme } = useRNETheme();
+  const themeUsersConfig = ReactNativeHello.get('theme') as AppTheme;
   const styles = useStyles();
   const insets = useSafeAreaInsets();
   return {
-    ...theme,
-    styles,
-    insets,
-  };
+    ...{
+      ...theme,
+      styles,
+      insets,
+    },
+    ...themeUsersConfig,
+  } as AppTheme;
 };
 
 export interface AppTheme extends Theme {

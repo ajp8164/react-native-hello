@@ -5,5 +5,6 @@ export type HelloConfig = {
   sentryEndpoint?: string;
   sentryLoggingEnabled?: boolean;
   svgImages?: SVGImages;
+  theme?: object;
   userId?: string;
 };
