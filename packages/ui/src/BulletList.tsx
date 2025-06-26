@@ -65,28 +65,41 @@ const BulletList = ({
             <View style={[s.row, { marginBottom: lineSpacing }]} key={count}>
               {itemsAreStrings &&
                 (type === 'unordered' ? (
-                  <Text style={[s.bulletStyle, bulletStyle]} allowFontScaling={false}>
+                  <Text
+                    style={[s.bulletStyle, bulletStyle]}
+                    allowFontScaling={false}>
                     {getBullet()}
                   </Text>
                 ) : (
-                  <Text style={[s.itemStyle, itemStyle]} allowFontScaling={false}>
+                  <Text
+                    style={[s.itemStyle, itemStyle]}
+                    allowFontScaling={false}>
                     {count + '.'}
                   </Text>
                 ))}
-              {typeof i === 'string' ? <Text style={[s.itemStyle, itemStyle]}>{i}</Text> : null}
+              {typeof i === 'string' ? (
+                <Text style={[s.itemStyle, itemStyle]}>{i}</Text>
+              ) : null}
               {itemsAreBulletItems ? (
                 (i as BulletItem).hide ? (
                   <></>
                 ) : (
                   <View
-                    style={[{ flexDirection: 'row', alignItems: 'center' }, itemContainerStyle]}>
+                    style={[
+                      { flexDirection: 'row', alignItems: 'center' },
+                      itemContainerStyle,
+                    ]}>
                     {(i as BulletItem).bullet}
                     <View style={{ flex: 1 }}>
-                      <Text style={[s.itemStyle, itemStyle]} allowFontScaling={false}>
+                      <Text
+                        style={[s.itemStyle, itemStyle]}
+                        allowFontScaling={false}>
                         {(i as BulletItem).text}
                       </Text>
                       {(i as BulletItem).subtext && (
-                        <Text style={[s.subItemStyle, subItemStyle]} allowFontScaling={false}>
+                        <Text
+                          style={[s.subItemStyle, subItemStyle]}
+                          allowFontScaling={false}>
                           {(i as BulletItem).subtext}
                         </Text>
                       )}
@@ -112,18 +125,16 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     marginBottom: 10,
   },
   bulletStyle: {
+    ...theme.styles.textNormal,
     marginRight: 10,
-    color: theme.colors.text,
     fontSize: 40,
   },
   itemStyle: {
     ...theme.styles.textNormal,
-    color: theme.colors.text,
     marginRight: 10,
   },
   subItemStyle: {
     ...theme.styles.textNormal,
-    color: theme.colors.text,
     marginRight: 10,
   },
 }));

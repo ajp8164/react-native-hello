@@ -1,7 +1,11 @@
 import React from 'react';
 import { Text, type TextStyle, View, type ViewStyle } from 'react-native';
 import SVG, { Circle } from 'react-native-svg';
-import Animated, { useSharedValue, useAnimatedProps, withTiming } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedProps,
+  withTiming,
+} from 'react-native-reanimated';
 import { useEffect } from 'react';
 import { type AppTheme, useTheme } from './theme';
 import { makeStyles } from '@rn-vui/themed';
@@ -27,7 +31,7 @@ export interface ProgressRingProps {
   valueStyle?: TextStyle;
   ContentComponent?: JSX.Element | null;
   InfoComponent?: JSX.Element | null;
-};
+}
 
 const ProgressRing = (props: ProgressRingProps) => {
   const {
@@ -112,7 +116,13 @@ const ProgressRing = (props: ProgressRingProps) => {
       </View>
       {InfoComponent ? (
         <>
-          <View style={{ width: '100%', position: 'absolute', bottom: 0, borderWidth: 0 }}>
+          <View
+            style={{
+              width: '100%',
+              position: 'absolute',
+              bottom: 0,
+              borderWidth: 0,
+            }}>
             {InfoComponent}
           </View>
         </>
@@ -123,7 +133,10 @@ const ProgressRing = (props: ProgressRingProps) => {
               <Text style={s.rangeLow}>{range[0]}</Text>
               <Text style={s.rangeHigh}>{range[1]}</Text>
               {label && (
-                <Text style={[s.label, { color, backgroundColor: `${color}33` }]}>{label}</Text>
+                <Text
+                  style={[s.label, { color, backgroundColor: `${color}33` }]}>
+                  {label}
+                </Text>
               )}
               <Text style={s.footNote}>{footNote}</Text>
             </View>
@@ -146,7 +159,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   footNote: {
     ...theme.styles.textSmall,
-    color: theme.colors.textLight,
+    ...theme.styles.textDim,
     alignSelf: 'center',
     top: 35,
     textAlign: 'center',

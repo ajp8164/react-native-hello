@@ -1,6 +1,13 @@
-import { type LayoutChangeEvent, Text, TextInput, type TextStyle, View, type ViewStyle } from 'react-native';
+import {
+  type LayoutChangeEvent,
+  Text,
+  TextInput,
+  type TextStyle,
+  View,
+  type ViewStyle,
+} from 'react-native';
 import MaskInput, { type MaskInputProps } from 'react-native-mask-input';
-import { type AppTheme, fontFamily, fontSizes, useTheme } from './theme';
+import { type AppTheme, useTheme } from './theme';
 import { makeStyles } from '@rn-vui/themed';
 import React, { useState } from 'react';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -62,7 +69,11 @@ const Input = React.forwardRef<TextInput, InputProps>(
           <View style={[s.style, style]}>
             <MaskInput
               ref={ref}
-              style={[s.textInput, inputStyle, _label ? { paddingTop: 15 } : null]}
+              style={[
+                s.textInput,
+                inputStyle,
+                _label ? { paddingTop: 15 } : null,
+              ]}
               onChangeText={onChangeText}
               {...rest}
             />
@@ -96,7 +107,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   label: {
     ...theme.styles.textSmall,
-    color: theme.colors.textLight,
+    ...theme.styles.textDim,
   },
   labelContainer: {
     position: 'absolute',
@@ -111,15 +122,12 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   style: {},
   textInput: {
+    ...theme.styles.textNormal,
     width: '100%',
     height: 48,
     backgroundColor: theme.colors.listItem,
     borderRadius: theme.styles.button.borderRadius,
     paddingHorizontal: 12,
-    color: theme.colors.text,
-    fontSize: fontSizes.normal,
-    fontFamily,
-    fontWeight: '500',
   },
 }));
 

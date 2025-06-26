@@ -14,7 +14,14 @@ export interface LinearProgressProps {
 }
 
 const LinearProgress = (props: LinearProgressProps) => {
-  const { marker, markerPercent = 0, percent, trackColor, valueLeft, valueRight } = props;
+  const {
+    marker,
+    markerPercent = 0,
+    percent,
+    trackColor,
+    valueLeft,
+    valueRight,
+  } = props;
 
   const theme = useTheme();
   const s = useStyles(theme);
@@ -28,7 +35,12 @@ const LinearProgress = (props: LinearProgressProps) => {
         variant={'determinate'}
         value={percent}
       />
-      <View style={{ marginTop: -11, left: -7, marginLeft: `${markerPercent * 100}%` }}>
+      <View
+        style={{
+          marginTop: -11,
+          left: -7,
+          marginLeft: `${markerPercent * 100}%`,
+        }}>
         {marker}
       </View>
       <View style={s.progressValuesContainer}>
@@ -47,7 +59,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   progressAmount: {
     ...theme.styles.textSmall,
-    color: theme.colors.textLight,
+    ...theme.styles.textDim,
   },
   progressContainer: {
     paddingHorizontal: 15,

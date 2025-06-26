@@ -34,7 +34,12 @@ const Divider = ({
   return (
     <RNEDivider
       subHeader={text}
-      subHeaderStyle={[s.subheader, note ? s.note : {}, light ? s.light : {}, subHeaderStyle]}
+      subHeaderStyle={[
+        s.subheader,
+        note ? s.note : {},
+        light ? s.light : {},
+        subHeaderStyle,
+      ]}
       color={color || s.color.color}
       orientation={orientation}
       style={[!!width && { marginBottom: 20 }, s.style, style]}
@@ -54,12 +59,11 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     color: theme.colors.divider,
   },
   light: {
-    color: theme.colors.textLight,
+    ...theme.styles.textDim,
   },
   note: {
     ...theme.styles.textNormal,
     textTransform: 'none',
-    color: theme.colors.text,
     lineHeight: 20,
     marginBottom: 15,
     marginTop: -15,

@@ -152,14 +152,14 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     top: -10,
     left: 12,
     ...theme.styles.textNormal,
-    color: theme.colors.textLight,
+    ...theme.styles.textDim,
   },
   titleShrink: {
     position: 'absolute',
     top: -7,
     left: 12,
     ...theme.styles.textSmall,
-    color: theme.colors.textLight,
+    ...theme.styles.textDim,
   },
 }));
 

@@ -1,5 +1,10 @@
 import { type AppTheme, useTheme } from './theme';
-import { type LayoutChangeEvent, Text, View, type ViewStyle } from 'react-native';
+import {
+  type LayoutChangeEvent,
+  Text,
+  View,
+  type ViewStyle,
+} from 'react-native';
 import React, { useState } from 'react';
 import { makeStyles } from '@rn-vui/themed';
 import { DateTime } from 'luxon';
@@ -31,7 +36,9 @@ const Calendar = (props: CalendarProps) => {
   const now = DateTime.now();
   // Use local to start week on Sunday.
   const startOfThisWeek = now.startOf('week', { useLocaleWeeks: true }).day;
-  const startOfNextWeek = now.plus({ days: 7 }).startOf('week', { useLocaleWeeks: true }).day;
+  const startOfNextWeek = now
+    .plus({ days: 7 })
+    .startOf('week', { useLocaleWeeks: true }).day;
   const lastDayOfThisMonth = now.endOf('month').day;
 
   const today = now.day;
@@ -47,13 +54,15 @@ const Calendar = (props: CalendarProps) => {
           style={[
             s.dayContent,
             { width: dayWidth * 0.9, height: dayWidth * 0.9 },
-            day === today ? { backgroundColor: todayColor || theme.colors.button } : {},
+            day === today
+              ? { backgroundColor: todayColor || theme.colors.button }
+              : {},
           ]}>
           <Text
             style={[
               s.dayNumber,
-              row === 0 && day < today ? { color: theme.colors.textLight } : {},
-              day === today ? { color: theme.colors.textInv } : {},
+              row === 0 && day < today ? s.pastDate : {},
+              day === today ? s.today : {},
             ]}>
             {day}
           </Text>
@@ -62,7 +71,9 @@ const Calendar = (props: CalendarProps) => {
               dayDots[day] &&
               new Array(dayDots[day].colors?.length)
                 .fill(0)
-                .map((_v, index) => renderDot(day, index, dayDots[day].colors?.[index]))}
+                .map((_v, index) =>
+                  renderDot(day, index, dayDots[day].colors?.[index]),
+                )}
           </View>
         </View>
       </View>
@@ -162,12 +173,16 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     justifyContent: 'center',
     bottom: 6,
   },
+  pastDate: {
+    ...theme.styles.textNormal,
+    ...theme.styles.textDim,
+  },
   row: {
     flexDirection: 'row',
   },
   subtitle: {
     ...theme.styles.textMedium,
-    color: theme.colors.textLight,
+    ...theme.styles.textDim,
     lineHeight: 20,
     marginHorizontal: 10,
     marginBottom: 15,
@@ -178,6 +193,9 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   title: {
     ...theme.styles.textHeading5,
     marginHorizontal: 10,
+  },
+  today: {
+    color: theme.colors.textInv,
   },
 }));
 
