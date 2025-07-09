@@ -8,6 +8,7 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
+import Animated from 'react-native-reanimated';
 import React, { type ReactElement, useState } from 'react';
 import { makeStyles } from '@rn-vui/themed';
 import { ChevronDown, ChevronRight, ChevronUp } from 'lucide-react-native';
@@ -226,7 +227,7 @@ const ListItem = (props: ListItem) => {
                 )}
               </View>
               {value && !valueIsElement && (
-                <Text
+                <Animated.Text
                   style={[
                     s.value,
                     _rightContent ? s.valueMarginRightContent : s.valueMargin,
@@ -235,10 +236,10 @@ const ListItem = (props: ListItem) => {
                   allowFontScaling={false}
                   onLayout={onLayoutValue}>
                   {value}
-                </Text>
+                </Animated.Text>
               )}
               {value && valueIsElement && (
-                <View
+                <Animated.View
                   style={[
                     s.valueElement,
                     _rightContent ? s.valueMarginRightContent : s.valueMargin,
@@ -246,16 +247,16 @@ const ListItem = (props: ListItem) => {
                   ]}
                   onLayout={onLayoutValue}>
                   {value}
-                </View>
+                </Animated.View>
               )}
             </>
           )}
           {_rightContent && (
-            <View
+            <Animated.View
               style={[s.rightContent, s.rightContentElement, rightContentStyle]}
               onLayout={onLayoutRightContent}>
               {_rightContent}
-            </View>
+            </Animated.View>
           )}
         </View>
         {footerContent && (
