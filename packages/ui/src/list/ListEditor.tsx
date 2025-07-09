@@ -91,6 +91,7 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
 
 const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
   overlay: {
+    height: '100%',
     position: 'absolute',
     top: 0,
     left: 0,
