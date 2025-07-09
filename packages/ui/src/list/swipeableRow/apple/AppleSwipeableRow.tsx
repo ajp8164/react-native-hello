@@ -23,7 +23,8 @@ import { RightAction } from './RightAction';
 import { useAlert } from '../../../hooks';
 import { LayoutAwareView } from '../../../LayoutAwareView';
 
-interface AppleStyleSwipeableRow {
+interface AppleStyleSwipeableRow
+  extends Partial<React.ComponentProps<typeof Swipeable>> {
   buttonWidth?: number;
   children?: ReactNode;
   containerStyle?: ViewStyle | ViewStyle[];
@@ -38,6 +39,7 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
     children,
     leftActions,
     rightActions,
+    ...rest
   } = props;
 
   const theme = useTheme();
@@ -223,7 +225,8 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
                 swipeableRow.current?.close();
               }
             }
-          }}>
+          }}
+          {...rest}>
           {children}
         </Swipeable>
       </LayoutAwareView>

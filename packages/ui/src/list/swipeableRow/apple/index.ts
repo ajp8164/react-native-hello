@@ -3,6 +3,13 @@ import { type ReactElement } from 'react';
 
 export * from './AppleSwipeableRow';
 
+export interface EditAction {
+  ButtonComponent?: ReactElement;
+  op?: 'open-swipeable';
+  onPressEdit?: () => void;
+  reorderable?: boolean;
+}
+
 export interface SwipeableAction {
   ButtonComponent?: ReactElement;
   color: string;
