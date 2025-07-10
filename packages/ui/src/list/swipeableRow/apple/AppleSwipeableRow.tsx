@@ -5,23 +5,21 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  View,
-  type ViewStyle,
-  Animated,
-  type LayoutChangeEvent,
-} from 'react-native';
+import { View, type ViewStyle } from 'react-native';
 import { type SharedValue } from 'react-native-reanimated';
 import Swipeable, {
   type SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
+import {
+  AnimatedRemovableItem,
+  type AnimatedRemovableItemRef,
+} from '../../AnimatedRemovableItem';
 import { makeStyles } from '@rn-vui/themed';
 import { type AppTheme, useTheme } from '../../../theme';
 import { type SwipeableAction } from '.';
 import { LeftAction } from './LeftAction';
 import { RightAction } from './RightAction';
 import { useAlert } from '../../../hooks';
-import { LayoutAwareView } from '../../../LayoutAwareView';
 
 interface AppleStyleSwipeableRow
   extends Partial<React.ComponentProps<typeof Swipeable>> {
@@ -49,11 +47,11 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
   const enabled = !!leftActions || !!rightActions;
 
   const swipeableRow = useRef<SwipeableMethods>(null);
-  // Initial max height > anything expected, onLayout will set final value
-  const animatedMaxHeight = useRef(new Animated.Value(1000));
 
   const [actionsLeft, setActionsLeft] = useState<SwipeableAction[]>([]);
   const [actionsRight, setActionsRight] = useState<SwipeableAction[]>([]);
+
+  const animatedRemovableItemRef = useRef<AnimatedRemovableItemRef>(null);
 
   useEffect(() => {
     // For actions requiring removal operation listen to the onPress handler promise result to
@@ -99,11 +97,8 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
   }, [leftActions, rightActions]);
 
   const handleRemoval = (actionOnPress: () => void) => {
-    Animated.timing(animatedMaxHeight.current, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start(actionOnPress);
+    // Trigger removal animation and execute press action when animation completes.
+    animatedRemovableItemRef.current?.trigger(actionOnPress);
   };
 
   // Only 1 action allowed.
@@ -184,25 +179,9 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
     [],
   );
 
-  const onLayout = (event: LayoutChangeEvent) => {
-    animatedMaxHeight.current = new Animated.Value(
-      event.nativeEvent.layout.height,
-    );
-  };
-
   return (
-    <Animated.View
-      style={[
-        enabled ? { maxHeight: animatedMaxHeight.current } : {},
-        s.container,
-      ]}
-      onLayout={onLayout}>
-      <LayoutAwareView
-        onLayout={event => {
-          animatedMaxHeight.current = new Animated.Value(
-            event.nativeEvent.layout.height,
-          );
-        }}>
+    <AnimatedRemovableItem ref={animatedRemovableItemRef}>
+      <View style={[s.container]}>
         <Swipeable
           ref={swipeableRow}
           enabled={enabled}
@@ -210,10 +189,10 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
           friction={2}
           leftThreshold={140}
           rightThreshold={40}
-          renderLeftActions={(_, translation) =>
+          renderLeftActions={(_progress, translation) =>
             renderLeftActions(translation, swipeableRow, actionsLeft)
           }
-          renderRightActions={(_, translation) =>
+          renderRightActions={(_progress, translation) =>
             renderRightActions(translation, swipeableRow, actionsRight)
           }
           onSwipeableOpen={dir => {
@@ -229,8 +208,8 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
           {...rest}>
           {children}
         </Swipeable>
-      </LayoutAwareView>
-    </Animated.View>
+      </View>
+    </AnimatedRemovableItem>
   );
 };
 
