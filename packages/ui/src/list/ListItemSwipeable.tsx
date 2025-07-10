@@ -59,9 +59,13 @@ const ListItemSwipeable = React.forwardRef<
   const swipeableRef = useRef<Swipeable>(null);
 
   const dragOnly = !editAction && drag; // Whether or not the drag handle should be shown regardless of editing.
-  const dragHandleX = useSharedValue(dragOnly ? 0 : -dragHandleWidth);
-  const editButtonX = useSharedValue(0);
-  const editModeOpacity = useSharedValue(dragOnly ? 1 : 0);
+
+  // Initialize wrt to showEditor to avoid recyling animation when this list item is re-render/re-mounted.
+  const dragHandleX = useSharedValue(
+    dragOnly ? 0 : showEditor ? 0 : -dragHandleWidth,
+  );
+  const editButtonX = useSharedValue(showEditor ? editButtonWidth : 0);
+  const editModeOpacity = useSharedValue(dragOnly ? 1 : showEditor ? 1 : 0);
   const titlePad = useSharedValue(0);
 
   const dragHandleAnimatedStyles = useAnimatedStyle(() => ({
