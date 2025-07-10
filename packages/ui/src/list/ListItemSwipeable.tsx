@@ -16,7 +16,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Pressable } from 'react-native';
 import { GripHorizontal } from 'lucide-react-native';
-import { Swipeable } from 'react-native-gesture-handler';
+import type { SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
 
 const dragHandleWidth = 44;
 const editButtonWidth = 44;
@@ -56,7 +56,7 @@ const ListItemSwipeable = React.forwardRef<
   const s = useStyles(theme);
 
   const [rerender, setRerender] = useState(false);
-  const swipeableRef = useRef<Swipeable>(null);
+  const swipeableRef = useRef<SwipeableMethods>(null);
 
   const dragOnly = !editAction && drag; // Whether or not the drag handle should be shown regardless of editing.
 
@@ -235,8 +235,8 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     backgroundColor: theme.colors.white,
   },
   first: {
-    borderTopLeftRadius: theme.styles.button.borderRadius,
-    borderTopRightRadius: theme.styles.button.borderRadius,
+    borderTopLeftRadius: 10, //theme.styles.button.borderRadius,
+    borderTopRightRadius: 10, //theme.styles.button.borderRadius,
   },
   focus: {
     borderColor: theme.colors.listItemIcon,
@@ -249,8 +249,8 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     overflow: 'visible',
   },
   last: {
-    borderBottomLeftRadius: theme.styles.button.borderRadius,
-    borderBottomEndRadius: theme.styles.button.borderRadius,
+    borderBottomLeftRadius: 10, //theme.styles.button.borderRadius,
+    borderBottomEndRadius: 10, //theme.styles.button.borderRadius,
   },
   noBorderRadius: {
     borderTopRightRadius: 0,

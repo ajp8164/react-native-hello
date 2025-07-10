@@ -45,14 +45,16 @@ export const useListEditor = () => {
   const onSwipeableWillOpen = (group: string, id: string) => {
     Object.keys(liRef.current).forEach(g => {
       liRef.current[g].forEach(li => {
-        if (!(g === group && li.id === id)) li.ref.close();
+        if (!(g === group && li.id === id)) {
+          li.ref.close();
+        }
       });
     });
 
     // Need to allow the editor resets to run first.
     setTimeout(() => {
       setListEditSwipeEnabled(true);
-    });
+    }, 200); // Greater than the animation time for open/close
   };
 
   const onSwipeableWillClose = () => {
@@ -75,10 +77,12 @@ export const useListEditor = () => {
         };
       }
 
-      // Don't duplicate entries.
+      // Add or update the list item entry.
       const index = liRef.current[group].findIndex(li => li.id === id);
       if (index < 0) {
         liRef.current[group].push({ id, ref });
+      } else {
+        liRef.current[group][index] = { id, ref };
       }
     }
   };

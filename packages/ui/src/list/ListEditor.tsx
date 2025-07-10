@@ -72,14 +72,22 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
               pointerEvents="auto"
               style={{ ...s.overlay, height: listLayout.y }}
               onStartShouldSetResponder={() => true}
-              onTouchStart={listEditor.onToggleEditMode}
+              onTouchStart={() =>
+                listEditor.enabledBySwipe
+                  ? listEditor.reset()
+                  : listEditor.onToggleEditMode()
+              }
             />
             {/* Top Overlay - intercept taps and close the editor */}
             <View
               pointerEvents="auto"
               style={{ ...s.overlay, top: listLayout.y + listLayout.height }}
               onStartShouldSetResponder={() => true}
-              onTouchStart={listEditor.onToggleEditMode}
+              onTouchStart={() =>
+                listEditor.enabledBySwipe
+                  ? listEditor.reset()
+                  : listEditor.onToggleEditMode()
+              }
             />
           </>
         )}
@@ -91,12 +99,12 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
 
 const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
   overlay: {
-    height: '100%',
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     zIndex: 9999,
+    height: '100%',
   },
 }));
 
