@@ -24,16 +24,14 @@ interface Props {
 export const AnimatedRemovableItem = forwardRef<
   AnimatedRemovableItemRef,
   PropsWithChildren<Props>
->(({ duration = 300, style, children }, ref) => {
+>(({ duration = 200, style, children }, ref) => {
   const height = useSharedValue<number>(0);
-  const opacity = useSharedValue(1);
   const [measured, setMeasured] = useState(false);
 
   const animatedStyle = useAnimatedStyle(() => {
     if (!measured) return {};
     return {
       height: height.value,
-      opacity: opacity.value,
       overflow: 'hidden',
     };
   });
@@ -42,7 +40,6 @@ export const AnimatedRemovableItem = forwardRef<
   const triggerWorklet = () => {
     'worklet';
     height.value = withTiming(0, { duration });
-    opacity.value = withTiming(0, { duration });
   };
 
   useImperativeHandle(ref, () => ({
