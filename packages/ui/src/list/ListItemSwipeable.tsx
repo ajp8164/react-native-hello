@@ -14,7 +14,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { GripHorizontal } from 'lucide-react-native';
 import type { SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
 
@@ -24,6 +24,7 @@ const editButtonWidth = 44;
 interface ListItemSwipeable extends ListItem {
   buttonWidth?: number;
   drag?: () => void; // The drag() method from react-native-draggable-flat-list.
+  dragIsActive?: () => void; // From react-native-draggable-flat-list.
   editAction?: EditAction;
   onSwipeableWillClose?: (direction: 'left' | 'right') => void;
   onSwipeableWillOpen?: (direction: 'left' | 'right') => void;
@@ -43,6 +44,7 @@ const ListItemSwipeable = React.forwardRef<
   const {
     buttonWidth = 70,
     drag,
+    dragIsActive,
     editAction,
     onSwipeableWillOpen,
     onSwipeableWillClose,
@@ -182,39 +184,41 @@ const ListItemSwipeable = React.forwardRef<
   };
 
   return (
-    <AppleStyleSwipeableRow
-      ref={swipeableRef}
-      containerStyle={[
-        rest.position?.includes('first') ? s.first : {},
-        rest.position?.includes('last') ? s.last : {},
-        rest.focus ? s.focus : {},
-        rest.ghost ? s.ghost : {},
-      ]}
-      buttonWidth={buttonWidth}
-      leftActions={swipeableActionsLeft}
-      rightActions={swipeableActionsRight}
-      onSwipeableWillOpen={onSwipeableWillOpen}
-      onSwipeableWillClose={onSwipeableWillClose}>
-      {editAction && renderEditButton()}
-      <Animated.View style={listItemAnimatedStyles}>
-        <ListItem
-          {...rest}
-          containerStyle={{
-            ...rest.containerStyle,
-            ...s.noBorderRadius,
-          }}
-          rightContentStyle={{
-            ...listItemRightValueContentAnimatedStyles,
-            ...rest.rightContentStyle,
-          }}
-          valueStyle={{
-            ...listItemRightValueContentAnimatedStyles,
-            ...rest.valueStyle,
-          }}
-        />
-      </Animated.View>
-      {drag && renderDragHandle()}
-    </AppleStyleSwipeableRow>
+    <View style={[dragIsActive ? theme.styles.shadowGlow : {}]}>
+      <AppleStyleSwipeableRow
+        ref={swipeableRef}
+        containerStyle={[
+          rest.position?.includes('first') ? s.first : {},
+          rest.position?.includes('last') ? s.last : {},
+          rest.focus ? s.focus : {},
+          rest.ghost ? s.ghost : {},
+        ]}
+        buttonWidth={buttonWidth}
+        leftActions={swipeableActionsLeft}
+        rightActions={swipeableActionsRight}
+        onSwipeableWillOpen={onSwipeableWillOpen}
+        onSwipeableWillClose={onSwipeableWillClose}>
+        {editAction && renderEditButton()}
+        <Animated.View style={listItemAnimatedStyles}>
+          <ListItem
+            {...rest}
+            containerStyle={{
+              ...rest.containerStyle,
+              ...s.noBorderRadius,
+            }}
+            rightContentStyle={{
+              ...listItemRightValueContentAnimatedStyles,
+              ...rest.rightContentStyle,
+            }}
+            valueStyle={{
+              ...listItemRightValueContentAnimatedStyles,
+              ...rest.valueStyle,
+            }}
+          />
+        </Animated.View>
+        {drag && renderDragHandle()}
+      </AppleStyleSwipeableRow>
+    </View>
   );
 });
 
