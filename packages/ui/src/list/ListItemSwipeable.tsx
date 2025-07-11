@@ -24,7 +24,7 @@ const editButtonWidth = 44;
 interface ListItemSwipeable extends ListItem {
   buttonWidth?: number;
   drag?: () => void; // The drag() method from react-native-draggable-flat-list.
-  dragIsActive?: () => void; // From react-native-draggable-flat-list.
+  dragIsActive?: boolean; // From react-native-draggable-flat-list.
   editAction?: EditAction;
   onSwipeableWillClose?: (direction: 'left' | 'right') => void;
   onSwipeableWillOpen?: (direction: 'left' | 'right') => void;
