@@ -1,10 +1,15 @@
 import { type AppTheme, useTheme } from '../theme';
-import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type ReactElement,
+} from 'react';
 import { makeStyles } from '@rn-vui/themed';
 import { ListItem } from './ListItem';
 import {
   AppleStyleSwipeableRow,
-  type EditAction,
   type SwipeableAction,
 } from './swipeableRow/apple';
 import Animated, {
@@ -20,6 +25,13 @@ import type { SwipeableMethods } from 'react-native-gesture-handler/lib/typescri
 
 const dragHandleWidth = 44;
 const editButtonWidth = 44;
+
+export interface EditAction {
+  ButtonComponent?: ReactElement;
+  op?: 'open-swipeable';
+  onPressEdit?: () => void;
+  draggable?: boolean;
+}
 
 interface ListItemSwipeable extends ListItem {
   buttonWidth?: number;
@@ -107,7 +119,7 @@ const ListItemSwipeable = React.forwardRef<
 
       editModeOpacity.value = withDelay(100, withTiming(1, { duration: 200 }));
 
-      if (editAction?.reorderable) {
+      if (editAction?.draggable) {
         titlePad.value = withDelay(
           100,
           withTiming(editButtonWidth, {
@@ -156,7 +168,7 @@ const ListItemSwipeable = React.forwardRef<
   };
 
   const renderDragHandle = () => {
-    if (!editAction?.reorderable && !dragOnly) return null;
+    if (!editAction?.draggable && !dragOnly) return null;
     return (
       <Animated.View style={[s.dragTouchContainer, dragHandleAnimatedStyles]}>
         <Pressable
