@@ -19,7 +19,6 @@ import { type AppTheme, useTheme } from '../../../theme';
 import { type SwipeableAction } from '.';
 import { LeftAction } from './LeftAction';
 import { RightAction } from './RightAction';
-import { useAlert } from '../../../hooks';
 
 interface AppleStyleSwipeableRow
   extends Partial<React.ComponentProps<typeof Swipeable>> {
@@ -42,7 +41,6 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
 
   const theme = useTheme();
   const s = useStyles(theme);
-  const alert = useAlert();
 
   const enabled = !!leftActions || !!rightActions;
 
@@ -60,11 +58,12 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
       ? leftActions.map(a => {
           if (a.op === 'remove') {
             const aOnPress = a.onPress;
-            a.onPress = () => {
+            a.onPress = async () => {
               if (a.confirmation) {
-                alert(a.confirmation, () => {
+                const confirmed = await a.confirmation();
+                if (confirmed) {
                   handleRemoval(aOnPress);
-                })();
+                }
               } else {
                 handleRemoval(aOnPress);
               }
@@ -78,11 +77,12 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
       ? rightActions.map(a => {
           if (a.op === 'remove') {
             const aOnPress = a.onPress;
-            a.onPress = () => {
+            a.onPress = async () => {
               if (a.confirmation) {
-                alert(a.confirmation, () => {
+                const confirmed = await a.confirmation();
+                if (confirmed) {
                   handleRemoval(aOnPress);
-                })();
+                }
               } else {
                 handleRemoval(aOnPress);
               }

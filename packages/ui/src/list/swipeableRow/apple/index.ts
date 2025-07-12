@@ -1,4 +1,3 @@
-import { type AlertConfig } from '../../../hooks';
 import { type ReactElement } from 'react';
 
 export * from './AppleSwipeableRow';
@@ -6,7 +5,7 @@ export * from './AppleSwipeableRow';
 export interface SwipeableAction {
   ButtonComponent?: ReactElement;
   color: string;
-  confirmation?: AlertConfig;
+  confirmation?: () => Promise<boolean>;
   onPress: () => void;
   op?: 'remove';
   text?: string;
