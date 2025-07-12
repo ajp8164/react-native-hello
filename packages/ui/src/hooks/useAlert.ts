@@ -4,13 +4,13 @@ import { useContext } from 'react';
 import { useTheme } from '../theme';
 
 type AlertButton = {
-  text: string;
+  text?: string;
   style?: 'default' | 'cancel' | 'destructive' | undefined;
 };
 
 export type AlertConfig = {
   title: string;
-  message: string;
+  message?: string;
   buttons?: AlertButton[];
 };
 
@@ -27,8 +27,12 @@ export const useAlert = () => {
 
   // Return a function that presents an alert UI if and only if another alert UI is not presented.
   // Calls to present a second alert ignore the request. This prevents alerts from stacking up on the UI.
-  return (config: AlertConfig, onConfirm?: () => void, onCancel?: () => void) => {
-    return () => {
+  return (
+    config: AlertConfig,
+    onConfirm?: () => void,
+    onCancel?: () => void,
+  ): Promise<boolean> => {
+    return new Promise(resolve => {
       const onDismiss = () => {
         alertStatusContext.alertInProgress = false;
       };
@@ -36,63 +40,47 @@ export const useAlert = () => {
       if (!alertStatusContext.alertInProgress) {
         alertStatusContext.alertInProgress = true;
 
-        if (onConfirm) {
-          Alert.alert(
-            config.title,
-            config.message,
-            config.buttons?.length === 1
-              ? [
-                  {
-                    text: config.buttons?.[0].text || 'OK',
-                    style: config.buttons?.[0].style,
-                    onPress: () => {
-                      onDismiss();
-                      onConfirm();
-                    },
+        Alert.alert(
+          config.title,
+          config.message,
+          config.buttons?.length === 1
+            ? [
+                {
+                  text: config.buttons?.[0].text || 'OK',
+                  style: config.buttons?.[0].style,
+                  onPress: () => {
+                    onDismiss();
+                    if (onConfirm) onConfirm();
+                    resolve(true);
                   },
-                ]
-              : [
-                  {
-                    text: config.buttons?.[0].text || 'Cancel',
-                    style: config.buttons?.[0].style,
-                    onPress: () => {
-                      onDismiss();
-                      if (onCancel) onCancel();
-                    },
-                  },
-                  {
-                    text: config.buttons?.[1].text || 'OK',
-                    style: config.buttons?.[1].style,
-                    onPress: () => {
-                      onDismiss();
-                      onConfirm();
-                    },
-                  },
-                ],
-            {
-              cancelable: false,
-              userInterfaceStyle: theme.mode,
-            },
-          );
-        } else {
-          Alert.alert(
-            config.title,
-            config.message,
-            [
-              {
-                text: config.buttons?.[1].text || 'OK',
-                onPress: () => {
-                  onDismiss();
                 },
-              },
-            ],
-            {
-              cancelable: false,
-              userInterfaceStyle: theme.mode,
-            },
-          );
-        }
+              ]
+            : [
+                {
+                  text: config.buttons?.[0].text || 'Cancel',
+                  style: config.buttons?.[0].style,
+                  onPress: () => {
+                    onDismiss();
+                    if (onCancel) onCancel();
+                    resolve(false);
+                  },
+                },
+                {
+                  text: config.buttons?.[1].text || 'OK',
+                  style: config.buttons?.[1].style,
+                  onPress: () => {
+                    onDismiss();
+                    if (onConfirm) onConfirm();
+                    resolve(true);
+                  },
+                },
+              ],
+          {
+            cancelable: false,
+            userInterfaceStyle: theme.mode,
+          },
+        );
       }
-    };
+    });
   };
 };
