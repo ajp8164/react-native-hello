@@ -6,7 +6,7 @@ import React from 'react';
 import { DateTime } from 'luxon';
 import type { ISODateString } from '@react-native-hello/common';
 import { Platform, View, type ViewStyle } from 'react-native';
-import { ListItem } from '@react-native-hello/ui';
+import { ListItem } from './ListItem';
 import { makeStyles } from '@rn-vui/themed';
 import CollapsibleView from '@eliav2/react-native-collapsible-view';
 
@@ -41,7 +41,7 @@ const ListItemDateTime = (props: Props) => {
   const theme = useTheme();
   const s = useStyles(theme);
 
-  const first = props.position?.includes('first') ? 'first' : undefined;
+  const first = rest.position?.includes('first') ? 'first' : undefined;
   const isIOS = Platform.OS === 'ios';
 
   return (
@@ -49,14 +49,14 @@ const ListItemDateTime = (props: Props) => {
       <ListItem
         {...rest}
         containerStyle={[
-          ...(props.containerStyle
-            ? Array.isArray(props.containerStyle)
-              ? props.containerStyle
-              : [props.containerStyle]
+          ...(rest.containerStyle
+            ? Array.isArray(rest.containerStyle)
+              ? rest.containerStyle
+              : [rest.containerStyle]
             : []),
           s.container,
         ]}
-        position={expanded ? [first] : props.position}
+        position={expanded ? [first] : rest.position}
         rightContent={expanded ? 'chevron-up' : 'chevron-down'}
         valueStyle={s.valueStyle}
       />
@@ -64,7 +64,7 @@ const ListItemDateTime = (props: Props) => {
         expanded={expanded}
         style={{
           ...expandableContainerStyle,
-          ...(props.position?.includes('last') ? s.collapsibleBorder : {}),
+          ...(rest.position?.includes('last') ? s.collapsibleBorder : {}),
         }}>
         <View style={[s.datePickerContainer, datePickerContainerStyle]}>
           {/* Separate date and time pickers since Android doesn't have a single datetime version. */}
