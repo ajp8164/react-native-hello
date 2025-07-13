@@ -8,7 +8,7 @@ import type { ISODateString } from '@react-native-hello/common';
 import { Platform, View, type ViewStyle } from 'react-native';
 import { ListItem } from './ListItem';
 import { makeStyles } from '@rn-vui/themed';
-import CollapsibleView from '@eliav2/react-native-collapsible-view';
+import { CollapsibleView } from '../CollapsibleView';
 
 type Mode = 'date' | 'time' | 'datetime';
 

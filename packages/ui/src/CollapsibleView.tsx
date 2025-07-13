@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 import { type ViewStyle } from 'react-native';
-import RNCollapsibleView from '@eliav2/react-native-collapsible-view';
+import RNCollapsible from 'react-native-collapsible';
 import { type AppTheme, useTheme } from './theme';
 import { makeStyles } from '@rn-vui/themed';
 
@@ -8,33 +8,22 @@ interface Props {
   children: ReactNode | ReactNode[];
   duration?: number;
   expanded?: boolean;
-  initExpanded?: boolean;
   style?: ViewStyle;
 }
 
 const CollapsibleView = (props: Props) => {
-  const {
-    children,
-    duration,
-    expanded = true,
-    initExpanded = false,
-    style,
-  } = props;
+  const { children, duration, expanded = true, style } = props;
 
   const theme = useTheme();
   const s = useStyles(theme);
 
   return (
-    <RNCollapsibleView
-      initExpanded={initExpanded}
-      expanded={expanded}
-      activeOpacityFeedback={1}
+    <RNCollapsible
+      collapsed={!expanded}
       style={{ ...s.collapsible, ...style }}
-      titleStyle={s.collapsibleTitle}
-      noArrow
       duration={duration}>
       {children}
-    </RNCollapsibleView>
+    </RNCollapsible>
   );
 };
 
@@ -45,9 +34,6 @@ const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
     marginHorizontal: 0,
     borderWidth: 0,
     overflow: 'hidden',
-  },
-  collapsibleTitle: {
-    height: 0,
   },
 }));
 
