@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/ajp8164/react-native-hello/compare/@react-native-hello/common@0.0.9...@react-native-hello/common@0.0.10) (2025-07-13)
+
+**Note:** Version bump only for package @react-native-hello/common
+
 ## [0.0.9](https://github.com/ajp8164/react-native-hello/compare/@react-native-hello/common@0.0.8...@react-native-hello/common@0.0.9) (2025-07-13)
 
 **Note:** Version bump only for package @react-native-hello/common
