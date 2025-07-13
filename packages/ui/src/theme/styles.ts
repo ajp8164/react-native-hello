@@ -134,6 +134,10 @@ export const useStyles = makeStyles(
     },
     buttonScreenHeaderDisabled: {
       backgroundColor: theme.colors.transparent,
+      height: 40,
+      paddingHorizontal: 0,
+      minWidth: 0,
+      justifyContent: 'flex-start',
       opacity: 0.4,
     },
     buttonSmall: {
