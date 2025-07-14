@@ -1,20 +1,22 @@
 import {
   type LayoutChangeEvent,
   Text,
-  TextInput,
   type TextStyle,
   View,
   type ViewStyle,
 } from 'react-native';
-import MaskInput, { type MaskInputProps } from 'react-native-mask-input';
+import {
+  MaskedTextInput,
+  type MaskedTextInputProps,
+  type MaskedTextInputRef,
+} from 'react-native-advanced-input-mask';
 import { type AppTheme, useTheme } from './theme';
 import { makeStyles } from '@rn-vui/themed';
 import React, { useState } from 'react';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-export { Masks } from './lib';
 
-interface Input extends Omit<MaskInputProps, 'style'> {
+interface Input extends Omit<MaskedTextInputProps, 'style'> {
   errorMessage?: string;
   infoMessage?: string;
   insideModal?: boolean;
@@ -23,11 +25,15 @@ interface Input extends Omit<MaskInputProps, 'style'> {
   messageStyle?: TextStyle | TextStyle[];
   inputStyle?: TextStyle | TextStyle[];
   style?: TextStyle | TextStyle[];
-  // MaskedInput provides three arguments.
-  onChangeText: (text1: string, text2: string, text3: string) => void;
+  onChangeText: (
+    formattedValue: string,
+    extractedValue: string,
+    tailPlaceholder: string,
+    complete: boolean,
+  ) => void;
 }
 
-const Input = React.forwardRef<TextInput, Input>(
+const Input = React.forwardRef<MaskedTextInputRef, Input>(
   (
     {
       errorMessage,
@@ -62,18 +68,18 @@ const Input = React.forwardRef<TextInput, Input>(
         {insideModal === true ? (
           <BottomSheetTextInput
             style={[s.textInput, style]}
-            onChangeText={text => onChangeText(text, '', '')}
+            onChangeText={text => onChangeText(text, '', '', true)}
             {...rest}
           />
         ) : (
           <View style={[s.style, style]}>
-            <MaskInput
+            <MaskedTextInput
               ref={ref}
-              style={[
-                s.textInput,
-                inputStyle,
-                _label ? { paddingTop: 15 } : null,
-              ]}
+              style={{
+                ...s.textInput,
+                ...inputStyle,
+                ...(_label ? { paddingTop: 15 } : null),
+              }}
               onChangeText={onChangeText}
               {...rest}
             />
@@ -120,14 +126,16 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     marginTop: 5,
     alignSelf: 'flex-start',
   },
-  style: {},
+  style: {
+    width: 100,
+  },
   textInput: {
     ...theme.styles.textNormal,
     width: '100%',
     height: 48,
     backgroundColor: theme.colors.listItem,
     borderRadius: theme.styles.button.borderRadius,
-    paddingHorizontal: 12,
+    paddingHorizontal: 6,
   },
 }));
 
