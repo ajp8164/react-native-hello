@@ -1,39 +1,47 @@
 import {
   type LayoutChangeEvent,
   Text,
+  TextInput,
+  type TextInputProps,
   type TextStyle,
   View,
   type ViewStyle,
 } from 'react-native';
+import { type AppTheme, useTheme } from './theme';
+import { makeStyles } from '@rn-vui/themed';
+import React, { useState, type ReactNode } from 'react';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import Animated, { FadeInDown } from 'react-native-reanimated';
+import MaskedNumberInput from './MaskedNumberInput';
 import {
   MaskedTextInput,
   type MaskedTextInputProps,
   type MaskedTextInputRef,
 } from 'react-native-advanced-input-mask';
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
-import React, { useState } from 'react';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import Animated, { FadeInDown } from 'react-native-reanimated';
 
-interface Input extends Omit<MaskedTextInputProps, 'style'> {
+export type InputRef = TextInput & MaskedTextInputRef;
+
+interface Input
+  extends Omit<
+    TextInputProps & MaskedTextInputProps,
+    'mask' | 'onChangeText' | 'value'
+  > {
   errorMessage?: string;
   infoMessage?: string;
   insideModal?: boolean;
   containerStyle?: ViewStyle | ViewStyle[];
   label?: string;
+  mask?: string; // Adheres to format described by react-native-advanced-input-mask
   messageStyle?: TextStyle | TextStyle[];
+  inputContainerStyle?: ViewStyle | ViewStyle[];
   inputStyle?: TextStyle | TextStyle[];
-  style?: TextStyle | TextStyle[];
-  onChangeText: (
-    formattedValue: string,
-    extractedValue: string,
-    tailPlaceholder: string,
-    complete: boolean,
-  ) => void;
+  onChangeText: (formatted: string, unformatted: string) => void;
+  rtlNumber?: boolean;
+  value: string;
+  ComponentRight?: ReactNode;
 }
 
-const Input = React.forwardRef<MaskedTextInputRef, Input>(
+const Input = React.forwardRef<InputRef, Input>(
   (
     {
       errorMessage,
@@ -41,10 +49,13 @@ const Input = React.forwardRef<MaskedTextInputRef, Input>(
       insideModal,
       containerStyle,
       label,
+      mask,
       messageStyle,
+      inputContainerStyle,
       inputStyle,
-      style,
       onChangeText,
+      rtlNumber,
+      value,
       ...rest
     }: Input,
     ref,
@@ -59,7 +70,7 @@ const Input = React.forwardRef<MaskedTextInputRef, Input>(
     };
 
     let _label = label;
-    if (!rest.value) {
+    if (!value) {
       _label = undefined;
     }
 
@@ -67,22 +78,51 @@ const Input = React.forwardRef<MaskedTextInputRef, Input>(
       <View style={containerStyle}>
         {insideModal === true ? (
           <BottomSheetTextInput
-            style={[s.textInput, style]}
-            onChangeText={text => onChangeText(text, '', '', true)}
+            style={[s.textInput, inputStyle]}
+            onChangeText={text => onChangeText(text, text)}
             {...rest}
           />
         ) : (
-          <View style={[s.style, style]}>
-            <MaskedTextInput
-              ref={ref}
-              style={{
-                ...s.textInput,
-                ...inputStyle,
-                ...(_label ? { paddingTop: 15 } : null),
-              }}
-              onChangeText={onChangeText}
-              {...rest}
-            />
+          <View style={[s.inputContainer, inputContainerStyle]}>
+            {mask && rtlNumber ? (
+              <MaskedNumberInput
+                ref={ref}
+                {...rest}
+                style={{
+                  ...s.textInput,
+                  ...inputStyle,
+                  ...(_label ? { paddingTop: 15 } : null),
+                }}
+                mask={mask}
+                value={value}
+                onChangeText={onChangeText}
+              />
+            ) : mask && !rtlNumber ? (
+              <MaskedTextInput
+                ref={ref}
+                {...rest}
+                style={{
+                  ...s.textInput,
+                  ...inputStyle,
+                  ...(_label ? { paddingTop: 15 } : null),
+                }}
+                mask={mask}
+                value={value}
+                onChangeText={onChangeText}
+              />
+            ) : (
+              <TextInput
+                ref={ref}
+                {...rest}
+                style={{
+                  ...s.textInput,
+                  ...inputStyle,
+                  ...(_label ? { paddingTop: 15 } : null),
+                }}
+                value={value}
+                onChangeText={text => onChangeText(text, text)}
+              />
+            )}
             {_label && (
               <Animated.View style={s.labelContainer} entering={FadeInDown}>
                 <Text style={s.label}>{_label}</Text>
@@ -125,16 +165,21 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     height: 17, // Needs to change if font size changes
     marginTop: 5,
     alignSelf: 'flex-start',
+    position: 'absolute',
+    bottom: 0,
+    paddingHorizontal: 6,
   },
-  style: {
-    width: 100,
+  inputContainer: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
   textInput: {
     ...theme.styles.textNormal,
     width: '100%',
-    height: 48,
     backgroundColor: theme.colors.listItem,
-    borderRadius: theme.styles.button.borderRadius,
+    borderRadius: 10, //theme.styles.button.borderRadius,
     paddingHorizontal: 6,
   },
 }));

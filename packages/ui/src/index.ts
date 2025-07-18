@@ -21,6 +21,7 @@ export * from './Input';
 export * from './KeyboardAccessory';
 export * from './LayoutAwareView';
 export * from './LinearProgress';
+export * from './MaskedNumberInput';
 export * from './Modal';
 export * from './ModalHeader';
 export * from './NavTabBar';
