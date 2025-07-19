@@ -32,14 +32,19 @@ const MaskedNumberInput = React.forwardRef<
   const s = useStyles(theme);
 
   // Parse the mask.
+  // Capture a prefix and apply to the result.
+  const prefix = mask.replace(/[[\]{}]/g, '').match(/^\D+/)?.[0] || '';
+  const coreMask = mask.replace(prefix, '').replace(/[[\]{}]/g, '');
+
   // Strip unneeded characters from the mask.
   // Support mask having only 1 separator.
-  const rtlMask = mask.replace(/[[\]{}]/g, '');
-  const separator = rtlMask?.match(/[^0-9]/)?.[0] || '';
-  const precision = separator ? rtlMask?.split(separator[0])[1].length || 0 : 0;
+  const separator = coreMask?.match(/[^0-9]/)?.[0] || '';
+  const precision = separator
+    ? coreMask?.split(separator[0])[1].length || 0
+    : 0;
   const maxValue = separator
-    ? (Math.pow(10, rtlMask.length - 1) - 1) / Math.pow(10, precision)
-    : (Math.pow(10, rtlMask.length) - 1) / Math.pow(10, precision);
+    ? (Math.pow(10, coreMask.length - 1) - 1) / Math.pow(10, precision)
+    : (Math.pow(10, coreMask.length) - 1) / Math.pow(10, precision);
 
   const [internalValue, setInternalValue] = useState<number | null>(
     toInternalValue(value),
@@ -51,7 +56,10 @@ const MaskedNumberInput = React.forwardRef<
   }, [value]);
 
   function toInternalValue(value: string) {
-    return parseFloat(value?.replace(/\D/g, '').replace(/^0+/, '')) / 100;
+    return (
+      parseFloat(value?.replace(/\D/g, '').replace(/^0+/, '')) /
+      Math.pow(10, precision)
+    );
   }
 
   return (
@@ -59,8 +67,8 @@ const MaskedNumberInput = React.forwardRef<
       ref={ref}
       caretStyle={s.caret}
       {...rest}
-      prefix={''}
-      delimiter={''}
+      prefix={prefix}
+      delimiter={','}
       separator={separator}
       precision={precision}
       maxValue={maxValue}
@@ -68,14 +76,10 @@ const MaskedNumberInput = React.forwardRef<
       placeholderTextColor={theme.colors.textPlaceholder}
       value={internalValue}
       onChangeValue={setInternalValue}
-      onChangeText={fornatted => {
-        // For unformated, remove non-numeric and leading zero characters.
-        if (fornatted != value) {
-          onChangeText(
-            fornatted,
-            internalValue?.toString().replace(/\D/g, '').replace(/^0+/, '') ||
-              '',
-          );
+      onChangeText={text => {
+        // For unformatted, remove non-numeric and leading zero characters.
+        if (text !== value) {
+          onChangeText(text, internalValue?.toFixed(precision) || '');
         }
       }}
     />
