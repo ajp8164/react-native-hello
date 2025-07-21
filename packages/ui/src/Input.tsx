@@ -91,7 +91,7 @@ const Input = React.forwardRef<InputRef, Input>(
                 style={{
                   ...s.textInput,
                   ...inputStyle,
-                  ...(_label ? { paddingTop: 15 } : null),
+                  ...(_label ? { paddingTop: 20 } : null),
                 }}
                 mask={mask}
                 value={value}
@@ -104,7 +104,7 @@ const Input = React.forwardRef<InputRef, Input>(
                 style={{
                   ...s.textInput,
                   ...inputStyle,
-                  ...(_label ? { paddingTop: 15 } : null),
+                  ...(_label ? { paddingTop: 20 } : null),
                 }}
                 mask={mask}
                 value={value}
@@ -117,7 +117,7 @@ const Input = React.forwardRef<InputRef, Input>(
                 style={{
                   ...s.textInput,
                   ...inputStyle,
-                  ...(_label ? { paddingTop: 15 } : null),
+                  ...(_label ? { paddingTop: 20 } : null),
                 }}
                 value={value}
                 onChangeText={text => onChangeText(text, text)}
@@ -157,8 +157,8 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   labelContainer: {
     position: 'absolute',
-    top: 3,
-    left: 12,
+    top: 0,
+    left: 6,
   },
   message: {
     ...theme.styles.textSmall,
