@@ -56,17 +56,15 @@ const MaskedNumberInput = React.forwardRef<
   }, [value]);
 
   function toInternalValue(value: string) {
-    return (
-      parseFloat(value?.replace(/\D/g, '').replace(/^0+/, '')) /
-      Math.pow(10, precision)
-    );
+    return value
+      ? parseFloat(value.replace(/[^\d.]/g, '').replace(/^0+/, ''))
+      : null;
   }
 
   return (
     <FakeCurrencyInput
       ref={ref}
       caretStyle={s.caret}
-      {...rest}
       prefix={prefix}
       delimiter={','}
       separator={separator}
@@ -77,11 +75,11 @@ const MaskedNumberInput = React.forwardRef<
       value={internalValue}
       onChangeValue={setInternalValue}
       onChangeText={text => {
-        // For unformatted, remove non-numeric and leading zero characters.
         if (text !== value) {
-          onChangeText(text, internalValue?.toFixed(precision) || '');
+          onChangeText(text, text);
         }
       }}
+      {...rest}
     />
   );
 });
