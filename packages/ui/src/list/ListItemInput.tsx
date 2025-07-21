@@ -10,6 +10,8 @@ export type ListItemInputRef = InputRef;
 
 interface ListItemInput extends ListItem {
   container?: 'left' | 'main' | 'right';
+  error?: boolean;
+  errorMessage?: string;
   inputProps: Input;
   title?: string;
   units?: string;
@@ -20,6 +22,8 @@ const ListItemInput = React.forwardRef<ListItemInputRef, ListItemInput>(
   (props, ref) => {
     const {
       container = 'main',
+      error,
+      errorMessage = 'Required field',
       inputProps,
       title,
       units,
@@ -61,15 +65,20 @@ const ListItemInput = React.forwardRef<ListItemInputRef, ListItemInput>(
       </View>
     );
 
+    const Error = <Text style={s.error}>{errorMessage}</Text>;
+
     return (
-      <ListItem
-        title={title}
-        {...rest}
-        leftContent={container === 'left' ? Content : undefined}
-        rightContent={container === 'right' ? Content : undefined}
-        mainContent={container === 'main' ? Content : undefined}
-        mainContentStyle={s.main}
-      />
+      <>
+        <ListItem
+          title={title}
+          {...rest}
+          leftContent={container === 'left' ? Content : undefined}
+          rightContent={container === 'right' ? Content : undefined}
+          mainContent={container === 'main' ? Content : undefined}
+          mainContentStyle={s.main}
+          footerContent={error ? Error : undefined}
+        />
+      </>
     );
   },
 );
@@ -77,6 +86,13 @@ const ListItemInput = React.forwardRef<ListItemInputRef, ListItemInput>(
 const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   container: {
     flex: 1,
+  },
+  error: {
+    ...theme.styles.textSmall,
+    color: theme.colors.assertive,
+    position: 'absolute',
+    left: 15,
+    bottom: 0,
   },
   leftContainer: {
     width: 100,
