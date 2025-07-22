@@ -74,9 +74,11 @@ const MaskedNumberInput = React.forwardRef<
       placeholderTextColor={theme.colors.textPlaceholder}
       value={internalValue}
       onChangeValue={setInternalValue}
-      onChangeText={text => {
-        if (text !== value) {
-          onChangeText(text, text);
+      onChangeText={formatted => {
+        if (formatted !== value) {
+          const unformatted =
+            toInternalValue(formatted)?.toFixed(precision) || '';
+          onChangeText(formatted, unformatted);
         }
       }}
       {...rest}
