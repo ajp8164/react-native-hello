@@ -103,7 +103,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   mainContainer: {},
   rightContainer: {
-    width: 100,
+    width: 125,
   },
   row: {
     flexDirection: 'row',
