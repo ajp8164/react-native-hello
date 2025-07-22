@@ -19,6 +19,8 @@ interface ListItem {
   bottomDividerLeft?: number;
   bottomDividerRight?: number;
   containerStyle?: ViewStyle | ViewStyle[];
+  disabled?: boolean;
+  disabledStyle?: ViewStyle | ViewStyle[];
   focus?: boolean;
   footerContent?: ReactElement;
   ghost?: boolean;
@@ -63,6 +65,8 @@ const ListItem = (props: ListItem) => {
     bottomDividerLeft,
     bottomDividerRight,
     containerStyle,
+    disabled,
+    disabledStyle,
     focus,
     footerContent,
     ghost,
@@ -166,8 +170,9 @@ const ListItem = (props: ListItem) => {
         focus ? s.focus : {},
         ghost ? s.ghost : {},
         containerStyle,
+        disabled ? { ...s.disabled, ...disabledStyle } : {},
       ]}
-      onPress={onPress}>
+      onPress={!disabled ? onPress : null}>
       <View>
         <View
           style={[s.innerContainer, subtitle ? s.itemWithSubtitle : {}, style]}>
@@ -294,6 +299,9 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   container: {
     backgroundColor: theme.colors.listItem,
     overflow: 'hidden',
+  },
+  disabled: {
+    opacity: 0.3,
   },
   first: {
     borderTopLeftRadius: theme.styles.button.borderRadius,
