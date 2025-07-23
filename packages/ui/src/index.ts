@@ -15,6 +15,7 @@ export * from './Chip';
 export * from './CollapsibleView';
 export * from './ColorModeSwitch';
 export * from './ConditionalWrapper';
+export * from './ContentView';
 export * from './DismissableKeyboardView';
 export * from './Divider';
 export * from './Input';
