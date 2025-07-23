@@ -57,7 +57,12 @@ const MaskedNumberInput = React.forwardRef<
 
   function toInternalValue(value: string) {
     return value
-      ? parseFloat(value.replace(/[^\d.]/g, '').replace(/^0+/, ''))
+      ? parseFloat(
+          value
+            .replace(separator, '.')
+            .replace(/[^\d.]/g, '')
+            .replace(/^0+/, ''),
+        )
       : null;
   }
 
