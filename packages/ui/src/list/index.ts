@@ -1,6 +1,7 @@
 export * from './ListEditor';
 export * from './ListItem';
 export * from './ListItemCheckBox';
+export * from './ListItemCollapsible';
 export * from './ListItemDateTime';
 export * from './ListItemInput';
 export * from './ListItemSwipeable';
