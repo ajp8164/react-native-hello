@@ -1,10 +1,8 @@
-import {
-  CollapsibleView,
-  ListItemSwitch as _ListItemSwitch,
-} from '@react-native-hello/ui';
+import { ListItemSwitch } from '.';
 import React from 'react';
+import { CollapsibleView } from '../CollapsibleView';
 
-interface ListItemSwitchCollapsible extends _ListItemSwitch {
+interface ListItemSwitchCollapsible extends ListItemSwitch {
   children?: React.ReactElement;
   expanded?: boolean;
 }
@@ -16,10 +14,7 @@ const ListItemSwitchCollapsible = (props: ListItemSwitchCollapsible) => {
 
   return (
     <>
-      <_ListItemSwitch
-        {...rest}
-        position={expanded ? [first] : rest.position}
-      />
+      <ListItemSwitch {...rest} position={expanded ? [first] : rest.position} />
       <CollapsibleView expanded={expanded}>{children}</CollapsibleView>
     </>
   );
