@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.49](https://github.com/ajp8164/react-native-hello/compare/@react-native-hello/ui@0.0.48...@react-native-hello/ui@0.0.49) (2025-07-25)
+
+**Note:** Version bump only for package @react-native-hello/ui
+
 ## [0.0.48](https://github.com/ajp8164/react-native-hello/compare/@react-native-hello/ui@0.0.47...@react-native-hello/ui@0.0.48) (2025-07-25)
 
 **Note:** Version bump only for package @react-native-hello/ui
