@@ -6,5 +6,6 @@ export * from './ListItemDateTime';
 export * from './ListItemInput';
 export * from './ListItemSwipeable';
 export * from './ListItemSwitch';
+export * from './ListItemSwitchCollapsible';
 export * from './swipeableRow/apple';
 export * from './useListEditor';
