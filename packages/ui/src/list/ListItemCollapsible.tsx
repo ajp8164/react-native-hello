@@ -17,6 +17,7 @@ export interface ListItemCollapsibleMethods {
   close: () => void;
   isOpen: () => boolean;
   open: () => void;
+  toggle: () => void;
 }
 
 const ListItemCollapsible = React.forwardRef<
@@ -41,6 +42,7 @@ const ListItemCollapsible = React.forwardRef<
     close,
     isOpen,
     open,
+    toggle,
   }));
 
   const close = () => {
@@ -51,6 +53,15 @@ const ListItemCollapsible = React.forwardRef<
   const open = () => {
     setExpanded(true);
     openRotation();
+  };
+
+  const toggle = () => {
+    setExpanded(!expanded);
+    if (expanded) {
+      openRotation();
+    } else {
+      closeRotation();
+    }
   };
 
   const isOpen = () => {
