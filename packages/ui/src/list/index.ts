@@ -4,6 +4,7 @@ export * from './ListItemCheckBox';
 export * from './ListItemCollapsible';
 export * from './ListItemDateTime';
 export * from './ListItemInput';
+export * from './ListItemSegmented';
 export * from './ListItemSwipeable';
 export * from './ListItemSwitch';
 export * from './ListItemSwitchCollapsible';
