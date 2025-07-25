@@ -34,4 +34,4 @@ const useSetState = <T extends object>(
   return [state, setState];
 };
 
-export default useSetState;
+export { useSetState };
