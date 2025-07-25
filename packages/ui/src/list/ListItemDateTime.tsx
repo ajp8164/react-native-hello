@@ -2,13 +2,19 @@ import { type AppTheme, useTheme } from '../theme';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import React, { type ReactElement } from 'react';
+import React, { useEffect, type ReactElement } from 'react';
 import { DateTime } from 'luxon';
 import type { ISODateString } from '@react-native-hello/common';
 import { Platform, View, type ViewStyle } from 'react-native';
 import { ListItem } from './ListItem';
 import { makeStyles } from '@rn-vui/themed';
 import { CollapsibleView } from '../CollapsibleView';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { ChevronDown } from 'lucide-react-native';
 
 type Mode = 'date' | 'time' | 'datetime' | 'custom';
 
@@ -46,6 +52,34 @@ const ListItemDateTime = (props: Props) => {
   const first = rest.position?.includes('first') ? 'first' : undefined;
   const isIOS = Platform.OS === 'ios';
 
+  const rotation = useSharedValue(0);
+
+  const animatedCaret = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    };
+  });
+
+  useEffect(() => {
+    if (expanded) {
+      openRotation();
+    } else {
+      closeRotation();
+    }
+  }, [expanded]);
+
+  const closeRotation = () => {
+    rotation.value = withTiming(0, {
+      duration: 200,
+    });
+  };
+
+  const openRotation = () => {
+    rotation.value = withTiming(180, {
+      duration: 200,
+    });
+  };
+
   return (
     <>
       <ListItem
@@ -59,8 +93,12 @@ const ListItemDateTime = (props: Props) => {
           s.container,
         ]}
         position={expanded ? [first] : rest.position}
-        rightContent={expanded ? 'chevron-up' : 'chevron-down'}
-        valueStyle={s.valueStyle}
+        rightContent={
+          <Animated.View style={animatedCaret}>
+            <ChevronDown color={theme.colors.listItemIconNav} />
+          </Animated.View>
+        }
+        valueStyle={{ ...s.valueStyle, ...rest.valueStyle }}
       />
       <CollapsibleView
         expanded={expanded}
@@ -131,7 +169,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     flexDirection: 'row',
   },
   valueStyle: {
-    ...theme.styles.textDim,
+    ...theme.styles.textNormal,
   },
 }));
 
