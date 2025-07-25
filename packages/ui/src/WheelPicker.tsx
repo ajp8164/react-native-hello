@@ -1,13 +1,12 @@
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import React, { type Key, useEffect, useState } from 'react';
-import { Text, type TextStyle, View, type ViewStyle } from 'react-native';
-
+import { fontFamily, useTheme, viewport } from './theme';
 import { Picker as RNPicker } from '@react-native-picker/picker';
-import { isEqual } from 'lodash';
 import { makeStyles } from '@rn-vui/themed';
-import { type AppTheme, useTheme, viewport } from './theme';
+import { isEqual } from 'lodash';
+import React, { type Key, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 
 type PickerInternalValue = string | Date;
 type PickerInternalOnChangeValue = {
@@ -25,33 +24,22 @@ export type WheelPickerItem = {
   label: string;
   value: string | number;
   color?: string;
-  style?: ViewStyle;
-  fontFamily?: string;
-  enabled?: boolean;
 };
 
 export type WheelPickerWidth = string | number;
 
-interface WheelPicker {
-  androidDialogPrompt?: string;
-  androidMode?: 'dialog' | 'dropdown';
-  androidOnBlur?: () => void;
-  androidOnFocus?: () => void;
-  dropdownIconColor?: string;
+export interface WheelPicker {
   mode?: PickerMode;
   items?: WheelPickerItem[] | WheelPickerItem[][];
-  itemStyle?: TextStyle;
   itemWidth?: WheelPickerWidth | WheelPickerWidth[];
   labels?: string | string[];
   labelWidth?: WheelPickerWidth | WheelPickerWidth[];
   placeholder?: string | WheelPickerItem | WheelPickerItem[];
-  pickerContainerStyle?: ViewStyle | ViewStyle[];
-  pickerStyle?: ViewStyle | ViewStyle[];
   value?: Date | string | string[];
   wheelVisible?: boolean | boolean[];
   onValueChange: (
     wheelIndex: number,
-    value: Date | string[],
+    value: Date | string | string[],
     index: number,
   ) => void;
 }
@@ -63,26 +51,20 @@ const defaultPlaceholder: WheelPickerItem = {
 };
 
 const WheelPicker = ({
-  androidDialogPrompt,
-  androidMode,
-  androidOnBlur,
-  androidOnFocus,
-  dropdownIconColor,
   mode = PickerMode.Custom,
   items,
-  itemStyle,
   itemWidth,
   labels,
   labelWidth,
   placeholder = defaultPlaceholder,
-  pickerContainerStyle,
-  pickerStyle,
   value,
   wheelVisible = true,
   onValueChange,
 }: WheelPicker) => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
+
+  // const multiWheel = Array.isArray(items && items[0]);
 
   const [pickerItems, setPickerItems] = useState<WheelPickerItem[][]>(
     (Array.isArray(items && items[0]) ? items : [items]) as WheelPickerItem[][],
@@ -90,14 +72,10 @@ const WheelPicker = ({
 
   useEffect(() => {
     // If caller changes the items then a re-render is needed to update wheel(s).
-    let placeholderItem;
-    if (placeholder !== 'none') {
-      placeholderItem = pickerItems[0];
-    }
     setPickerItems(
       (Array.isArray(items && items[0])
-        ? [placeholderItem].concat(items)
-        : [placeholderItem, items]) as WheelPickerItem[][],
+        ? items
+        : [items]) as WheelPickerItem[][],
     );
   }, [items]);
 
@@ -167,24 +145,23 @@ const WheelPicker = ({
   }, []);
 
   const renderPickerItems = (items: WheelPickerItem[]) => {
-    return items.map(item => (
-      <RNPicker.Item
-        label={item.label}
-        value={item.value}
-        key={item.value as Key}
-        color={item.color || theme.colors.text}
-        style={item.style}
-        fontFamily={item.fontFamily}
-        enabled={item.enabled}
-      />
-    ));
+    return items.map(item => {
+      return (
+        <RNPicker.Item
+          label={item.label}
+          value={item.value}
+          key={item.value as Key}
+          color={item.color || theme.colors.text}
+          fontFamily={fontFamily}
+        />
+      );
+    });
   };
 
   const onDateValueChange = (_event: DateTimePickerEvent, date?: Date) => {
     const now = Date();
-    // setPickerValue([date || now]);
     setPickerValue([date || now]);
-    onValueChange(0, date || [now], 0);
+    onValueChange(0, date || now, 0);
   };
 
   const onChange = ({
@@ -207,7 +184,7 @@ const WheelPicker = ({
           value={pickerValue[0] as Date}
         />
       ) : (
-        <View style={[s.pickerContainer, pickerContainerStyle]}>
+        <View style={s.pickerContainer}>
           {pickerItems.map((wheel, wheelIndex) => {
             if (!pickerWheelVisible[wheelIndex]) {
               return null;
@@ -233,19 +210,10 @@ const WheelPicker = ({
                 ) : null}
                 <View style={{ width: iWidth }}>
                   <RNPicker
-                    prompt={androidDialogPrompt}
-                    mode={androidMode || 'dropdown'}
                     onValueChange={(value, index) =>
                       onChange({ wheelIndex, value, index })
                     }
-                    onBlur={androidOnBlur}
-                    onFocus={androidOnFocus}
-                    selectedValue={pickerValue[wheelIndex]}
-                    dropdownIconColor={dropdownIconColor}
-                    style={[s.picker, pickerStyle]}
-                    itemStyle={itemStyle}
-                    // @ts-expect-error - themeVariant is not typed
-                    themeVariant={theme.mode}>
+                    selectedValue={pickerValue[wheelIndex]}>
                     {renderPickerItems(wheel)}
                   </RNPicker>
                 </View>
@@ -258,7 +226,7 @@ const WheelPicker = ({
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = makeStyles(theme => ({
   pickerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -272,12 +240,10 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     marginTop: -1,
   },
   label: {
-    ...theme.styles.textNormal,
     fontSize: 22,
+    fontFamily: fontFamily,
     textAlign: 'right',
-  },
-  picker: {
-    alignItems: 'center',
+    color: theme.colors.text,
   },
 }));
 
