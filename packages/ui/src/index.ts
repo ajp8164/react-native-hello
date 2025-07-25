@@ -30,5 +30,6 @@ export * from './NetworkConnectionBar';
 export * from './ProgressRing';
 export * from './SearchBar';
 export * from './SegmentedControl';
+export * from './SwipeButton';
 export * from './Tooltip';
 export * from './WheelPicker';
