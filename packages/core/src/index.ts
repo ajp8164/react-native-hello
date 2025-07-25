@@ -1,5 +1,6 @@
 export * from './biometrics';
 export * from './event';
+export * from './hooks';
 export * from './logger';
 export * from './network';
 export * from './string';
