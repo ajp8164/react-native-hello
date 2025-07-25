@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme } from '../theme';
+import { type AppTheme, useTheme } from '../../theme';
 
 import React, { useRef, useState } from 'react';
 import { WebView as RNWebView } from 'react-native-webview';

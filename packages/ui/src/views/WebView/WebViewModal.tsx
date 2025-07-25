@@ -1,8 +1,8 @@
-import { type AppTheme, useTheme } from '../theme';
+import { type AppTheme, useTheme } from '../../theme';
 import React, { useImperativeHandle, useRef, useState } from 'react';
 
 import { type BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-import { Modal } from '..';
+import { Modal } from '../../modals';
 import { makeStyles } from '@rn-vui/themed';
 import { type WebViewModalMethods, type WebViewModalProps } from './types';
 import { WebView } from './WebView';

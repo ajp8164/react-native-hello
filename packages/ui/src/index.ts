@@ -1,8 +1,12 @@
+export * from './camera';
+export * from './fab';
 export * from './hooks';
 export * from './lib';
 export * from './list';
 export * from './modals';
+export * from './providers';
 export * from './theme';
+export * from './views';
 
 export * from './AutoDismissKeyboard';
 export * from './AutoSubmitForm';
