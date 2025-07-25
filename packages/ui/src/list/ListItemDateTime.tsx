@@ -2,7 +2,7 @@ import { type AppTheme, useTheme } from '../theme';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import React from 'react';
+import React, { type ReactElement } from 'react';
 import { DateTime } from 'luxon';
 import type { ISODateString } from '@react-native-hello/common';
 import { Platform, View, type ViewStyle } from 'react-native';
@@ -10,10 +10,11 @@ import { ListItem } from './ListItem';
 import { makeStyles } from '@rn-vui/themed';
 import { CollapsibleView } from '../CollapsibleView';
 
-type Mode = 'date' | 'time' | 'datetime';
+type Mode = 'date' | 'time' | 'datetime' | 'custom';
 
 interface Props extends ListItem {
   accentColor?: string;
+  customContent?: ReactElement;
   datePickerContainerStyle?: ViewStyle;
   expanded?: boolean;
   expandableContainerStyle?: ViewStyle;
@@ -27,6 +28,7 @@ interface Props extends ListItem {
 const ListItemDateTime = (props: Props) => {
   const {
     accentColor,
+    customContent,
     datePickerContainerStyle,
     expanded = false,
     expandableContainerStyle,
@@ -110,6 +112,7 @@ const ListItemDateTime = (props: Props) => {
               }
             />
           ) : null}
+          {mode === 'custom' ? customContent : null}
         </View>
       </CollapsibleView>
     </>
