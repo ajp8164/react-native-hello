@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme } from '../theme';
+import { type AppTheme, useTheme } from '../../theme';
 import type { ModalMethods, ModalProps } from './types';
 import React, {
   useCallback,
@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from 'react';
 
-import { BottomSheet } from '../BottomSheet';
+import { BottomSheet } from '../../BottomSheet';
 import type { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { makeStyles } from '@rn-vui/themed';

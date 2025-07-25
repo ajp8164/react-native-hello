@@ -5,9 +5,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { BulletList } from './BulletList';
+import { BulletList } from '../BulletList';
 import React from 'react';
-import { useTheme } from './theme';
+import { useTheme } from '../theme';
 
 export type ContentLink = {
   prefix?: string;

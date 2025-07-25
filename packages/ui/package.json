@@ -62,8 +62,12 @@
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
+    "@expo/react-native-action-sheet": "^4.1.1",
     "@gorhom/bottom-sheet": "^5.0.6",
+    "@react-native-camera-roll/camera-roll": "^7.10.1",
+    "@react-native-community/blur": "^4.4.1",
     "@react-native-community/datetimepicker": "^8.2.0",
+    "@react-native-documents/picker": "^10.1.5",
     "@react-native-picker/picker": "^2.11.0",
     "@react-native-segmented-control/segmented-control": "^2.5.7",
     "@react-navigation/bottom-tabs": "^7.3.10",
@@ -75,14 +79,18 @@
     "react": ">=18",
     "react-native": ">=0.70",
     "react-native-advanced-input-mask": "^1.4.3",
+    "react-native-camera-kit": "^15.1.0",
     "react-native-collapsible": "^1.6.2",
     "react-native-currency-input": "^1.1.1",
+    "react-native-image-crop-picker": "^0.50.1",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-reanimated": "^3.18.0",
     "react-native-reanimated-carousel": "^4.0.2",
     "react-native-share": "^12.0.3",
     "react-native-svg": "^15.11.1",
     "react-native-toast-message": "^2.2.1",
+    "react-native-video": "^6.16.1",
+    "react-native-vision-camera": "^4.7.1",
     "react-native-webview": "^13.13.5"
   },
   "jest": {
