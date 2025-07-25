@@ -1,6 +1,9 @@
 import type { TextStyle, ViewStyle } from 'react-native';
 
 export type Styles = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  extra: any; // Used by components to pass arbitrary props to makeStyles()
+
   // Constants
 
   headerBar: ViewStyle;

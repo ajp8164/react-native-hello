@@ -30,6 +30,8 @@ export const viewport = {
 
 export const useStyles = makeStyles(
   (theme): Styles => ({
+    extra: undefined,
+
     /**
      * Constants
      */
