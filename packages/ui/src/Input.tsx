@@ -19,7 +19,7 @@ import {
   type MaskedTextInputRef,
 } from 'react-native-advanced-input-mask';
 
-export type InputRef = TextInput & MaskedTextInputRef;
+export type InputMethods = TextInput & MaskedTextInputRef;
 
 interface Input
   extends Omit<
@@ -41,7 +41,7 @@ interface Input
   ComponentRight?: ReactNode;
 }
 
-const Input = React.forwardRef<InputRef, Input>(
+const Input = React.forwardRef<InputMethods, Input>(
   (
     {
       errorMessage,

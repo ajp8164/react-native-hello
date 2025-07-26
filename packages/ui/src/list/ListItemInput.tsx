@@ -4,9 +4,9 @@ import { Text, type TextStyle, View } from 'react-native';
 
 import { makeStyles } from '@rn-vui/themed';
 import { ListItem } from './ListItem';
-import { Input, type InputRef } from '../Input';
+import { Input, type InputMethods } from '../Input';
 
-export type ListItemInputRef = InputRef;
+export type ListItemInputMethods = InputMethods;
 
 interface ListItemInput extends ListItem {
   container?: 'left' | 'main' | 'right';
@@ -18,7 +18,7 @@ interface ListItemInput extends ListItem {
   unitsStyle?: TextStyle;
 }
 
-const ListItemInput = React.forwardRef<ListItemInputRef, ListItemInput>(
+const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
   (props, ref) => {
     const {
       container = 'main',
