@@ -29,12 +29,12 @@ interface KeyboardAccessory {
   onDone?: () => void;
 }
 
-export interface KeyboardAccessorylMethods {
+export interface KeyboardAccessoryMethods {
   focusedField: (field: number) => void;
 }
 
 const KeyboardAccessory = forwardRef<
-  KeyboardAccessorylMethods,
+  KeyboardAccessoryMethods,
   KeyboardAccessory
 >(
   (
