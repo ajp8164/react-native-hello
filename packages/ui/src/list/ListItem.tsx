@@ -34,7 +34,12 @@ interface ListItem {
   mainContent?: ReactElement;
   mainContentStyle?: ViewStyle | ViewStyle;
   position?: ('first' | 'last' | undefined)[];
-  rightContent?: ReactElement | 'chevron-down' | 'chevron-right' | 'chevron-up';
+  rightContent?:
+    | ReactElement
+    | 'chevron-down'
+    | 'chevron-right'
+    | 'chevron-up'
+    | 'info';
   rightContentStyle?: ViewStyle;
   style?: ViewStyle | ViewStyle[];
   subtitle?: string | null | ReactElement;
