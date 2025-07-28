@@ -11,7 +11,12 @@ import {
 import Animated from 'react-native-reanimated';
 import React, { type ReactElement, useState } from 'react';
 import { makeStyles } from '@rn-vui/themed';
-import { ChevronDown, ChevronRight, ChevronUp } from 'lucide-react-native';
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  Info,
+} from 'lucide-react-native';
 
 interface ListItem {
   bottomDividerColor?: string;
@@ -41,11 +46,12 @@ interface ListItem {
   value?: string | null | ReactElement;
   valueStyle?: TextStyle | TextStyle[];
   onPress?: () => void;
+  onPressRight?: () => void;
 }
 
 const iconLeftTitleOffset = 40;
 
-const getContent = (key: string, theme: AppTheme) => {
+const getRightContent = (key: string, theme: AppTheme) => {
   switch (key) {
     case 'chevron-down':
       return <ChevronDown color={theme.colors.listItemIconNav} />;
@@ -53,6 +59,8 @@ const getContent = (key: string, theme: AppTheme) => {
       return <ChevronRight color={theme.colors.listItemIconNav} />;
     case 'chevron-up':
       return <ChevronUp color={theme.colors.listItemIconNav} />;
+    case 'info':
+      return <Info color={theme.colors.listItemIconNav} />;
     default:
       return undefined;
   }
@@ -87,6 +95,7 @@ const ListItem = (props: ListItem) => {
     value,
     valueStyle,
     onPress,
+    onPressRight,
   } = props;
 
   const theme = useTheme();
@@ -104,8 +113,10 @@ const ListItem = (props: ListItem) => {
   const valueIsElement = React.isValidElement(value);
 
   let _rightContent = rightContent;
+  let rightIcon = false;
   if (!React.isValidElement(_rightContent)) {
-    _rightContent = getContent(_rightContent as string, theme);
+    _rightContent = getRightContent(_rightContent as string, theme);
+    rightIcon = true;
   }
 
   // Shorten title to avoid title and value overlapping.
@@ -258,9 +269,18 @@ const ListItem = (props: ListItem) => {
           )}
           {_rightContent && (
             <Animated.View
-              style={[s.rightContent, s.rightContentElement, rightContentStyle]}
+              style={[
+                s.rightContent,
+                s.rightContentElement,
+                rightIcon ? s.rightIconTouchArea : {},
+                rightContentStyle,
+              ]}
               onLayout={onLayoutRightContent}>
-              {_rightContent}
+              <Pressable
+                style={rightIcon ? s.rightIcon : {}}
+                onPress={rightIcon ? onPressRight : undefined}>
+                {_rightContent}
+              </Pressable>
             </Animated.View>
           )}
         </View>
@@ -353,6 +373,18 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   itemWithSubtitle: {
     paddingTop: 4,
     paddingBottom: 7,
+  },
+  rightIconTouchArea: {
+    height: '100%',
+    width: 60,
+    right: 0,
+  },
+  rightIcon: {
+    height: '100%',
+    width: '100%',
+    right: 15,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
   title: {
     ...theme.styles.textNormal,
