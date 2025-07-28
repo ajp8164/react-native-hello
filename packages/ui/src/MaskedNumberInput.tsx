@@ -55,15 +55,17 @@ const MaskedNumberInput = React.forwardRef<
     setInternalValue(toInternalValue(value));
   }, [value]);
 
+  // Convert a formatted string to a number.
+  // If the string is empty or '0' then return null.
+  // A null value forces display of the input placeholder.
   function toInternalValue(value: string) {
-    return value
-      ? parseFloat(
-          value
-            .replace(separator, '.')
-            .replace(/[^\d.]/g, '')
-            .replace(/^0+/, ''),
-        )
-      : null;
+    const parsed = parseFloat(
+      value
+        .replace(separator || '.', '.')
+        .replace(/[^\d.]/g, '')
+        .replace(/^0+/, ''),
+    );
+    return parsed === 0 || isNaN(parsed) ? null : parsed;
   }
 
   return (
@@ -80,9 +82,13 @@ const MaskedNumberInput = React.forwardRef<
       value={internalValue}
       onChangeValue={setInternalValue}
       onChangeText={formatted => {
+        // Formatted string is the internal value matching the mask; 1.23 numeric value -> '$1.23'.
+        // Unformatted string is a parsable string numeric; '$1.23' -> '1.23'.
+        // Unformatted zero is returned as an empty string.
         if (formatted !== value) {
-          const unformatted =
-            toInternalValue(formatted)?.toFixed(precision) || '';
+          const unformatted = internalValue
+            ? internalValue.toFixed(precision)
+            : '';
           onChangeText(formatted, unformatted);
         }
       }}

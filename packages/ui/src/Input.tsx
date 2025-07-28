@@ -18,12 +18,13 @@ import {
   type MaskedTextInputProps,
   type MaskedTextInputRef,
 } from 'react-native-advanced-input-mask';
+import type { FakeCurrencyInputProps } from 'react-native-currency-input';
 
 export type InputMethods = TextInput & MaskedTextInputRef;
 
 interface Input
   extends Omit<
-    TextInputProps & MaskedTextInputProps,
+    TextInputProps & MaskedTextInputProps & FakeCurrencyInputProps,
     'mask' | 'onChangeText' | 'value'
   > {
   errorMessage?: string;
