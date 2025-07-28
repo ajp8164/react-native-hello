@@ -186,7 +186,7 @@ const ListItem = (props: ListItem) => {
         focus ? s.focus : {},
         ghost ? s.ghost : {},
         containerStyle,
-        disabled ? { ...s.disabled, ...disabledStyle } : {},
+        disabled ? disabledStyle : {},
       ]}
       onPress={!disabled ? onPress : null}>
       <View>
@@ -324,9 +324,6 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   container: {
     backgroundColor: theme.colors.listItem,
     overflow: 'hidden',
-  },
-  disabled: {
-    opacity: 0.3,
   },
   first: {
     borderTopLeftRadius: theme.styles.button.borderRadius,
