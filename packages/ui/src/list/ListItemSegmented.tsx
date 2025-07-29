@@ -28,6 +28,24 @@ const ListItemSegmented = (props: ListItemSegmented) => {
   const theme = useTheme();
   const s = useStyles(theme);
 
+  const renderSegments = () => (
+    <View style={[fullWidth ? s.segmentedViewFullWidth : {}]}>
+      <SegmentedControl
+        values={segments}
+        style={[{ width: fullWidth ? '100%' : segments.length * 50 }]}
+        tintColor={segmentTintColor || theme.colors.viewAltBackground}
+        backgroundColor={segmentBackgroundColor || theme.colors.wispGray}
+        fontStyle={s.segmentedFont}
+        activeFontStyle={s.segmentedActiveFont}
+        enabled={rest.disabled !== true}
+        selectedIndex={index}
+        onChange={event => {
+          onChangeIndex(event.nativeEvent.selectedSegmentIndex);
+        }}
+      />
+    </View>
+  );
+
   return (
     <>
       <ListItem
@@ -41,23 +59,8 @@ const ListItemSegmented = (props: ListItemSegmented) => {
             : []),
           s.container,
         ]}
-        rightContent={
-          <View style={[fullWidth ? s.segmentedViewFullWidth : {}]}>
-            <SegmentedControl
-              values={segments}
-              style={[{ width: fullWidth ? '100%' : segments.length * 50 }]}
-              tintColor={segmentTintColor || theme.colors.viewAltBackground}
-              backgroundColor={segmentBackgroundColor || theme.colors.wispGray}
-              fontStyle={s.segmentedFont}
-              activeFontStyle={s.segmentedActiveFont}
-              enabled={rest.disabled !== true}
-              selectedIndex={index}
-              onChange={event => {
-                onChangeIndex(event.nativeEvent.selectedSegmentIndex);
-              }}
-            />
-          </View>
-        }
+        mainContent={fullWidth ? renderSegments() : undefined}
+        rightContent={fullWidth ? undefined : renderSegments()}
       />
     </>
   );

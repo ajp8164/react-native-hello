@@ -64,7 +64,7 @@ export const theme: CreateThemeOptions = {
     text: '#ffffffde',
     textInv: '#000000',
     textLink: '#0078fe',
-    textPlaceholder: '#878787',
+    textPlaceholder: '#bbbbbb',
 
     viewBackground: '#000000',
     viewAltBackground: '#000000',
@@ -133,7 +133,7 @@ export const theme: CreateThemeOptions = {
     text: '#303030',
     textInv: '#ffffff',
     textLink: '#0078fe',
-    textPlaceholder: '#878787',
+    textPlaceholder: '#bbbbbb',
 
     viewBackground: '#f0f0f0',
     viewAltBackground: '#ffffff',
