@@ -112,7 +112,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   units: {
     ...theme.styles.textNormal,
-    ...theme.styles.textDim,
+    color: theme.colors.listItemValue,
     marginRight: 7,
   },
 }));
