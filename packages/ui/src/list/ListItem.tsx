@@ -283,7 +283,8 @@ const ListItem = (props: ListItem) => {
               onLayout={onLayoutRightContent}>
               <Pressable
                 style={rightIcon ? s.rightIcon : {}}
-                onPress={rightIcon ? onPressRight : undefined}>
+                disabled={!onPressRight}
+                onPress={rightIcon && onPressRight ? onPressRight : undefined}>
                 {_rightContent}
               </Pressable>
             </Animated.View>
