@@ -43,14 +43,16 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
           selectionColor={theme.colors.text}
           keyboardAppearance={theme.mode}
           allowFontScaling={false}
+          {...inputProps}
           inputStyle={{
             backgroundColor: theme.colors.transparent,
             ...(container === 'right' ? { textAlign: 'right' } : {}),
+            ...inputProps.inputStyle,
           }}
           messageStyle={{
             ...(container === 'right' ? { alignSelf: 'flex-end' } : {}),
+            ...inputProps.messageStyle,
           }}
-          {...inputProps}
           inputContainerStyle={[
             container === 'left' ? s.leftContainer : {},
             container === 'right' ? s.rightContainer : {},
