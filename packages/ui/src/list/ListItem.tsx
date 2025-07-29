@@ -365,7 +365,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   rightContentElement: {},
   subtitle: {
     ...theme.styles.textSmall,
-    ...theme.styles.textDim,
+    color: theme.colors.listItemSubtitle,
     left: 15,
   },
   subtitleElement: {
@@ -390,11 +390,13 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   title: {
     ...theme.styles.textNormal,
+    color: theme.colors.listItemTitle,
     left: 15,
     overflow: 'hidden',
   },
   value: {
     ...theme.styles.textNormal,
+    color: theme.colors.listItemValue,
     position: 'absolute',
     right: 15,
     textAlign: 'right',

@@ -45,6 +45,9 @@ export const theme: CreateThemeOptions = {
     listItemBorder: '#1b1b1b',
     listItemIcon: '#0078fe',
     listItemIconNav: '#ffffff',
+    listItemSubtitle: '#878787',
+    listItemTitle: '#ffffffde',
+    listItemValue: '#878787',
 
     screenHeaderBackground: '#202020',
     screenHeaderButtonText: '#ffffff',
@@ -111,6 +114,9 @@ export const theme: CreateThemeOptions = {
     listItemBorder: '#e5e5e5',
     listItemIcon: '#0078fe',
     listItemIconNav: '#000000',
+    listItemSubtitle: '#878787',
+    listItemTitle: '#303030',
+    listItemValue: '#878787',
 
     screenHeaderBackground: '#ffffff',
     screenHeaderButtonText: '#000000',
