@@ -13,7 +13,7 @@ export type ListEditorState = {
   show: boolean;
 };
 
-interface ListEditor {
+interface ListEditor extends View {
   children: JSX.Element;
   listLayout?: LayoutRectangle;
   onChangeState?: (state: ListEditorState) => void;
@@ -33,7 +33,7 @@ export interface ListEditorMethods {
 
 const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
   (props: ListEditor, ref) => {
-    const { children, listLayout, onChangeState } = props;
+    const { children, listLayout, onChangeState, ...rest } = props;
 
     const theme = useTheme();
     const s = useStyles(theme);
@@ -64,7 +64,7 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
 
     // TODO - overlays are not able to manage more than one list.
     return (
-      <>
+      <View style={s.container} {...rest}>
         {listEditor.enabled && listLayout && (
           <>
             {/* Top Overlay - intercept taps and close the editor */}
@@ -92,12 +92,15 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
           </>
         )}
         {children}
-      </>
+      </View>
     );
   },
 );
 
 const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
+  container: {
+    flex: 1,
+  },
   overlay: {
     position: 'absolute',
     top: 0,
