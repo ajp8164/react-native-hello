@@ -74,7 +74,7 @@ const ListItemSwipeable = React.forwardRef<
 
   // Keep track of whether the user is swiping or not. Needed to ignore press
   // events when swiping in progress.
-  const [swiping, setSwiping] = useState(false);
+  const swiping = useSharedValue(false);
 
   const dragOnly = !editAction && drag; // Whether or not the drag handle should be shown regardless of editing.
 
@@ -214,21 +214,21 @@ const ListItemSwipeable = React.forwardRef<
         rightActions={swipeableActionsRight}
         onSwipeableWillOpen={direction => {
           if (onSwipeableWillOpen) onSwipeableWillOpen(direction);
-          setSwiping(true);
+          swiping.value = true;
         }}
         onSwipeableWillClose={direction => {
           if (onSwipeableWillClose) onSwipeableWillClose(direction);
-          setSwiping(false);
+          swiping.value = false;
         }}
-        onSwipeableOpen={() => setSwiping(false)}
-        onSwipeableClose={() => setSwiping(false)}>
+        onSwipeableOpen={() => (swiping.value = false)}
+        onSwipeableClose={() => (swiping.value = false)}>
         {editAction && renderEditButton()}
         <Animated.View style={listItemAnimatedStyles}>
           <ListItem
             {...rest}
             onPress={() => {
               // Only handle press if not swiping.
-              if (!swiping) {
+              if (!swiping.value) {
                 if (rest.onPress) rest.onPress();
               }
             }}
