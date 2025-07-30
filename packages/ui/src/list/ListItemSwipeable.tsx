@@ -72,6 +72,10 @@ const ListItemSwipeable = React.forwardRef<
   const [rerender, setRerender] = useState(false);
   const swipeableRef = useRef<SwipeableMethods>(null);
 
+  // Keep track of whether the user is swiping or not. Needed to ignore press
+  // events when swiping in progress.
+  const [swiping, setSwiping] = useState(false);
+
   const dragOnly = !editAction && drag; // Whether or not the drag handle should be shown regardless of editing.
 
   // Initialize wrt to showEditor to avoid recyling animation when this list item is re-render/re-mounted.
@@ -208,12 +212,26 @@ const ListItemSwipeable = React.forwardRef<
         buttonWidth={buttonWidth}
         leftActions={swipeableActionsLeft}
         rightActions={swipeableActionsRight}
-        onSwipeableWillOpen={onSwipeableWillOpen}
-        onSwipeableWillClose={onSwipeableWillClose}>
+        onSwipeableWillOpen={direction => {
+          if (onSwipeableWillOpen) onSwipeableWillOpen(direction);
+          setSwiping(true);
+        }}
+        onSwipeableWillClose={direction => {
+          if (onSwipeableWillClose) onSwipeableWillClose(direction);
+          setSwiping(false);
+        }}
+        onSwipeableOpen={() => setSwiping(false)}
+        onSwipeableClose={() => setSwiping(false)}>
         {editAction && renderEditButton()}
         <Animated.View style={listItemAnimatedStyles}>
           <ListItem
             {...rest}
+            onPress={() => {
+              // Only handle press if not swiping.
+              if (!swiping) {
+                if (rest.onPress) rest.onPress();
+              }
+            }}
             containerStyle={{
               ...rest.containerStyle,
               ...s.noBorderRadius,
