@@ -1,6 +1,11 @@
 import React, { type JSX, useEffect, useImperativeHandle } from 'react';
 import { useListEditor } from '.';
-import { Keyboard, type LayoutRectangle, View } from 'react-native';
+import {
+  Keyboard,
+  type LayoutRectangle,
+  View,
+  type ViewProps,
+} from 'react-native';
 import { type AppTheme, useTheme } from '../theme';
 import { makeStyles } from '@rn-vui/themed';
 import { type ListItemSwipeableMethods } from './ListItemSwipeable';
@@ -13,7 +18,7 @@ export type ListEditorState = {
   show: boolean;
 };
 
-interface ListEditor extends View {
+interface ListEditor extends ViewProps {
   children: JSX.Element;
   listLayout?: LayoutRectangle;
   onChangeState?: (state: ListEditorState) => void;
