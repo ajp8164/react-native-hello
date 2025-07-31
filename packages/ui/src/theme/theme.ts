@@ -50,7 +50,8 @@ export const theme: CreateThemeOptions = {
     listItemValue: '#878787',
 
     screenHeaderBackground: '#202020',
-    screenHeaderButtonText: '#ffffff',
+    screenHeaderButtonText: '#0078fe',
+    screenHeaderTitle: '#ffffff',
 
     segmentActive: '#787878',
     segmentBackground: '#1a1a17',
@@ -119,7 +120,8 @@ export const theme: CreateThemeOptions = {
     listItemValue: '#878787',
 
     screenHeaderBackground: '#ffffff',
-    screenHeaderButtonText: '#000000',
+    screenHeaderButtonText: '#0078fe',
+    screenHeaderTitle: '#000000',
 
     segmentActive: '#ffffff',
     segmentBackground: '#e2e1e6',
