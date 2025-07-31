@@ -38,7 +38,7 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
       <View style={s.row}>
         <Input
           ref={ref}
-          containerStyle={s.container}
+          containerStyle={container === 'main' ? s.container : {}}
           placeholderTextColor={theme.colors.textPlaceholder}
           selectionColor={theme.colors.text}
           keyboardAppearance={theme.mode}
@@ -94,14 +94,15 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     color: theme.colors.assertive,
     position: 'absolute',
     left: 15,
-    bottom: 0,
+    bottom: 2,
   },
   leftContainer: {
-    width: 100,
+    width: 125,
   },
   main: {
     marginHorizontal: 10,
     paddingRight: 5,
+    justifyContent: 'center',
   },
   mainContainer: {},
   rightContainer: {
