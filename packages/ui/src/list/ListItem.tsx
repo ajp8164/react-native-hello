@@ -1,6 +1,12 @@
-import { type AppTheme, useTheme } from '../theme';
+import { makeStyles } from '@rn-vui/themed';
 import {
-  type LayoutChangeEvent,
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  Info,
+} from 'lucide-react-native';
+import React, { type ReactElement } from 'react';
+import {
   Pressable,
   StyleSheet,
   Text,
@@ -9,14 +15,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-import React, { type ReactElement, useState } from 'react';
-import { makeStyles } from '@rn-vui/themed';
-import {
-  ChevronDown,
-  ChevronRight,
-  ChevronUp,
-  Info,
-} from 'lucide-react-native';
+import { type AppTheme, useTheme } from '../theme';
 
 interface ListItem {
   bottomDividerColor?: string;
@@ -29,6 +28,7 @@ interface ListItem {
   focus?: boolean;
   footerContent?: ReactElement;
   ghost?: boolean;
+  headerContent?: ReactElement;
   leftContent?: ReactElement;
   leftContentStyle?: ViewStyle;
   mainContent?: ReactElement;
@@ -41,7 +41,6 @@ interface ListItem {
     | 'chevron-up'
     | 'info';
   rightContentStyle?: ViewStyle;
-  style?: ViewStyle | ViewStyle[];
   subtitle?: string | null | ReactElement;
   subtitleLines?: number;
   subtitleStyle?: TextStyle | TextStyle[];
@@ -53,8 +52,6 @@ interface ListItem {
   onPress?: () => void;
   onPressRight?: () => void;
 }
-
-const iconLeftTitleOffset = 40;
 
 const getRightContent = (key: string, theme: AppTheme) => {
   switch (key) {
@@ -83,6 +80,7 @@ const ListItem = (props: ListItem) => {
     focus,
     footerContent,
     ghost,
+    headerContent,
     leftContent,
     leftContentStyle,
     mainContent,
@@ -90,7 +88,6 @@ const ListItem = (props: ListItem) => {
     position,
     rightContent,
     rightContentStyle,
-    style,
     subtitle,
     subtitleLines,
     subtitleStyle,
@@ -111,10 +108,6 @@ const ListItem = (props: ListItem) => {
   const _bottomDividerLeft = bottomDividerLeft || (s.border.left as number);
   const _bottomDividerRight = bottomDividerRight || (s.border.right as number);
 
-  const mainOffset = leftContent ? iconLeftTitleOffset : 0;
-  const subtitleIsElement = React.isValidElement(subtitle);
-  const subtitleOffset = leftContent ? iconLeftTitleOffset : 0;
-  const titleOffset = leftContent ? iconLeftTitleOffset : 0;
   const valueIsElement = React.isValidElement(value);
 
   let _rightContent = rightContent;
@@ -123,59 +116,6 @@ const ListItem = (props: ListItem) => {
     _rightContent = getRightContent(_rightContent as string, theme);
     rightIcon = true;
   }
-
-  // Shorten title to avoid title and value overlapping.
-  const [titleEndX, setTitleEndX] = useState<number>(0);
-  const [titleW, setTitleW] = useState<number>(0);
-  const [subtitleEndX, setSubtitleEndX] = useState<number>(0);
-  const [subtitleW, setSubtitleW] = useState<number>(0);
-  const [rightContentX, setRightContentX] = useState<number>(0);
-  const [valueX, setValueX] = useState<number>(0);
-
-  const rightX =
-    valueX && rightContentX
-      ? Math.min(valueX, rightContentX)
-      : valueX || rightContentX || 0;
-  const titleWidth = titleW - Math.min(titleEndX - rightX);
-  const subtitleWidth = subtitleW - Math.min(subtitleEndX - rightX);
-
-  const onLayoutTitle = (event: LayoutChangeEvent) => {
-    // If this list item is animated then layout may not be complete until the next
-    // render cycle.
-    const layout = event.nativeEvent.layout;
-    setTimeout(() => {
-      setTitleEndX(layout.width + layout.x);
-      setTitleW(layout.width);
-    });
-  };
-
-  const onLayoutSubtitle = (event: LayoutChangeEvent) => {
-    // If this list item is animated then layout may not be complete until the next
-    // render cycle.
-    const layout = event.nativeEvent.layout;
-    setTimeout(() => {
-      setSubtitleEndX(layout.width + layout.x);
-      setSubtitleW(layout.width);
-    });
-  };
-
-  const onLayoutValue = (event: LayoutChangeEvent) => {
-    // If this list item is animated then layout may not be complete until the next
-    // render cycle.
-    const layout = event.nativeEvent.layout;
-    setTimeout(() => {
-      setValueX(layout.x);
-    });
-  };
-
-  const onLayoutRightContent = (event: LayoutChangeEvent) => {
-    // If this list item is animated then layout may not be complete until the next
-    // render cycle.
-    const layout = event.nativeEvent.layout;
-    setTimeout(() => {
-      setRightContentX(layout.x);
-    });
-  };
 
   return (
     <Pressable
@@ -189,123 +129,83 @@ const ListItem = (props: ListItem) => {
         disabled ? disabledStyle : {},
       ]}
       onPress={!disabled ? onPress : null}>
-      <View>
-        <View
-          style={[s.innerContainer, subtitle ? s.itemWithSubtitle : {}, style]}>
-          {leftContent && (
-            <View
-              style={[s.leftContent, s.leftContentElement, leftContentStyle]}>
-              {leftContent}
-            </View>
-          )}
-          {mainContent ? (
-            <View
-              style={[
-                s.mainContent,
-                mainContentStyle,
-                { paddingLeft: mainOffset },
-              ]}>
-              {mainContent}
-            </View>
-          ) : (
-            <>
-              <View>
+      {/* Header */}
+      {headerContent && <View>{headerContent}</View>}
+      <View style={s.innerContainer}>
+        {/* Left */}
+        {leftContent && (
+          <View style={[s.leftContent, leftContentStyle]}>{leftContent}</View>
+        )}
+        {/* Main */}
+        {mainContent ? (
+          <View style={[s.mainContent, mainContentStyle]}>{mainContent}</View>
+        ) : (
+          <>
+            {/* Title, Subtitle */}
+            <View style={s.titleSubtitle}>
+              {title && (
                 <Text
-                  style={[
-                    s.title,
-                    { marginLeft: titleOffset, width: titleWidth },
-                    titleStyle,
-                  ]}
-                  allowFontScaling={false}
-                  onLayout={onLayoutTitle}
-                  numberOfLines={titleLines || 1}
-                  ellipsizeMode={'tail'}>
+                  style={[s.title, titleStyle]}
+                  numberOfLines={titleLines !== undefined ? titleLines : 1}
+                  ellipsizeMode={'tail'}
+                  allowFontScaling={false}>
                   {title}
                 </Text>
-                {subtitle && !subtitleIsElement && (
-                  <Text
-                    style={[
-                      s.subtitle,
-                      { marginLeft: subtitleOffset, width: subtitleWidth },
-                      subtitleStyle,
-                    ]}
-                    allowFontScaling={false}
-                    onLayout={onLayoutSubtitle}
-                    numberOfLines={subtitleLines || 1}
-                    ellipsizeMode={'tail'}>
-                    {subtitle}
-                  </Text>
-                )}
-                {subtitle && subtitleIsElement && (
-                  <View
-                    style={[
-                      s.subtitleElement,
-                      { marginLeft: subtitleOffset },
-                      subtitleStyle,
-                    ]}>
-                    {subtitle}
-                  </View>
-                )}
-              </View>
-              {value && !valueIsElement && (
-                <Animated.Text
-                  style={[
-                    s.value,
-                    _rightContent ? s.valueMarginRightContent : s.valueMargin,
-                    valueStyle,
-                  ]}
-                  allowFontScaling={false}
-                  onLayout={onLayoutValue}>
-                  {value}
-                </Animated.Text>
               )}
-              {value && valueIsElement && (
-                <Animated.View
-                  style={[
-                    s.valueElement,
-                    _rightContent ? s.valueMarginRightContent : s.valueMargin,
-                    valueStyle,
-                  ]}
-                  onLayout={onLayoutValue}>
-                  {value}
-                </Animated.View>
+              {subtitle && (
+                <Text
+                  style={[s.subtitle, subtitleStyle]}
+                  numberOfLines={
+                    subtitleLines !== undefined ? subtitleLines : 1
+                  }
+                  ellipsizeMode={'tail'}
+                  allowFontScaling={false}>
+                  {subtitle}
+                </Text>
               )}
-            </>
-          )}
-          {_rightContent && (
-            <Animated.View
-              style={[
-                s.rightContent,
-                s.rightContentElement,
-                rightIcon ? s.rightIconTouchArea : {},
-                rightContentStyle,
-              ]}
-              onLayout={onLayoutRightContent}>
-              <Pressable
-                style={rightIcon ? s.rightIcon : {}}
-                disabled={!onPressRight}
-                onPress={rightIcon && onPressRight ? onPressRight : undefined}>
-                {_rightContent}
-              </Pressable>
-            </Animated.View>
-          )}
-        </View>
-        {footerContent && (
-          <View style={s.footerContentElement}>{footerContent}</View>
+            </View>
+            {/* Value */}
+            {value && !valueIsElement && (
+              <Animated.Text
+                style={[s.value, valueStyle]}
+                allowFontScaling={false}>
+                {value}
+              </Animated.Text>
+            )}
+            {value && valueIsElement && (
+              <Animated.View style={[s.valueElement, valueStyle]}>
+                {value}
+              </Animated.View>
+            )}
+          </>
         )}
-        {!bottomDividerForceHide && !position?.includes('last') ? (
-          <View
-            style={[
-              ghost ? {} : s.bottomDivider,
-              {
-                borderColor: _bottomDividerColor,
-                left: _bottomDividerLeft,
-                right: _bottomDividerRight,
-              },
-            ]}
-          />
-        ) : null}
+        {/* Right */}
+        {_rightContent && (
+          <Animated.View style={[rightContentStyle]}>
+            <Pressable
+              style={s.rightContent}
+              disabled={!onPressRight}
+              onPress={rightIcon && onPressRight ? onPressRight : undefined}>
+              {_rightContent}
+            </Pressable>
+          </Animated.View>
+        )}
       </View>
+      {/* Footer */}
+      {footerContent && <View>{footerContent}</View>}
+      {/* Bottom Divider */}
+      {!bottomDividerForceHide && !position?.includes('last') ? (
+        <View
+          style={[
+            ghost ? {} : s.bottomDivider,
+            {
+              borderColor: _bottomDividerColor,
+              left: _bottomDividerLeft,
+              right: _bottomDividerRight,
+            },
+          ]}
+        />
+      ) : null}
     </Pressable>
   );
 };
@@ -334,7 +234,6 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     borderColor: theme.colors.listItemIcon,
     borderWidth: 1,
   },
-  footerContentElement: {},
   ghost: {
     borderColor: theme.colors.listItemBorder,
     borderWidth: 1,
@@ -344,73 +243,46 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   innerContainer: {
     flexDirection: 'row',
     minHeight: 60,
-    alignItems: 'center',
-    overflow: 'hidden',
   },
   last: {
     borderBottomLeftRadius: theme.styles.button.borderRadius,
     borderBottomEndRadius: theme.styles.button.borderRadius,
   },
   leftContent: {
-    position: 'absolute',
-    left: 15,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
   },
-  leftContentElement: {},
   mainContent: {
     flex: 1,
   },
   rightContent: {
-    position: 'absolute',
-    right: 15,
+    flex: 1,
+    justifyContent: 'center',
+    paddingRight: 10,
+    paddingLeft: 10,
   },
-  rightContentElement: {},
   subtitle: {
     ...theme.styles.textSmall,
     color: theme.colors.listItemSubtitle,
-    left: 15,
-    marginRight: 15 + 15,
   },
-  subtitleElement: {
-    left: 15,
-    alignSelf: 'flex-start',
-  },
-  itemWithSubtitle: {
-    paddingTop: 4,
-    paddingBottom: 7,
-  },
-  rightIconTouchArea: {
-    height: '100%',
-    width: 60,
-    right: 0,
-  },
-  rightIcon: {
-    height: '100%',
-    width: '100%',
-    right: 15,
+  titleSubtitle: {
+    flex: 1,
+    paddingVertical: 10,
     justifyContent: 'center',
-    alignItems: 'flex-end',
   },
   title: {
     ...theme.styles.textNormal,
     color: theme.colors.listItemTitle,
-    left: 15,
-    overflow: 'hidden',
   },
   value: {
     ...theme.styles.textNormal,
     color: theme.colors.listItemValue,
-    position: 'absolute',
-    right: 15,
     textAlign: 'right',
+    alignSelf: 'center',
+    paddingLeft: 10,
   },
   valueElement: {
-    position: 'absolute',
-  },
-  valueMargin: {
-    right: 15,
-  },
-  valueMarginRightContent: {
-    right: 40,
+    justifyContent: 'center',
   },
 }));
 
