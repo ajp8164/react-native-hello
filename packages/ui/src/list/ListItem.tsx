@@ -136,8 +136,8 @@ const ListItem = (props: ListItem) => {
     valueX && rightContentX
       ? Math.min(valueX, rightContentX)
       : valueX || rightContentX || 0;
-  const titleWidth = titleW - Math.min(titleEndX - rightX + 5);
-  const subtitleWidth = subtitleW - Math.min(subtitleEndX - rightX + 20);
+  const titleWidth = titleW - Math.min(titleEndX - rightX);
+  const subtitleWidth = subtitleW - Math.min(subtitleEndX - rightX);
 
   const onLayoutTitle = (event: LayoutChangeEvent) => {
     // If this list item is animated then layout may not be complete until the next
