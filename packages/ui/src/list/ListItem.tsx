@@ -368,6 +368,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     ...theme.styles.textSmall,
     color: theme.colors.listItemSubtitle,
     left: 15,
+    marginRight: 15 + 15,
   },
   subtitleElement: {
     left: 15,
