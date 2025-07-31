@@ -142,7 +142,12 @@ const ListItem = (props: ListItem) => {
         ) : (
           <>
             {/* Title, Subtitle */}
-            <View style={s.titleSubtitle}>
+            <View
+              style={[
+                s.titleSubtitle,
+                !leftContent ? s.noLeftContent : {},
+                !rightContent && !value ? s.noRightContent : {},
+              ]}>
               {title && (
                 <Text
                   style={[s.title, titleStyle]}
@@ -167,13 +172,22 @@ const ListItem = (props: ListItem) => {
             {/* Value */}
             {value && !valueIsElement && (
               <Animated.Text
-                style={[s.value, valueStyle]}
+                style={[
+                  s.value,
+                  !rightContent ? s.noRightContent : {},
+                  valueStyle,
+                ]}
                 allowFontScaling={false}>
                 {value}
               </Animated.Text>
             )}
             {value && valueIsElement && (
-              <Animated.View style={[s.valueElement, valueStyle]}>
+              <Animated.View
+                style={[
+                  s.valueElement,
+                  !rightContent ? s.noRightContent : {},
+                  valueStyle,
+                ]}>
                 {value}
               </Animated.View>
             )}
@@ -254,6 +268,12 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   mainContent: {
     flex: 1,
+  },
+  noLeftContent: {
+    paddingLeft: 15,
+  },
+  noRightContent: {
+    paddingRight: 15,
   },
   rightContent: {
     flex: 1,
