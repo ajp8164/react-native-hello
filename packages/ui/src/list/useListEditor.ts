@@ -87,6 +87,20 @@ export const useListEditor = () => {
     }
   };
 
+  // Remove the reference from the editor. Automatically exit edit mode if
+  // there are no more references in the group.
+  const removeFromEditor = (group: string, id: string) => {
+    const index = liRef.current[group].findIndex(li => li.id === id);
+    if (index >= 0) {
+      liRef.current[group].splice(index, 1);
+    }
+
+    // Exit edit mode if all items in the list are removed.
+    if (liRef.current[group].length === 0) {
+      onToggleEditMode();
+    }
+  };
+
   // Close all swipeables.
   const resetEditor = () => {
     Object.keys(liRef.current).forEach(group => {
@@ -104,6 +118,7 @@ export const useListEditor = () => {
     onToggleEditMode,
     onItemWillOpen: onSwipeableWillOpen,
     onItemWillClose: onSwipeableWillClose,
+    remove: removeFromEditor,
     reset: resetEditor,
   };
 };

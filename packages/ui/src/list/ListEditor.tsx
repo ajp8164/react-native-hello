@@ -33,6 +33,7 @@ export interface ListEditorMethods {
   onItemWillClose: () => void;
   onItemWillOpen: (group: string, id: string) => void;
   onToggleEditMode: () => void;
+  remove: (group: string, id: string) => void;
   reset: () => void;
 }
 
@@ -54,6 +55,7 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
       },
       onItemWillClose: listEditor.onItemWillClose,
       onItemWillOpen: listEditor.onItemWillOpen,
+      remove: listEditor.remove,
       reset: listEditor.reset,
     }));
 
