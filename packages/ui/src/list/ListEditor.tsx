@@ -30,6 +30,7 @@ export interface ListEditorMethods {
     group: string,
     id: string,
   ) => void;
+  getState: () => ListEditorState;
   onItemWillClose: () => void;
   onItemWillOpen: (group: string, id: string) => void;
   onToggleEditMode: () => void;
@@ -49,6 +50,7 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
     useImperativeHandle(ref, () => ({
       // These functions exposed to the parent component through the ref.
       add: listEditor.add,
+      getState: listEditor.getState,
       onToggleEditMode: () => {
         Keyboard.dismiss();
         listEditor.onToggleEditMode();
