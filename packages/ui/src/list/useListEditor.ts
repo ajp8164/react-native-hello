@@ -15,29 +15,43 @@ export const useListEditor = () => {
     Record<string, { id: string; ref: ListItemSwipeableMethods }[]>
   >({});
 
-  const [listEditSwipeEnabled, setListEditSwipeEnabled] = useState(false);
-  const [listEditModeEnabled, setListEditModeEnabled] = useState(false);
+  const [state, setState] = useState({
+    enabled: false,
+    enabledBySwipe: false,
+    show: false,
+  });
 
   // Reset the editor when the screen loses focus (navigate away).
   useEffect(() => {
     if (!isFocused) resetEditor();
-    setListEditModeEnabled(false);
-    setListEditSwipeEnabled(false);
+    setState({
+      enabled: false,
+      enabledBySwipe: false,
+      show: false,
+    });
   }, [isFocused]);
 
   // When the screen edit button is touched all of the open swipeables are closed and
   // the list is put into edit mode (swipeable shows editor controls).
   const onToggleEditMode = () => {
-    if (listEditSwipeEnabled) {
-      setListEditSwipeEnabled(false);
-      setListEditModeEnabled(false);
+    if (state.enabledBySwipe) {
+      setState({
+        enabled: false,
+        enabledBySwipe: false,
+        show: false,
+      });
       resetEditor();
     } else {
-      if (listEditModeEnabled) {
+      if (state.enabled) {
         resetEditor();
       }
 
-      setListEditModeEnabled(!listEditModeEnabled);
+      setState(prevState => {
+        return {
+          ...prevState,
+          enabled: !prevState.enabled,
+        };
+      });
     }
   };
 
@@ -53,12 +67,26 @@ export const useListEditor = () => {
 
     // Need to allow the editor resets to run first.
     setTimeout(() => {
-      setListEditSwipeEnabled(true);
+      setState(prevState => {
+        return {
+          ...prevState,
+          enabledBySwipe: true,
+        };
+      });
     }, 200); // Greater than the animation time for open/close
   };
 
   const onSwipeableWillClose = () => {
-    setListEditSwipeEnabled(false);
+    setState(prevState => {
+      return {
+        ...prevState,
+        enabledBySwipe: false,
+      };
+    });
+  };
+
+  const getState = () => {
+    return state;
   };
 
   // Add the reference to the editor by group. The group is used to allow
@@ -111,10 +139,11 @@ export const useListEditor = () => {
   };
 
   return {
-    enabled: listEditModeEnabled || listEditSwipeEnabled,
-    show: listEditModeEnabled,
-    enabledBySwipe: listEditSwipeEnabled,
+    enabled: state.enabled || state.enabledBySwipe,
+    show: state.enabled,
+    enabledBySwipe: state.enabledBySwipe,
     add: addToEditor,
+    getState,
     onToggleEditMode,
     onItemWillOpen: onSwipeableWillOpen,
     onItemWillClose: onSwipeableWillClose,

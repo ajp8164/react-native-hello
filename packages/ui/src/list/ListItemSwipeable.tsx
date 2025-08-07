@@ -1,12 +1,15 @@
-import { type AppTheme, useTheme } from '../theme';
+import { uuidv4 } from '@react-native-hello/core';
+import { makeStyles } from '@rn-vui/themed';
+import { GripHorizontal } from 'lucide-react-native';
 import React, {
+  type ReactElement,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
-  type ReactElement,
 } from 'react';
-import { makeStyles } from '@rn-vui/themed';
+import { Pressable, View } from 'react-native';
+import type { SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
 import { ListItem } from './ListItem';
 import {
   AppleStyleSwipeableRow,
@@ -19,9 +22,8 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { Pressable, View } from 'react-native';
-import { GripHorizontal } from 'lucide-react-native';
-import type { SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
+import { type AppTheme, useTheme } from '../theme';
+import type { ListEditorMethods } from './ListEditor';
 
 const dragHandleWidth = 44;
 const editButtonWidth = 44;
@@ -38,6 +40,8 @@ interface ListItemSwipeable extends ListItem {
   drag?: () => void; // The drag() method from react-native-draggable-flat-list.
   dragIsActive?: boolean; // From react-native-draggable-flat-list.
   editAction?: EditAction;
+  listEditor?: ListEditorMethods | null;
+  listGroup?: string;
   onSwipeableWillClose?: (direction: 'left' | 'right') => void;
   onSwipeableWillOpen?: (direction: 'left' | 'right') => void;
   showEditor?: boolean;
@@ -58,6 +62,8 @@ const ListItemSwipeable = React.forwardRef<
     drag,
     dragIsActive,
     editAction,
+    listEditor,
+    listGroup = 'default',
     onSwipeableWillOpen,
     onSwipeableWillClose,
     showEditor = false,
@@ -104,6 +110,23 @@ const ListItemSwipeable = React.forwardRef<
   const listItemRightValueContentAnimatedStyles = useAnimatedStyle(() => ({
     opacity: 1 - editModeOpacity.value,
   }));
+
+  // Used to uniquely identify this list item in the list editor (if being used).
+  const listItemId = useRef(uuidv4());
+
+  // Add ourself to the list editor if specified. When this component unmounts (is deleted)
+  // it is removed from the list editor.
+  useEffect(() => {
+    if (listEditor) {
+      listEditor?.add(swipeableRef.current, listGroup, listItemId.current);
+    }
+  }, [listEditor]);
+
+  useEffect(() => {
+    return () => {
+      listEditor?.remove(listGroup, listItemId.current);
+    };
+  }, []);
 
   // Force a re-render when the button component changes.
   useEffect(() => {
@@ -213,10 +236,12 @@ const ListItemSwipeable = React.forwardRef<
         leftActions={swipeableActionsLeft}
         rightActions={swipeableActionsRight}
         onSwipeableWillOpen={direction => {
+          listEditor?.onItemWillOpen(listGroup, listItemId.current);
           if (onSwipeableWillOpen) onSwipeableWillOpen(direction);
           swiping.value = true;
         }}
         onSwipeableWillClose={direction => {
+          listEditor?.onItemWillClose();
           if (onSwipeableWillClose) onSwipeableWillClose(direction);
           swiping.value = false;
         }}
