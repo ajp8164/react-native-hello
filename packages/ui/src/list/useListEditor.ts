@@ -50,6 +50,7 @@ export const useListEditor = () => {
         return {
           ...prevState,
           enabled: !prevState.enabled,
+          show: !prevState.show,
         };
       });
     }
