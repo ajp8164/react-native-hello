@@ -5,13 +5,10 @@ import {
   type ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {
-  type ButtonProps as RNEButtonProps,
-  Button as RNEButton,
-} from '@rn-vui/themed';
+import { ButtonBase } from './ButtonBase';
 
 interface Button
-  extends Omit<RNEButtonProps, 'buttonStyle' | 'disabledStyle' | 'titleStyle'> {
+  extends Omit<ButtonBase, 'buttonStyle' | 'disabledStyle' | 'titleStyle'> {
   buttonStyle?: ViewStyle;
   clear?: boolean;
   containerStyle?: ViewStyle | ViewStyle[];
@@ -43,7 +40,7 @@ const Button = (props: Button) => {
   const theme = useTheme();
 
   return (
-    <RNEButton
+    <ButtonBase
       title={title}
       titleStyle={[
         theme.styles.buttonTitle,
