@@ -10,6 +10,7 @@ export * from './views';
 
 export * from './AutoDismissKeyboard';
 export * from './AutoSubmitForm';
+export * from './Avatar';
 export * from './BlurBackground';
 export * from './BottomSheet';
 export * from './BulletList';
