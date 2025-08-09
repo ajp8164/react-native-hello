@@ -264,7 +264,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   leftContent: {
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
   mainContent: {
     flex: 1,
@@ -278,8 +278,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   rightContent: {
     flex: 1,
     justifyContent: 'center',
-    paddingRight: 10,
-    paddingLeft: 10,
+    paddingHorizontal: 10,
   },
   subtitle: {
     ...theme.styles.textSmall,
