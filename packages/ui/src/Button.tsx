@@ -234,7 +234,7 @@ const Button = (props: Button) => {
           {!loading &&
             React.Children.toArray(children).map((child, index) => (
               <React.Fragment key={index}>
-                {typeof child === 'string' ? (
+                {typeof child === 'string' && child.length ? (
                   <Text style={titleStyle} {...titleProps}>
                     {child}
                   </Text>
