@@ -1,6 +1,6 @@
-import { type IPaletteKeys } from './types';
+import type { IPalette } from '@react-native-hello/ui';
 
-export const palette: Record<IPaletteKeys, string> = {
+export const palette: Record<keyof IPalette, string> = {
   black: '#000000',
   white: '#ffffff',
   transparent: '#00000000',

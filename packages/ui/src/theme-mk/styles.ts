@@ -1,4 +1,5 @@
-import { type IBaseThemeSchema, type IStylesKeys } from './types';
+import type { IStyles } from '@react-native-hello/ui';
+import { type IBaseThemeSchema } from './types';
 import { Platform } from 'react-native';
 import { type IStyle } from 'react-native-theme-mk';
 
@@ -6,7 +7,7 @@ export const createElementsStyles = ({
   theme,
 }: {
   theme: IBaseThemeSchema;
-}): Record<IStylesKeys, IStyle> => ({
+}): Record<keyof IStyles, IStyle> => ({
   /**
    * Buttons
    */
@@ -96,108 +97,4 @@ export const createElementsStyles = ({
     lineHeight: 14,
     color: theme.colors.buttonText,
   },
-
-  /**
-   * Text
-   */
-
-  // textHeadingXL: {
-  //   color: theme.colors.text,
-  //   marginVertical: 10,
-  //   fontSize: theme.fontSize.H1,
-  //   fontFamily: theme.fonts.bold,
-  // },
-  // textHeading1: {
-  //   color: theme.colors.text,
-  //   marginVertical: 10,
-  //   fontSize: theme.fontSize.H1,
-  //   fontFamily: theme.fonts.bold,
-  // },
-  // textHeading2: {
-  //   color: theme.colors.text,
-  //   marginVertical: 10,
-  //   fontSize: theme.fontSize.H2,
-  //   fontFamily: theme.fonts.bold,
-  // },
-  // textHeading3: {
-  //   color: theme.colors.text,
-  //   marginVertical: 10,
-  //   fontSize: theme.fontSize.H3,
-  //   fontFamily: theme.fonts.bold,
-  // },
-  // textHeading4: {
-  //   color: theme.colors.text,
-  //   marginVertical: 4,
-  //   fontSize: theme.fontSize.H4,
-  //   fontFamily: theme.fonts.bold,
-  // },
-  // textHeading5: {
-  //   color: theme.colors.text,
-  //   marginVertical: 4,
-  //   fontSize: theme.fontSize.H5,
-  //   fontFamily: theme.fonts.bold,
-  // },
-  // textLarge: {
-  //   color: theme.colors.text,
-  //   fontSize: theme.fontSize.large,
-  //   fontFamily: theme.fonts.regular,
-  //   fontWeight: 'normal',
-  // },
-  // textXL: {
-  //   color: theme.colors.text,
-  //   fontSize: theme.fontSize.XL,
-  //   fontFamily: theme.fonts.regular,
-  //   fontWeight: 'normal',
-  // },
-  // textScreenTitle: {
-  //   color: theme.colors.black,
-  //   fontSize: 17,
-  //   fontFamily: theme.fonts.regular,
-  //   fontWeight: '600',
-  // },
-  // textNormal: {
-  //   color: theme.colors.text,
-  //   fontSize: theme.fontSize.normal,
-  //   fontFamily: theme.fonts.regular,
-  //   fontWeight: 'normal',
-  // },
-  // textSmall: {
-  //   color: theme.colors.text,
-  //   fontSize: theme.fontSize.small,
-  //   fontFamily: theme.fonts.regular,
-  //   fontWeight: 'normal',
-  // },
-  // textTiny: {
-  //   color: theme.colors.text,
-  //   fontSize: theme.fontSize.tiny,
-  //   fontFamily: theme.fonts.regular,
-  //   fontWeight: 'normal',
-  // },
-  // textLight: {
-  //   fontFamily: theme.fonts.light,
-  //   fontWeight: 'normal',
-  // },
-  // textMedium: {
-  //   color: theme.colors.text,
-  //   fontFamily: theme.fonts.medium,
-  //   fontWeight: 'normal',
-  // },
-  // textSemiBold: {
-  //   fontFamily: theme.fonts.semiBold,
-  //   fontWeight: 'normal',
-  // },
-  // textBold: {
-  //   fontFamily: theme.fonts.bold,
-  //   fontWeight: '600',
-  // },
-  // textDim: {
-  //   opacity: 0.4,
-  // },
-  // textPlaceholder: {
-  //   opacity: 0.4,
-  // },
-  // textLink: {
-  //   color: theme.colors.textLink,
-  //   textDecorationLine: 'underline',
-  // },
 });

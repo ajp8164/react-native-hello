@@ -1,14 +1,11 @@
-import {
-  type IBaseThemeSchema,
-  type ITextsKeys,
-  type IThemeManagerTextStyle,
-} from './types';
+import type { ITexts } from '@react-native-hello/ui';
+import { type IBaseThemeSchema, type IThemeManagerTextStyle } from './types';
 
 export const createTextStyles = ({
   theme,
 }: {
   theme: IBaseThemeSchema;
-}): Record<ITextsKeys, IThemeManagerTextStyle> => ({
+}): Record<keyof ITexts, IThemeManagerTextStyle> => ({
   h1: {
     color: theme.colors.text,
     fontFamily: theme.fonts.bold,

@@ -1,4 +1,5 @@
-import { type IShadow, type IShadowsKeys } from './types';
+import type { IShadows } from '@react-native-hello/ui';
+import { type IShadow } from './types';
 import { Platform } from 'react-native';
 
 const glow = Platform.select({
@@ -49,7 +50,7 @@ const shallow = Platform.select({
   },
 });
 
-export const shadow: Record<IShadowsKeys, IShadow> = {
+export const shadow: Record<keyof IShadows, IShadow> = {
   glow,
   normal,
   shallow,
