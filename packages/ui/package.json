@@ -1,6 +1,6 @@
 {
   "name": "@react-native-hello/ui",
-  "version": "0.0.104",
+  "version": "0.0.105",
   "description": "A React Native library for apps.",
   "author": "ajp8164",
   "license": "MIT",
@@ -125,5 +125,5 @@
       ]
     ]
   },
-  "gitHead": "6c897ebb73b134a507ec6655c340d8be0cf300ea"
+  "gitHead": "d79508665f63e6880b79cf294b1e807489ef9bc6"
 }
