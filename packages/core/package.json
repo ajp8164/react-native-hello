@@ -1,6 +1,6 @@
 {
   "name": "@react-native-hello/core",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A React Native library for apps.",
   "author": "ajp8164",
   "license": "MIT",
@@ -33,7 +33,7 @@
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
   "dependencies": {
-    "@react-native-hello/common": "^0.0.11",
+    "@react-native-hello/common": "^0.0.12",
     "react-native-biometrics": "^3.0.1"
   },
   "devDependencies": {
