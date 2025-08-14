@@ -6,6 +6,7 @@ export * from './list';
 export * from './modals';
 export * from './providers';
 export * from './theme';
+export * from './theme-mk';
 export * from './views';
 
 export * from './AutoDismissKeyboard';
