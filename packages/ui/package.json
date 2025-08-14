@@ -31,7 +31,7 @@
   "main": "lib/commonjs/index.js",
   "source": "src/index.ts",
   "module": "lib/module/index.js",
-  "types": "lib/typescript/src/index.d.ts",
+  "types": "lib/typescript/index.d.ts",
   "dependencies": {
     "@react-native-hello/common": "^0.0.11",
     "@react-native-hello/core": "^0.0.13",
@@ -125,5 +125,5 @@
       ]
     ]
   },
-  "gitHead": "b45ab44dd8921a2b7a07a14e640f2c0ac8041fed"
+  "gitHead": "df2fea18622b92c7d8dbff4611250bca90838edb"
 }
