@@ -36,7 +36,8 @@
     "@react-native-hello/common": "^0.0.11",
     "@react-native-hello/core": "^0.0.13",
     "@rn-vui/base": "^5.1.7",
-    "@rn-vui/themed": "^5.1.7"
+    "@rn-vui/themed": "^5.1.7",
+    "react-native-theme-mk": "^0.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
