@@ -1,4 +1,4 @@
-import type { IPalette } from '@react-native-hello/ui';
+import type { IPalette } from 'theme-mk';
 
 export const palette: Record<keyof IPalette, string> = {
   black: '#000000',

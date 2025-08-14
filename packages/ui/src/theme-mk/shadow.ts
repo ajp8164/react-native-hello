@@ -1,4 +1,4 @@
-import type { IShadows } from '@react-native-hello/ui';
+import type { IShadows } from 'theme-mk';
 import { type IShadow } from './types';
 import { Platform } from 'react-native';
 

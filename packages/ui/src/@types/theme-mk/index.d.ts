@@ -1,8 +1,4 @@
-import { type IShadow, type IThemeManagerTextStyle } from '../theme-mk/types';
-import { type ColorValue } from 'react-native';
-import { type IStyle } from 'react-native-theme-mk';
-
-declare module '@react-native-hello/ui' {
+declare module 'theme-mk' {
   interface IColor {
     white: ColorValue;
     black: ColorValue;

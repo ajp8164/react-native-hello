@@ -1,10 +1,12 @@
 {
   "extends": "../../tsconfig",
-  "references": [
-    { "path": "../common" },
-    { "path": "../core" }
-  ],
+  "references": [{ "path": "../common" }, { "path": "../core" }],
   "compilerOptions": {
-    "outDir": "./lib/typescript"
-  }
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "outDir": "lib/typescript",
+    "typeRoots": ["./src/@types", "./node_modules/@types"]
+  },
+  "include": ["src", "src/@types"],
+  "exclude": ["lib"]
 }

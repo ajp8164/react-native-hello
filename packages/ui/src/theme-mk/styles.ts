@@ -1,7 +1,7 @@
-import type { IStyles } from '@react-native-hello/ui';
 import { type IBaseThemeSchema } from './types';
 import { Platform } from 'react-native';
 import { type IStyle } from 'react-native-theme-mk';
+import type { IStyles } from 'theme-mk';
 
 export const createElementsStyles = ({
   theme,

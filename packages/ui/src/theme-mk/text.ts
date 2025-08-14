@@ -1,4 +1,4 @@
-import type { ITexts } from '@react-native-hello/ui';
+import type { ITexts } from 'theme-mk';
 import { type IBaseThemeSchema, type IThemeManagerTextStyle } from './types';
 
 export const createTextStyles = ({
