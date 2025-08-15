@@ -1,6 +1,6 @@
-import type { IPalette } from 'theme-mk';
+import type { IPalette } from './types';
 
-export const palette: Record<keyof IPalette, string> = {
+export const palette: IPalette = {
   black: '#000000',
   white: '#ffffff',
   transparent: '#00000000',

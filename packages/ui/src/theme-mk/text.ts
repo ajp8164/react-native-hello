@@ -1,11 +1,10 @@
-import type { ITexts } from 'theme-mk';
-import { type IBaseThemeSchema, type IThemeManagerTextStyle } from './types';
+import { type IBaseThemeSchema, type ITexts } from './types';
 
 export const createTextStyles = ({
   theme,
 }: {
   theme: IBaseThemeSchema;
-}): Record<keyof ITexts, IThemeManagerTextStyle> => ({
+}): ITexts => ({
   h1: {
     color: theme.colors.text,
     fontFamily: theme.fonts.bold,

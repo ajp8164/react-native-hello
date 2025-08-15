@@ -1,13 +1,11 @@
-import { type IBaseThemeSchema } from './types';
+import { type IBaseThemeSchema, type IStyles } from './types';
 import { Platform } from 'react-native';
-import { type IStyle } from 'react-native-theme-mk';
-import type { IStyles } from 'theme-mk';
 
 export const createElementsStyles = ({
   theme,
 }: {
   theme: IBaseThemeSchema;
-}): Record<keyof IStyles, IStyle> => ({
+}): IStyles => ({
   /**
    * Buttons
    */
