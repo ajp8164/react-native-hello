@@ -1,6 +1,8 @@
 import { type ColorValue } from 'react-native';
 import { type IStyle } from 'react-native-theme-mk';
 
+export { type IStyle } from 'react-native-theme-mk';
+
 export interface IThemeManagerTextStyle {
   color: ColorValue | string;
   fontFamily: string;
