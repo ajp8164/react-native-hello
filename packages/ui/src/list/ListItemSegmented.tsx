@@ -1,7 +1,7 @@
 import { ListItem } from '.';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import React from 'react';
-import { View } from 'react-native';
+import { View, type ColorValue } from 'react-native';
 import { ThemeManager, useTheme } from '../theme';
 
 export interface ListItemSegmented extends ListItem {
@@ -9,8 +9,8 @@ export interface ListItemSegmented extends ListItem {
   index?: number;
   onChangeIndex: (index: number) => void;
   segments: string[];
-  segmentBackgroundColor?: string;
-  segmentTintColor?: string;
+  segmentBackgroundColor?: ColorValue;
+  segmentTintColor?: ColorValue;
 }
 
 const ListItemSegmented = (props: ListItemSegmented) => {
@@ -33,10 +33,10 @@ const ListItemSegmented = (props: ListItemSegmented) => {
         values={segments}
         style={[{ width: fullWidth ? '100%' : segments.length * 50 }]}
         tintColor={
-          segmentTintColor || (theme.colors.viewAltBackground as string)
+          (segmentTintColor || theme.colors.viewAltBackground) as string
         }
         backgroundColor={
-          segmentBackgroundColor || (theme.colors.wispGray as string)
+          (segmentBackgroundColor || theme.colors.wispGray) as string
         }
         fontStyle={s.segmentedFont}
         activeFontStyle={s.segmentedActiveFont}

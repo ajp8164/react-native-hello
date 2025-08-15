@@ -1,3 +1,12 @@
+import { ReactNativeHello } from '@react-native-hello/core';
+import type { SVGImages } from '@react-native-hello/common';
+import iconMissing from './img/icon-missing.svg';
+
+type SvgOptions = {
+  fill?: boolean;
+  stroke?: boolean;
+};
+
 export const base64ToSvgStr = (base64Data?: string) => {
   const data = base64Data?.replace('data:image/svg+xml;base64,', '');
   // return atob(data || svgEmpty);
@@ -20,15 +29,6 @@ export const getSvgAspect = (svg: string) => {
     aspect = 1;
   }
   return aspect;
-};
-
-import { ReactNativeHello } from '@react-native-hello/core';
-import type { SVGImages } from '@react-native-hello/common';
-import iconMissing from './img/icon-missing.svg';
-
-type SvgOptions = {
-  fill?: boolean;
-  stroke?: boolean;
 };
 
 export const getColoredSvg = (which: string, opts?: SvgOptions) => {

@@ -7,6 +7,7 @@ import React, {
 import {
   ActivityIndicator,
   type ActivityIndicatorProps,
+  type ColorValue,
   Platform,
   type StyleProp,
   StyleSheet,
@@ -46,7 +47,7 @@ export interface Button
   extends TouchableOpacityProps,
     TouchableNativeFeedbackProps {
   buttonStyle?: StyleProp<ViewStyle>;
-  color?: string;
+  color?: ColorValue;
   containerStyle?: StyleProp<ViewStyle>;
   disabled?: boolean;
   disabledStyle?: StyleProp<ViewStyle>;

@@ -1,5 +1,6 @@
 import { ThemeManager, useTheme } from './theme';
 import {
+  type ColorValue,
   type LayoutChangeEvent,
   Text,
   View,
@@ -20,7 +21,7 @@ interface Calendar {
   dayDots?: DayDots;
   subtitle?: string;
   title?: string;
-  todayColor?: string;
+  todayColor?: ColorValue;
 }
 
 // Fixed two week calendar.
@@ -79,7 +80,7 @@ const Calendar = (props: Calendar) => {
     );
   };
 
-  const renderDot = (day: number, key: number, color?: string) => {
+  const renderDot = (day: number, key: number, color?: ColorValue) => {
     return (
       <View
         key={`${key}`}

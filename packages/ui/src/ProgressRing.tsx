@@ -1,5 +1,11 @@
 import React from 'react';
-import { Text, type TextStyle, View, type ViewStyle } from 'react-native';
+import {
+  type ColorValue,
+  Text,
+  type TextStyle,
+  View,
+  type ViewStyle,
+} from 'react-native';
 import SVG, { Circle } from 'react-native-svg';
 import Animated, {
   useSharedValue,
@@ -13,7 +19,7 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface ProgressRing {
   arc?: number;
-  color?: string;
+  color?: ColorValue;
   containerStyle?: ViewStyle;
   contentStyle?: ViewStyle;
   footNote?: string;
@@ -133,7 +139,10 @@ const ProgressRing = (props: ProgressRing) => {
               <Text style={s.rangeHigh}>{range[1]}</Text>
               {label && (
                 <Text
-                  style={[s.label, { color, backgroundColor: `${color}33` }]}>
+                  style={[
+                    s.label,
+                    { color, backgroundColor: `${color as string}33` },
+                  ]}>
                   {label}
                 </Text>
               )}
