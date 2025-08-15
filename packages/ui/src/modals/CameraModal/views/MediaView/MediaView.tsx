@@ -1,5 +1,5 @@
-import { type AppTheme, useTheme } from '../../../../theme';
-import { Button, Icon } from '@rn-vui/base';
+import { ThemeManager } from '../../../../theme';
+import { Button } from '../../../..';
 import { Image, StyleSheet, View } from 'react-native';
 import type { MediaViewMethods, MediaViewProps } from './types';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
@@ -11,7 +11,6 @@ import Video, {
 import type { ImageLoadEventData } from 'react-native';
 import type { NativeSyntheticEvent } from 'react-native';
 import { log } from '@react-native-hello/core';
-import { makeStyles } from '@rn-vui/themed';
 import { saveToCameraRoll } from '../../helpers';
 import { useIsFocused } from '@react-navigation/core';
 import { useIsForeground } from '../../../../hooks/useIsForeground';
@@ -25,10 +24,9 @@ const isVideoOnLoadEvent = (
 type MediaView = MediaViewMethods;
 
 const MediaView = React.forwardRef<MediaView, MediaViewProps>((props, _ref) => {
-  const { actionButton, onPress, path, saveOnAction = false, type } = props;
+  const { actionButtonIcon, onPress, path, saveOnAction = false, type } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const [hasMediaLoaded, setHasMediaLoaded] = useState(false);
   const isForeground = useIsForeground();
@@ -106,17 +104,8 @@ const MediaView = React.forwardRef<MediaView, MediaViewProps>((props, _ref) => {
       )}
       <Button
         type={'clear'}
-        containerStyle={[s.actionButton, actionButton?.containerStyle]}
-        icon={
-          <Icon
-            name={'send'}
-            type={'material'}
-            color={theme.colors.stickyWhite}
-            size={35}
-            style={{ width: actionButtonSize, left: 4 }}
-            {...actionButton?.icon}
-          />
-        }
+        containerStyle={s.actionButton}
+        icon={actionButtonIcon}
         onPress={() => {
           if (onPress) onPress(mediaWidth.current, mediaHeight.current);
           if (saveOnAction) saveToCameraRoll(path, type);
@@ -126,7 +115,7 @@ const MediaView = React.forwardRef<MediaView, MediaViewProps>((props, _ref) => {
   );
 });
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -136,7 +125,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   actionButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: theme.insets.bottom + 30,
+    bottom: device.inset.bottom + 30,
     width: actionButtonSize,
     height: actionButtonSize,
     borderRadius: actionButtonSize / 2,

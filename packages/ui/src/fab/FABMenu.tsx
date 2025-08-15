@@ -1,5 +1,3 @@
-import { type AppTheme, useTheme } from '../theme';
-import { makeStyles } from '@rn-vui/themed';
 import { Pressable, View } from 'react-native';
 import React, { type ReactElement } from 'react';
 import Animated, {
@@ -9,6 +7,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { FloatingActionButton } from '.';
+import { ThemeManager } from '../theme';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -27,8 +26,7 @@ interface FABMenu {
 const FABMenu = (props: FABMenu) => {
   const { animate = true, buttons, label, onPress } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const isExpanded = useSharedValue(false);
 
@@ -72,7 +70,7 @@ const FABMenu = (props: FABMenu) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   buttonContainer: {
     position: 'absolute',
     display: 'flex',

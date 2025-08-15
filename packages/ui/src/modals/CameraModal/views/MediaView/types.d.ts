@@ -1,7 +1,5 @@
-import { IconProps } from '@rn-vui/base';
 import { MediaType } from '../CameraView';
-import React from 'react';
-import { ViewStyle } from 'react-native';
+import React, { type ReactElement } from 'react';
 
 export declare type MediaView = MediaViewMethods;
 
@@ -11,14 +9,9 @@ declare const MediaView: React.MemoExoticComponent<
   >
 >;
 
-export type MediaActionButton = {
-  containerStyle?: ViewStyle | ViewStyle[];
-  icon?: IconProps;
-};
-
 export interface MediaViewProps {
   // The action button prompting the user to use (capture) the media (image/video).
-  actionButton?: MediaActionButton;
+  actionButtonIcon?: ReactElement;
   // A callback when the action button is pressed.
   onPress?: (mediaWidth: number, mediaHeight: number) => void;
   // Filename for saving media (image/video).

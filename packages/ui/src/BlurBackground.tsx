@@ -1,14 +1,13 @@
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import { BlurView, type BlurViewProps } from '@react-native-community/blur';
 
 import { Platform } from 'react-native';
 import React from 'react';
-import { makeStyles } from '@rn-vui/themed';
 
 const BlurBackground = React.memo(
   ({ style, ...props }: BlurViewProps): React.ReactElement | null => {
     const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     if (Platform.OS !== 'ios') return null;
 
@@ -17,14 +16,16 @@ const BlurBackground = React.memo(
         style={[s.background, style]}
         blurAmount={10}
         blurType={'dark'}
-        reducedTransparencyFallbackColor={theme.colors.blackTransparentMid}
+        reducedTransparencyFallbackColor={
+          theme.colors.blackTransparentMid as string
+        }
         {...props}
       />
     );
   },
 );
 
-const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(() => ({
   background: {
     position: 'absolute',
     top: 0,

@@ -1,6 +1,5 @@
 import React, { useImperativeHandle, useRef, useState } from 'react';
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager, useTheme } from './theme';
 import { SearchBar as RNESearchBar } from '@rn-vui/base';
 import { Search } from 'lucide-react-native';
 import { type ViewStyle } from 'react-native';
@@ -23,7 +22,7 @@ const SearchBar = React.forwardRef<SearchBarMethods, SearchBar>(
     const { containerStyle, onChangeText } = props;
 
     const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     const [search, setSearch] = useState('');
     const innerRef = useRef<SearchBarRef>(null);
@@ -62,9 +61,9 @@ const SearchBar = React.forwardRef<SearchBarMethods, SearchBar>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   cancelButton: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     color: theme.colors.button,
     marginRight: 10,
   },
@@ -75,7 +74,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     minHeight: 50,
   },
   input: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     marginTop: -5,
   },
   inputContainer: {

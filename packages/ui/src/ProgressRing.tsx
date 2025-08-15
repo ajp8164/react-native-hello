@@ -7,8 +7,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useEffect } from 'react';
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager, useTheme } from './theme';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -56,7 +55,7 @@ const ProgressRing = (props: ProgressRing) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const innerRadius = radius - strokeWidth / 2;
   const circumference = 2 * Math.PI * innerRadius;
@@ -147,7 +146,7 @@ const ProgressRing = (props: ProgressRing) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   container: {
     alignItems: 'center',
     width: '100%',
@@ -158,15 +157,15 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     top: '28%',
   },
   footNote: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     ...theme.styles.textDim,
     alignSelf: 'center',
     top: 35,
     textAlign: 'center',
   },
   label: {
-    ...theme.styles.textNormal,
-    ...theme.styles.textBold,
+    ...theme.text.normal,
+    fontFamily: theme.fonts.bold,
     position: 'absolute',
     alignSelf: 'center',
     borderRadius: 7,
@@ -180,24 +179,24 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     justifyContent: 'center',
   },
   rangeLow: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     left: '22%',
     position: 'absolute',
     width: 35,
     textAlign: 'right',
   },
   rangeHigh: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     right: '22%',
     position: 'absolute',
     width: 35,
     textAlign: 'left',
   },
   title: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
   },
   value: {
-    ...theme.styles.textHeading1,
+    ...theme.text.h1,
     textAlign: 'center',
     marginTop: -5,
   },

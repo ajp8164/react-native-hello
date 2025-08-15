@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme, viewport } from '../../theme';
+import { ThemeManager, useDevice, useTheme } from '../../theme';
 import type {
   CameraModalMethods,
   CameraModalProps,
@@ -14,27 +14,24 @@ import CameraView, {
   type PhotoFile,
   type VideoFile,
 } from './views/CameraView';
-import MediaView, {
-  type MediaActionButton,
-  type MediaViewMethods,
-} from './views/MediaView';
-import React, { useImperativeHandle, useRef } from 'react';
+import MediaView, { type MediaViewMethods } from './views/MediaView';
+import React, { useImperativeHandle, useRef, type ReactElement } from 'react';
 import { StatusBar, View } from 'react-native';
 
 import type { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Modal } from '../Modal';
 import { ModalHeader } from '../ModalHeader';
-import { makeStyles } from '@rn-vui/themed';
 import { saveToCameraRoll } from './helpers';
 import { selectImage } from '../../lib/imageSelect';
 import { useSetState } from '@react-native-hello/core';
+import { Images } from 'lucide-react-native';
 
 type CameraModal = CameraModalMethods;
 
 const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
   (props, ref) => {
     const {
-      actionButton: _actionButton,
+      actionButtonIcon: _actionButtonIcon,
       onCancel: _onCancel,
       onCapture: _onCapture,
       onSelect: _onSelect,
@@ -42,13 +39,14 @@ const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
     } = props;
 
     const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
+    const device = useDevice();
 
     const innerRef = useRef<BottomSheetModalMethods>(null);
     const cameraViewRef = useRef<CameraViewMethods>(null);
     const mediaViewRef = useRef<MediaViewMethods>(null);
 
-    const actionButton = useRef<MediaActionButton | undefined>(_actionButton);
+    const actionButton = useRef<ReactElement | undefined>(_actionButtonIcon);
     const onCancelCallback = useRef<OnCancelCallback | undefined>(_onCancel);
     const onCaptureCallback = useRef<OnCaptureCallback | undefined>(_onCapture);
     const onSelectCallback = useRef<OnSelectCallback | undefined>(_onSelect);
@@ -81,8 +79,8 @@ const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
     };
 
     const present = (args?: PresentInterface) => {
-      if (args?.opts?.actionButton) {
-        actionButton.current = args?.opts?.actionButton;
+      if (args?.opts?.actionButtonIcon) {
+        actionButton.current = args?.opts?.actionButtonIcon;
       }
       if (args?.onCancel) onCancelCallback.current = args?.onCancel;
       if (args?.onCapture) onCaptureCallback.current = args?.onCapture;
@@ -153,7 +151,7 @@ const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
     return (
       <Modal
         ref={innerRef}
-        snapPoints={[viewport.height + 50]}
+        snapPoints={[device.screen.height + 50]}
         onDismiss={onDismiss}
         scrollEnabled={false}
         enableGestureBehavior={false}
@@ -163,9 +161,10 @@ const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
           blurBackground={true}
           containerStyle={s.headerContainer}
           leftButtonIcon={
-            mediaCapture.showMediaView ? undefined : 'image-multiple-outline'
+            mediaCapture.showMediaView ? undefined : (
+              <Images color={theme.colors.stickyWhite} />
+            )
           }
-          leftButtonIconColor={theme.colors.stickyWhite}
           leftButtonText={mediaCapture.showMediaView ? 'Retake' : undefined}
           leftButtonTextStyle={[s.headerButton, s.retakeButton]}
           onLeftButtonPress={() =>
@@ -180,7 +179,7 @@ const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
           <View style={s.mediaView}>
             <MediaView
               ref={mediaViewRef}
-              actionButton={actionButton.current}
+              actionButtonIcon={actionButton.current}
               path={mediaCapture.media.path}
               type={mediaCapture.type}
               onPress={onPreviewAction}
@@ -192,10 +191,10 @@ const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   headerContainer: {
     position: 'absolute',
-    top: theme.insets.top - 20,
+    top: device.inset.top - 20,
     zIndex: 1,
     width: '100%',
   },
@@ -208,7 +207,8 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     height: '100%',
   },
   doneButton: {
-    ...theme.styles.textBold,
+    ...theme.text.normal,
+    fontFamily: theme.fonts.bold,
     color: theme.colors.warning,
   },
   retakeButton: {

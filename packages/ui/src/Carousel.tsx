@@ -1,6 +1,5 @@
 import React, { useImperativeHandle } from 'react';
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager } from './theme';
 import { View, type ViewStyle } from 'react-native';
 import RNACarousel, {
   type ICarouselInstance,
@@ -35,8 +34,7 @@ const Carousel = React.forwardRef<CarouselMethods, CarouselProps>(
   (props, ref) => {
     const { hidePagination, pages, paginationContainer, ...rest } = props;
 
-    const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     const innerRef = React.useRef<ICarouselInstance>(null);
     const progress = useSharedValue<number>(0);
@@ -100,7 +98,7 @@ const Carousel = React.forwardRef<CarouselMethods, CarouselProps>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   activeDot: {
     backgroundColor: theme.colors.lightGray,
     borderRadius: 8,

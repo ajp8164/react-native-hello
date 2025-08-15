@@ -1,5 +1,4 @@
-import { type AppTheme, useTheme } from '../theme';
-import { Button, Icon } from '@rn-vui/base';
+import { ThemeManager, useDevice } from '../theme';
 import {
   type LayoutChangeEvent,
   Text,
@@ -9,8 +8,8 @@ import {
 } from 'react-native';
 
 import { BlurBackground } from '../BlurBackground';
-import React from 'react';
-import { makeStyles } from '@rn-vui/themed';
+import React, { type ReactElement } from 'react';
+import { Button } from '..';
 
 interface ModalHeaderInterface {
   blurBackground?: boolean;
@@ -19,10 +18,7 @@ interface ModalHeaderInterface {
   leftButtonDisabled?: boolean;
   leftButtonText?: string;
   leftButtonTextStyle?: TextStyle | TextStyle[];
-  leftButtonIcon?: string;
-  leftButtonIconColor?: string;
-  leftButtonIconSize?: number;
-  leftButtonIconType?: string;
+  leftButtonIcon?: ReactElement;
   onLayout?: (event: LayoutChangeEvent) => void;
   onLeftButtonPress?: () => void;
   onRightButtonPress?: () => void;
@@ -30,10 +26,7 @@ interface ModalHeaderInterface {
   rightButtonDisabled?: boolean;
   rightButtonText?: string;
   rightButtonTextStyle?: TextStyle | TextStyle[];
-  rightButtonIcon?: string;
-  rightButtonIconColor?: string;
-  rightButtonIconSize?: number;
-  rightButtonIconType?: string;
+  rightButtonIcon?: ReactElement;
   size?: 'small' | 'large';
   title?: string;
 }
@@ -46,9 +39,6 @@ const ModalHeader = ({
   leftButtonText,
   leftButtonTextStyle,
   leftButtonIcon,
-  leftButtonIconColor,
-  leftButtonIconSize = 28,
-  leftButtonIconType = 'material-community',
   onLayout,
   onLeftButtonPress,
   onRightButtonPress,
@@ -57,14 +47,11 @@ const ModalHeader = ({
   rightButtonText,
   rightButtonTextStyle,
   rightButtonIcon,
-  rightButtonIconColor,
-  rightButtonIconSize = 28,
-  rightButtonIconType = 'material-community',
   size = 'large',
   title,
 }: ModalHeaderInterface) => {
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
+  const device = useDevice();
 
   const onHeaderLayout = (event: LayoutChangeEvent) => {
     if (onLayout) onLayout(event);
@@ -77,8 +64,8 @@ const ModalHeader = ({
           style={{
             height:
               size === 'large'
-                ? theme.insets.top + Number(theme.styles.headerBarLarge.height)
-                : theme.insets.top + Number(theme.styles.headerBar.height),
+                ? device.inset.top + Number(device.headerBarLarge.height)
+                : device.inset.top + Number(device.headerBar.height),
           }}
         />
       )}
@@ -97,16 +84,7 @@ const ModalHeader = ({
           title={leftButtonText}
           titleStyle={[s.buttonText, leftButtonTextStyle]}
           loading={leftButtonBusy}
-          icon={
-            leftButtonIcon ? (
-              <Icon
-                name={leftButtonIcon}
-                type={leftButtonIconType}
-                color={leftButtonIconColor}
-                size={leftButtonIconSize}
-              />
-            ) : undefined
-          }
+          icon={leftButtonIcon ? leftButtonIcon : undefined}
           disabled={leftButtonDisabled}
           onPress={onLeftButtonPress}
         />
@@ -119,16 +97,7 @@ const ModalHeader = ({
           title={rightButtonText}
           titleStyle={[s.buttonText, rightButtonTextStyle]}
           loading={rightButtonBusy}
-          icon={
-            rightButtonIcon ? (
-              <Icon
-                name={rightButtonIcon}
-                type={rightButtonIconType}
-                color={rightButtonIconColor}
-                size={rightButtonIconSize}
-              />
-            ) : undefined
-          }
+          icon={rightButtonIcon ? rightButtonIcon : undefined}
           disabled={rightButtonDisabled}
           onPress={onRightButtonPress}
         />
@@ -137,7 +106,7 @@ const ModalHeader = ({
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   viewLarge: {
     paddingHorizontal: 15,
     flexDirection: 'row',
@@ -166,18 +135,18 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   buttonLarge: {},
   buttonSmall: {},
   buttonText: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     color: theme.colors.screenHeaderButtonText,
   },
   titleLarge: {
-    ...theme.styles.textHeading1,
+    ...theme.text.h1,
     fontSize: 34.5,
     letterSpacing: -1.7,
     marginTop: 45,
   },
   titleSmall: {
-    ...theme.styles.textLarge,
-    ...theme.styles.textBold,
+    ...theme.text.large,
+    fontFamily: theme.fonts.bold,
     marginVertical: 8,
   },
 }));

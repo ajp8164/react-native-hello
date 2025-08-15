@@ -1,8 +1,7 @@
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import { TextInput } from 'react-native';
 
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@rn-vui/themed';
 import {
   FakeCurrencyInput,
   type FakeCurrencyInputProps,
@@ -29,7 +28,7 @@ const MaskedNumberInput = React.forwardRef<
   const { mask = '000.00', onChangeText, value, ...rest } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   // Parse the mask.
   // Capture a prefix and apply to the result.
@@ -97,7 +96,7 @@ const MaskedNumberInput = React.forwardRef<
   );
 });
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   caret: {
     color: theme.colors.text,
     left: -5,

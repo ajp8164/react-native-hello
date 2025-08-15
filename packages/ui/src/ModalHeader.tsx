@@ -1,9 +1,7 @@
-import { makeStyles } from '@rn-vui/themed';
-import { Button } from './Button';
-
+import { Button } from '.';
 import React, { type ReactElement } from 'react';
 import { Text, View } from 'react-native';
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 
 interface ModalHeader {
   buttonLeftDisabled?: boolean;
@@ -31,7 +29,7 @@ const ModalHeader = (props: ModalHeader) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const buttonLeftIsElement = React.isValidElement(buttonLeftLabel);
   const buttonRightIsElement = React.isValidElement(buttonRightLabel);
@@ -74,7 +72,7 @@ const ModalHeader = (props: ModalHeader) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   buttonLeft: {
     ...theme.styles.buttonScreenHeader,
     width: 'auto',
@@ -98,7 +96,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     backgroundColor: theme.colors.screenHeaderBackground,
   },
   title: {
-    ...theme.styles.textLarge,
+    ...theme.text.large,
     fontWeight: '500',
     position: 'absolute',
     width: '100%',

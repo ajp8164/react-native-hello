@@ -5,8 +5,7 @@ import {
   useLinkBuilder,
 } from '@react-navigation/native';
 import { Text, PlatformPressable } from '@react-navigation/elements';
-import { makeStyles } from '@rn-vui/themed';
-import { type AppTheme, useTheme, viewport } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import { type BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
@@ -18,7 +17,7 @@ import React from 'react';
  */
 const NavTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const { buildHref } = useLinkBuilder();
 
@@ -61,7 +60,7 @@ const NavTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
             style={s.button}>
             {icon
               ? icon({
-                  color: theme.colors.buttonText,
+                  color: theme.colors.buttonText as string,
                   focused: isFocused,
                   size: 0,
                 })
@@ -76,10 +75,10 @@ const NavTabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   bar: {
     flexDirection: 'row',
-    width: viewport.width - 30,
+    width: device.screen.width - 30,
     position: 'absolute',
     bottom: 25,
     height: 54,
@@ -98,7 +97,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     marginTop: 2,
   },
   label: {
-    ...theme.styles.textTiny,
+    ...theme.text.tiny,
     color: theme.colors.buttonText,
   },
 }));

@@ -1,7 +1,6 @@
-import { type AppTheme, useTheme } from '../theme';
+import { ThemeManager, useTheme } from '../theme';
 import React from 'react';
 import { CheckBox } from '../CheckBox';
-import { makeStyles } from '@rn-vui/themed';
 import { Check } from 'lucide-react-native';
 import { ListItem } from './ListItem';
 
@@ -18,7 +17,7 @@ const ListItemCheckBox = (props: ListItemCheckBox) => {
     props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   return (
     <ListItem
@@ -34,8 +33,8 @@ const ListItemCheckBox = (props: ListItemCheckBox) => {
             )
           }
           uncheckedIcon={uncheckedIcon ? uncheckedIcon : <></>}
-          checkedColor={theme.colors.checkboxActive}
-          uncheckedColor={theme.colors.checkboxInactive}
+          checkedColor={theme.colors.checkboxActive as string}
+          uncheckedColor={theme.colors.checkboxInactive as string}
           disabled={disabled}
           containerStyle={{ backgroundColor: theme.colors.transparent }}
           onPress={() => onChange(true)}
@@ -48,7 +47,7 @@ const ListItemCheckBox = (props: ListItemCheckBox) => {
   );
 };
 
-const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(() => ({
   checkbox: {
     right: 0,
   },

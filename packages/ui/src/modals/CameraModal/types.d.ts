@@ -1,5 +1,4 @@
 import type { Asset } from '../../lib/imageSelect';
-import type { MediaActionButton } from './views/MediaView';
 import type { RawMediaCapture } from './views/CameraView';
 import React from 'react';
 
@@ -29,13 +28,13 @@ export type PresentInterface = {
   onSelect?: OnSelectCallback;
   opts?: {
     preview?: boolean;
-    actionButton?: MediaActionButton;
+    actionButtonIcon?: ReactElement;
   };
 };
 
 export interface CameraModalProps {
   // The action button prompting the user to use (capture) the media (image/video).
-  actionButton?: MediaActionButton;
+  actionButtonIcon?: ReactElement;
   // Callback when the camera modal is canceled/closed.
   onCancel?: OnCancelCallback;
   // Callback when an image/video is captured. Only called when preview is set true.

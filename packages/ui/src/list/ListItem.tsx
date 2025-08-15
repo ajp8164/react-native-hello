@@ -1,4 +1,3 @@
-import { makeStyles } from '@rn-vui/themed';
 import {
   ChevronDown,
   ChevronRight,
@@ -15,7 +14,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { type AppTheme, useTheme } from '../theme';
+import { ThemeManager, useTheme, type IThemeManagerSchema } from '../theme';
 
 interface ListItem {
   bottomDividerColor?: string;
@@ -53,7 +52,7 @@ interface ListItem {
   onPressRight?: () => void;
 }
 
-const getRightContent = (key: string, theme: AppTheme) => {
+const getRightContent = (key: string, theme: IThemeManagerSchema) => {
   switch (key) {
     case 'chevron-down':
       return <ChevronDown color={theme.colors.listItemIconNav} />;
@@ -101,7 +100,7 @@ const ListItem = (props: ListItem) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const _bottomDividerColor =
     bottomDividerColor || (s.border.borderColor as string);
@@ -224,7 +223,7 @@ const ListItem = (props: ListItem) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   border: {
     left: 15,
     right: 0,
@@ -281,7 +280,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     paddingHorizontal: 10,
   },
   subtitle: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     color: theme.colors.listItemSubtitle,
   },
   titleSubtitle: {
@@ -290,11 +289,11 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     justifyContent: 'center',
   },
   title: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     color: theme.colors.listItemTitle,
   },
   value: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     color: theme.colors.listItemValue,
     textAlign: 'right',
     alignSelf: 'center',

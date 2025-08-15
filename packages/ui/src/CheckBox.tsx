@@ -1,5 +1,4 @@
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager, useTheme } from './theme';
 import { type GestureResponderEvent, type ViewStyle } from 'react-native';
 import React from 'react';
 import {
@@ -16,7 +15,7 @@ interface CheckBox extends Omit<RNECheckBoxProps, 'children'> {
 
 const CheckBox = ({ checked, containerStyle, onPress, ...rest }: CheckBox) => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   return (
     <RNECheckBox
@@ -24,8 +23,8 @@ const CheckBox = ({ checked, containerStyle, onPress, ...rest }: CheckBox) => {
       checked={checked}
       checkedIcon={<SquareCheckBig color={theme.colors.listItemIcon} />}
       uncheckedIcon={<Square color={theme.colors.listItemIcon} />}
-      checkedColor={theme.colors.checkboxActive}
-      uncheckedColor={theme.colors.checkboxInactive}
+      checkedColor={theme.colors.checkboxActive as string}
+      uncheckedColor={theme.colors.checkboxInactive as string}
       containerStyle={[s.checkbox, containerStyle]}
       onPress={onPress}
       {...rest}
@@ -33,7 +32,7 @@ const CheckBox = ({ checked, containerStyle, onPress, ...rest }: CheckBox) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   check: {
     top: 3,
     textAlign: 'center',

@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme, viewport } from '../../../../theme';
+import { ThemeManager, useDevice } from '../../../../theme';
 import type {
   Camera,
   TakePhotoOptions,
@@ -31,7 +31,6 @@ import Reanimated, {
 import { Text, View, type ViewProps } from 'react-native';
 
 import { log } from '@react-native-hello/core';
-import { makeStyles } from '@rn-vui/themed';
 // import { Gesture } from 'react-native-gesture-handler/lib/typescript/handlers/gestures/gesture';
 
 const captureButtonSize = 85;
@@ -62,8 +61,8 @@ const _CaptureButton: React.FC<Props> = ({
   style,
   ...props
 }): React.ReactElement => {
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
+  const device = useDevice();
 
   const pressDownDate = useRef<Date | undefined>(undefined);
   const isRecording = useRef(false);
@@ -238,7 +237,7 @@ const _CaptureButton: React.FC<Props> = ({
     },
     onActive: (event, context) => {
       const offset = context.offsetY ?? 0;
-      const startY = context.startY ?? viewport.height;
+      const startY = context.startY ?? device.screen.height;
       const yForFullZoom = startY * 0.7;
 
       cameraZoom.value = interpolate(
@@ -308,7 +307,7 @@ const _CaptureButton: React.FC<Props> = ({
 
   const panGesture = Gesture.Pan()
     .enabled(enabled)
-    .failOffsetX([-viewport.width, viewport.width])
+    .failOffsetX([-device.screen.width, device.screen.width])
     .activeOffsetY([-2, 2]);
   panGesture.handlers.onChange = onPanGestureEvent;
 
@@ -352,7 +351,7 @@ const _CaptureButton: React.FC<Props> = ({
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   flex: {
     flex: 1,
     alignItems: 'center',
@@ -382,7 +381,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     backgroundColor: theme.colors.stickyWhite,
   },
   buttonInfo: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     color: theme.colors.stickyWhite,
     top: 10,
   },

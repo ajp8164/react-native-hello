@@ -1,8 +1,7 @@
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import { Text, type TextStyle, View, type ViewStyle } from 'react-native';
 
 import React from 'react';
-import { makeStyles } from '@rn-vui/themed';
 import { Circle } from 'lucide-react-native';
 
 export type BulletItem = {
@@ -40,7 +39,7 @@ const BulletList = ({
   bulletStyle,
 }: BulletList) => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   let count = initialCount;
 
@@ -116,7 +115,7 @@ const BulletList = ({
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   container: {},
   row: {
     flexDirection: 'row',
@@ -125,16 +124,16 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     marginBottom: 10,
   },
   bulletStyle: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     marginRight: 10,
     fontSize: 40,
   },
   itemStyle: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     marginRight: 10,
   },
   subItemStyle: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     marginRight: 10,
   },
 }));

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { type AppTheme, useTheme, viewport } from '../../../../theme';
+import { ThemeManager, useDevice } from '../../../../theme';
 import {
   Camera,
   type CameraProps,
@@ -38,7 +38,6 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from 'react-native';
 import { log } from '@react-native-hello/core';
-import { makeStyles } from '@rn-vui/themed';
 import { useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/core';
 import { useIsForeground } from '../../../../hooks/useIsForeground';
@@ -58,8 +57,8 @@ type CameraView = CameraViewMethods;
 const CameraView = React.forwardRef<CameraView, CameraViewProps>(
   (props, _ref) => {
     const { onMediaCaptured } = props;
-    const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
+    const device = useDevice();
 
     const camera = useRef<Camera>(null);
     const [isCameraInitialized, setIsCameraInitialized] = useState(false);
@@ -82,20 +81,20 @@ const CameraView = React.forwardRef<CameraView, CameraViewProps>(
 
     // camera device settings
     const [preferredDevice] = usePreferredCameraDevice();
-    let device = useCameraDevice(cameraPosition);
+    let cameraDevice = useCameraDevice(cameraPosition);
 
     if (
       preferredDevice != null &&
       preferredDevice.position === cameraPosition
     ) {
       // override default device with the one selected by the user in settings
-      device = preferredDevice;
+      cameraDevice = preferredDevice;
     }
 
     const [targetFps, setTargetFps] = useState(60);
 
-    const screenAspectRatio = viewport.height / viewport.width;
-    const format = useCameraFormat(device, [
+    const screenAspectRatio = device.screenAspectRatio;
+    const format = useCameraFormat(cameraDevice, [
       { fps: targetFps },
       { videoAspectRatio: screenAspectRatio },
       { videoResolution: 'max' },
@@ -105,17 +104,17 @@ const CameraView = React.forwardRef<CameraView, CameraViewProps>(
 
     const fps = Math.min(format?.maxFps ?? 1, targetFps);
 
-    const supportsFlash = device?.hasFlash ?? false;
+    const supportsFlash = cameraDevice?.hasFlash ?? false;
     const supportsHdr = format?.supportsPhotoHdr;
     const supports60Fps = useMemo(
-      () => device?.formats.some(f => f.maxFps >= 60),
-      [device?.formats],
+      () => cameraDevice?.formats.some(f => f.maxFps >= 60),
+      [cameraDevice?.formats],
     );
-    const canToggleNightMode = device?.supportsLowLightBoost ?? false;
+    const canToggleNightMode = cameraDevice?.supportsLowLightBoost ?? false;
 
     //#region Animated Zoom
-    const minZoom = device?.minZoom ?? 1;
-    const maxZoom = Math.min(device?.maxZoom ?? 1, maxZoomFactor);
+    const minZoom = cameraDevice?.minZoom ?? 1;
+    const maxZoom = Math.min(cameraDevice?.maxZoom ?? 1, maxZoomFactor);
 
     const cameraAnimatedProps = useAnimatedProps<CameraProps>(() => {
       const z = Math.max(Math.min(zoom.value, maxZoom), minZoom);
@@ -154,13 +153,13 @@ const CameraView = React.forwardRef<CameraView, CameraViewProps>(
     //#region Tap Gesture
     const onFocusTap = useCallback(
       ({ nativeEvent: event }: GestureResponderEvent) => {
-        if (!device?.supportsFocus) return;
+        if (!cameraDevice?.supportsFocus) return;
         camera.current?.focus({
           x: event.locationX,
           y: event.locationY,
         });
       },
-      [device?.supportsFocus],
+      [cameraDevice?.supportsFocus],
     );
 
     const onDoubleTap = useCallback(() => {
@@ -170,9 +169,9 @@ const CameraView = React.forwardRef<CameraView, CameraViewProps>(
 
     //#region Effects
     useEffect(() => {
-      // Reset zoom to it's default everytime the `device` changes.
-      zoom.value = device?.neutralZoom ?? 1;
-    }, [zoom, device]);
+      // Reset zoom to it's default everytime the `cameraDevice` changes.
+      zoom.value = cameraDevice?.neutralZoom ?? 1;
+    }, [zoom, cameraDevice]);
     //#endregion
 
     //#region Pinch to Zoom Gesture
@@ -209,8 +208,8 @@ const CameraView = React.forwardRef<CameraView, CameraViewProps>(
         format != null
           ? `(${format.photoWidth}x${format.photoHeight} photo / ${format.videoWidth}x${format.videoHeight}@${format.maxFps} video @ ${fps}fps)`
           : undefined;
-      log.debug(`Camera: ${device?.name} | Format: ${f}`);
-    }, [device?.name, format, fps]);
+      log.debug(`Camera: ${cameraDevice?.name} | Format: ${f}`);
+    }, [cameraDevice?.name, format, fps]);
 
     useEffect(() => {
       location.requestPermission();
@@ -229,44 +228,46 @@ const CameraView = React.forwardRef<CameraView, CameraViewProps>(
               onTouchEnd={onFocusTap}
               style={StyleSheet.absoluteFill}>
               <TapGestureHandler onEnded={onDoubleTap} numberOfTaps={2}>
-                <ReanimatedCamera
-                  style={StyleSheet.absoluteFill}
-                  device={device}
-                  isActive={isActive}
-                  ref={camera}
-                  onInitialized={onInitialized}
-                  onError={onError}
-                  onStarted={() => console.log('Camera started!')}
-                  onStopped={() => console.log('Camera stopped!')}
-                  onPreviewStarted={() => console.log('Preview started!')}
-                  onPreviewStopped={() => console.log('Preview stopped!')}
-                  onOutputOrientationChanged={o =>
-                    console.log(`Output orientation changed to ${o}!`)
-                  }
-                  onPreviewOrientationChanged={o =>
-                    console.log(`Preview orientation changed to ${o}!`)
-                  }
-                  onUIRotationChanged={degrees =>
-                    console.log(`UI Rotation changed: ${degrees}°`)
-                  }
-                  format={format}
-                  fps={fps}
-                  photoHdr={photoHdr}
-                  videoHdr={videoHdr}
-                  photoQualityBalance="quality"
-                  lowLightBoost={
-                    device.supportsLowLightBoost && enableNightMode
-                  }
-                  enableZoomGesture={false}
-                  animatedProps={cameraAnimatedProps}
-                  exposure={0}
-                  enableFpsGraph={true}
-                  outputOrientation="device"
-                  photo={true}
-                  video={true}
-                  audio={microphone.hasPermission}
-                  enableLocation={location.hasPermission}
-                />
+                {cameraDevice ? (
+                  <ReanimatedCamera
+                    style={StyleSheet.absoluteFill}
+                    device={cameraDevice}
+                    isActive={isActive}
+                    ref={camera}
+                    onInitialized={onInitialized}
+                    onError={onError}
+                    onStarted={() => console.log('Camera started!')}
+                    onStopped={() => console.log('Camera stopped!')}
+                    onPreviewStarted={() => console.log('Preview started!')}
+                    onPreviewStopped={() => console.log('Preview stopped!')}
+                    onOutputOrientationChanged={o =>
+                      console.log(`Output orientation changed to ${o}!`)
+                    }
+                    onPreviewOrientationChanged={o =>
+                      console.log(`Preview orientation changed to ${o}!`)
+                    }
+                    onUIRotationChanged={degrees =>
+                      console.log(`UI Rotation changed: ${degrees}°`)
+                    }
+                    format={format}
+                    fps={fps}
+                    photoHdr={photoHdr}
+                    videoHdr={videoHdr}
+                    photoQualityBalance="quality"
+                    lowLightBoost={
+                      cameraDevice.supportsLowLightBoost && enableNightMode
+                    }
+                    enableZoomGesture={false}
+                    animatedProps={cameraAnimatedProps}
+                    exposure={0}
+                    enableFpsGraph={true}
+                    outputOrientation="device"
+                    photo={true}
+                    video={true}
+                    audio={microphone.hasPermission}
+                    enableLocation={location.hasPermission}
+                  />
+                ) : null}
               </TapGestureHandler>
             </Reanimated.View>
           </PinchGestureHandler>
@@ -332,7 +333,7 @@ const CameraView = React.forwardRef<CameraView, CameraViewProps>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   container: {
     flex: 1,
     backgroundColor: theme.colors.stickyBlack,
@@ -343,7 +344,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   captureButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: theme.insets.bottom,
+    bottom: device.inset.bottom,
   },
   button: {
     marginBottom: 15,
@@ -360,8 +361,8 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     top: '30%',
   },
   text: {
-    ...theme.styles.textTiny,
-    ...theme.styles.textBold,
+    ...theme.text.tiny,
+    fontFamily: theme.fonts.bold,
     color: theme.colors.stickyWhite,
     textAlign: 'center',
   },

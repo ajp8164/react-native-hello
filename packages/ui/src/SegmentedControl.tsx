@@ -1,6 +1,5 @@
-import { makeStyles } from '@rn-vui/themed';
 import React, { useState } from 'react';
-import { type AppTheme, fontFamily, fontSizes, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import RNSegmentedControl, {
   type SegmentedControlProps as RNSegmentedControlProps,
 } from '@react-native-segmented-control/segmented-control';
@@ -18,7 +17,7 @@ const SegmentedControl = (props: SegmentedControl) => {
   const { containerStyle, initialIndex, onChange, ...rest } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const [selectedIndex, setSelectedIndex] = useState(initialIndex || 0);
 
@@ -28,12 +27,12 @@ const SegmentedControl = (props: SegmentedControl) => {
         <View style={[s.border, s.borderClip]} />
         <RNSegmentedControl
           selectedIndex={selectedIndex}
-          backgroundColor={theme.colors.segmentBackground}
-          tintColor={theme.colors.segmentActive}
+          backgroundColor={theme.colors.segmentBackground as string}
+          tintColor={theme.colors.segmentActive as string}
           activeFontStyle={{ ...s.itemText, ...s.activeItemText }}
           fontStyle={s.itemText}
           style={[s.control, rest.style]}
-          appearance={theme.mode}
+          appearance={ThemeManager.name}
           onChange={event => {
             setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
             onChange(event.nativeEvent.selectedSegmentIndex);
@@ -45,7 +44,7 @@ const SegmentedControl = (props: SegmentedControl) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   activeItemText: {},
   // iOS native component is used and doesn't provide border styling. We create our own border and
   // clip the radius border of the iOS control (overflow hidden).
@@ -66,8 +65,8 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     height: controlHeight,
   },
   itemText: {
-    fontSize: fontSizes.small,
-    fontFamily,
+    fontSize: theme.fontSize.small,
+    fontFamily: theme.fonts.regular,
     allowFontScaling: false,
   },
 }));

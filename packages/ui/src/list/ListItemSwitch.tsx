@@ -1,7 +1,7 @@
 import { useTheme } from '../theme';
 import React from 'react';
 import { ListItem } from './ListItem';
-import { Switch } from '@rn-vui/base';
+import { Switch } from 'react-native';
 
 interface ListItemSwitch extends Omit<ListItem, 'value'> {
   disabled?: boolean;

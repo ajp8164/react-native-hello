@@ -7,8 +7,7 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager } from './theme';
 import React, { useState, type ReactNode } from 'react';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -61,8 +60,7 @@ const Input = React.forwardRef<InputMethods, Input>(
     }: Input,
     ref,
   ) => {
-    const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     const [messageHeight, setMessageHeight] = useState<number | undefined>();
 
@@ -148,12 +146,12 @@ const Input = React.forwardRef<InputMethods, Input>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   error: {
     color: theme.colors.assertive,
   },
   label: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     ...theme.styles.textDim,
   },
   labelContainer: {
@@ -162,7 +160,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     left: 6,
   },
   message: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     height: 17, // Needs to change if font size changes
     marginTop: 5,
     alignSelf: 'flex-start',
@@ -177,7 +175,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     flex: 1,
   },
   textInput: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     width: '100%',
     backgroundColor: theme.colors.listItem,
     borderRadius: 10, //theme.styles.button.borderRadius,

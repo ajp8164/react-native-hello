@@ -1,5 +1,4 @@
 import { uuidv4 } from '@react-native-hello/core';
-import { makeStyles } from '@rn-vui/themed';
 import { GripHorizontal } from 'lucide-react-native';
 import React, {
   type ReactElement,
@@ -22,7 +21,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { type AppTheme, useTheme } from '../theme';
+import { ThemeManager, useTheme } from '../theme';
 import type { ListEditorMethods } from './ListEditor';
 
 const dragHandleWidth = 44;
@@ -73,7 +72,7 @@ const ListItemSwipeable = React.forwardRef<
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const [rerender, setRerender] = useState(false);
   const swipeableRef = useRef<SwipeableMethods>(null);
@@ -223,7 +222,7 @@ const ListItemSwipeable = React.forwardRef<
   };
 
   return (
-    <View style={[dragIsActive ? theme.styles.shadowGlow : {}]}>
+    <View style={[dragIsActive ? theme.shadow.glow : {}]}>
       <AppleStyleSwipeableRow
         ref={swipeableRef}
         containerStyle={[
@@ -277,7 +276,7 @@ const ListItemSwipeable = React.forwardRef<
   );
 });
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   dragTouchContainer: {
     width: dragHandleWidth,
     height: '100%',

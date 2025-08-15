@@ -6,8 +6,7 @@ import {
   View,
   type ViewProps,
 } from 'react-native';
-import { type AppTheme, useTheme } from '../theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager } from '../theme';
 import { type ListItemSwipeableMethods } from './ListItemSwipeable';
 
 // This list editor works with ListItemSwipeable items only.
@@ -42,8 +41,7 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
   (props: ListEditor, ref) => {
     const { children, listLayout, onChangeState, ...rest } = props;
 
-    const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     const listEditor = useListEditor();
 
@@ -106,7 +104,7 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
   },
 );
 
-const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(() => ({
   container: {
     flex: 1,
   },

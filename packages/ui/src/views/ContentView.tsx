@@ -65,7 +65,7 @@ const ContentView = ({
             {i.title ? (
               <Text
                 style={[
-                  theme.styles.textHeading5,
+                  theme.text.h5,
                   { marginBottom: 15, color: theme.colors.text },
                   titleStyle,
                 ]}>
@@ -73,16 +73,16 @@ const ContentView = ({
               </Text>
             ) : null}
             {i.text ? (
-              <Text style={[theme.styles.textNormal, textStyle]}>{i.text}</Text>
+              <Text style={[theme.text.normal, textStyle]}>{i.text}</Text>
             ) : null}
             {i.orderedBullets ? (
               <BulletList
                 containerStyle={{ marginTop: 10 }}
                 bulletStyle={[
-                  theme.styles.textNormal,
+                  theme.text.normal,
                   { color: theme.colors.lightGray },
                 ]}
-                itemStyle={theme.styles.textNormal}
+                itemStyle={theme.text.normal}
                 type={'ordered'}
                 items={i.orderedBullets.map(b => {
                   return b;
@@ -93,10 +93,10 @@ const ContentView = ({
               <BulletList
                 containerStyle={{ marginTop: 10 }}
                 bulletStyle={[
-                  theme.styles.textNormal,
+                  theme.text.normal,
                   { color: theme.colors.lightGray },
                 ]}
-                itemStyle={theme.styles.textNormal}
+                itemStyle={theme.text.normal}
                 type={'unordered'}
                 items={i.unorderedBullets.map(b => {
                   return b;
@@ -112,17 +112,17 @@ const ContentView = ({
                     height: 200,
                   },
                 ]}>
-                <Text style={theme.styles.textNormal}>
+                <Text style={theme.text.normal}>
                   {i.link.prefix}
                   <Text
-                    style={[theme.styles.textNormal, theme.styles.textLink]}
+                    style={[theme.text.normal, theme.styles.textLink]}
                     onPress={() => {
                       openURL(i.link?.url || '');
                     }}>
                     {i.link.text}
                   </Text>
                   {i.link.suffix ? (
-                    <Text style={theme.styles.textNormal}>{i.link.suffix}</Text>
+                    <Text style={theme.text.normal}>{i.link.suffix}</Text>
                   ) : null}
                 </Text>
               </View>

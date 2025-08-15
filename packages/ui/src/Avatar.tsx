@@ -1,4 +1,3 @@
-import { makeStyles } from '@rn-vui/themed';
 import React from 'react';
 import {
   Text,
@@ -13,7 +12,7 @@ import {
   type ImageProps,
   View,
 } from 'react-native';
-import { useTheme, type AppTheme } from './theme';
+import { ThemeManager } from './theme';
 
 export const avatarSizes = {
   small: 34,
@@ -77,8 +76,7 @@ const Avatar = (props: Avatar) => {
     ...rest
   } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const width =
     typeof size === 'number' ? size : avatarSizes[size] || avatarSizes.small;
@@ -135,7 +133,7 @@ const Avatar = (props: Avatar) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   container: {
     justifyContent: 'center',
   },

@@ -17,13 +17,13 @@ const LogView = ({ logContent }: LogView) => {
       {logContent.map(l => {
         return (
           <View key={key++} style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-            <Text style={[theme.styles.textTiny, theme.styles.textBold]}>
+            <Text style={[theme.text.tiny, { fontFamily: theme.fonts.bold }]}>
               {l.ts}
             </Text>
             <Text
               style={[
-                theme.styles.textTiny,
-                theme.styles.textBold,
+                theme.text.tiny,
+                { fontFamily: theme.fonts.bold },
                 // prettier-ignore
                 l.level.text === 'warn'
                   ? { color: theme.colors.warning }
@@ -31,13 +31,13 @@ const LogView = ({ logContent }: LogView) => {
                   ? { color: theme.colors.assertive }
                   : l.level.text === 'info'
                   ? { color: theme.colors.success }
-                  : { color: theme.colors.primary },
+                  : { color: theme.colors.lightGray },
               ]}>
               {'[' + l.level.text + ']'}
             </Text>
             <Text
               style={[
-                theme.styles.textTiny,
+                theme.text.tiny,
                 // prettier-ignore
                 l.level.text === 'warn'
                   ? { color: theme.colors.warning }

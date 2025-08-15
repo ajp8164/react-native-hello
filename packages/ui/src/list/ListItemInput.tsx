@@ -1,8 +1,7 @@
-import { type AppTheme, useTheme } from '../theme';
+import { ThemeManager, useTheme } from '../theme';
 import React from 'react';
 import { Text, type TextStyle, View } from 'react-native';
 
-import { makeStyles } from '@rn-vui/themed';
 import { ListItem } from './ListItem';
 import { Input, type InputMethods } from '../Input';
 
@@ -32,7 +31,7 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
     } = props;
 
     const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     const Content = (
       <View style={s.row}>
@@ -41,7 +40,7 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
           containerStyle={container === 'main' ? s.container : {}}
           placeholderTextColor={theme.colors.textPlaceholder}
           selectionColor={theme.colors.text}
-          keyboardAppearance={theme.mode}
+          keyboardAppearance={ThemeManager.name}
           allowFontScaling={false}
           {...inputProps}
           inputStyle={{
@@ -85,12 +84,12 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   container: {
     flex: 1,
   },
   error: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     color: theme.colors.assertive,
     position: 'absolute',
     left: 15,
@@ -114,7 +113,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     width: '100%',
   },
   units: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     color: theme.colors.listItemValue,
     marginRight: 7,
   },

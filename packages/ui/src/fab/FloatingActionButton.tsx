@@ -1,5 +1,4 @@
-import { type AppTheme, useTheme } from '../theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager } from '../theme';
 import { Pressable, type ViewStyle } from 'react-native';
 import React, { type ReactElement } from 'react';
 import Animated, {
@@ -31,8 +30,7 @@ interface FloatingActionButton {
 const FloatingActionButton = (props: FloatingActionButton) => {
   const { buttonContent, index, isExpanded, style, onPress } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const animatedStyles = useAnimatedStyle(() => {
     const moveValue = isExpanded.value ? OFFSET * index : 0;
@@ -59,7 +57,7 @@ const FloatingActionButton = (props: FloatingActionButton) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   button: {
     width: 40,
     height: 40,

@@ -1,4 +1,3 @@
-import { makeStyles } from '@rn-vui/themed';
 import React, {
   type ReactElement,
   useCallback,
@@ -21,11 +20,16 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { type AppTheme, useTheme } from './theme';
+import {
+  ThemeManager,
+  useTheme,
+  type ISpacings,
+  type IThemeManagerSchema,
+} from './theme';
 
 const defaultLoadingProps = (
   type: 'solid' | 'clear' | 'outline',
-  theme: AppTheme,
+  theme: IThemeManagerSchema,
 ): ActivityIndicatorProps => ({
   color: type === 'solid' ? theme.colors.white : theme.colors.buttonText,
   size: 'small',
@@ -55,7 +59,7 @@ export interface Button
   loading?: boolean;
   loadingStyle?: StyleProp<ViewStyle>;
   loadingProps?: ActivityIndicatorProps;
-  size?: 'sm' | 'md' | 'lg';
+  size?: keyof ISpacings;
   radius?: number;
   raised?: boolean;
   title?: string | React.ReactElement;
@@ -86,7 +90,7 @@ const Button = (props: Button) => {
     onPress = () => {},
     radius,
     raised = false,
-    size = 'md',
+    size = 'M',
     title = '',
     titleProps,
     titleStyle: passedTitleStyle,
@@ -99,7 +103,7 @@ const Button = (props: Button) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   useEffect(() => {
     if (linearGradientProps && !ViewComponent) {
@@ -138,19 +142,11 @@ const Button = (props: Button) => {
         s.title,
         passedTitleStyle,
         disabled && {
-          color: theme.colors.disabled,
+          color: theme.colors.lightGray,
         },
         disabled && disabledTitleStyle,
       ]),
-    [
-      disabled,
-      disabledTitleStyle,
-      passedTitleStyle,
-      theme?.colors?.disabled,
-      theme?.colors?.primary,
-      type,
-      uppercase,
-    ],
+    [disabled, disabledTitleStyle, passedTitleStyle, theme, type, uppercase],
   );
 
   const background =
@@ -199,19 +195,21 @@ const Button = (props: Button) => {
                 positionStyle[iconRight ? 'right' : iconPosition] || 'row',
               backgroundColor:
                 type === 'solid'
-                  ? theme.colors.button || buttonColor || theme?.colors?.primary
+                  ? theme.colors.button ||
+                    buttonColor ||
+                    theme?.colors?.lightGray
                   : 'transparent',
-              borderColor: theme?.colors?.primary,
+              borderColor: theme?.colors?.lightGray,
               borderWidth: type === 'outline' ? StyleSheet.hairlineWidth : 0,
             },
             buttonStyle,
             disabled &&
               type === 'solid' && {
-                backgroundColor: theme?.colors?.disabled,
+                backgroundColor: theme.colors.lightGray,
               },
             disabled &&
               type === 'outline' && {
-                borderColor: theme.colors.disabled,
+                borderColor: theme.colors.lightGray,
               },
             disabled && disabledStyle,
           ])}>
@@ -249,7 +247,7 @@ const Button = (props: Button) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   border: {
     borderRadius: 10,
   },
@@ -272,10 +270,10 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   raised: {
     backgroundColor: theme.colors.white,
     overflow: 'visible',
-    ...theme.styles.shadow,
+    ...theme.shadow.normal,
   },
   title: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     textAlign: 'center',
     paddingVertical: 1,
   },

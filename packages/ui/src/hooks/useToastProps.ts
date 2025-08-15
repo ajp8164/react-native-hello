@@ -1,8 +1,8 @@
 import { type ToastShowParams } from 'react-native-toast-message';
-import { useTheme } from '../theme';
+import { useDevice } from '../theme';
 
 export const useToastProps = () => {
-  const theme = useTheme();
+  const device = useDevice();
 
   return {
     noNetworkConnection: {
@@ -11,7 +11,7 @@ export const useToastProps = () => {
       position: 'bottom',
       autoHide: true,
       visibilityTime: 3000,
-      bottomOffset: (theme.styles.navigationBottomTabBar.height as number) + 15,
+      bottomOffset: device.bottomTabBarHeight + 15,
     } as ToastShowParams,
   };
 };

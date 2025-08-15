@@ -1,8 +1,7 @@
-import { type AppTheme, useTheme } from '../../theme';
+import { ThemeManager, useTheme } from '../../theme';
 
 import React, { useRef, useState } from 'react';
 import { WebView as RNWebView } from 'react-native-webview';
-import { makeStyles } from '@rn-vui/themed';
 import { Pressable, View, type ViewStyle } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 
@@ -13,7 +12,7 @@ interface WebView {
 
 const WebView = ({ navBarStyle, url }: WebView) => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
@@ -64,7 +63,7 @@ const WebView = ({ navBarStyle, url }: WebView) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   navBarContainer: {
     position: 'absolute',
     bottom: 0,

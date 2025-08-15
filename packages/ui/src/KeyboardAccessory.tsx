@@ -1,5 +1,5 @@
-import { type AppTheme, useTheme, viewport } from './theme';
-import { Button, Icon } from '@rn-vui/base';
+import { ThemeManager, useTheme } from './theme';
+import { Button } from '.';
 import {
   InputAccessoryView,
   Keyboard,
@@ -8,9 +8,8 @@ import {
   View,
   type TextStyle,
 } from 'react-native';
-
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { makeStyles } from '@rn-vui/themed';
+import { ChevronDown, ChevronUp } from 'lucide-react-native';
 
 type AccessoryState = {
   fieldCount: number;
@@ -52,7 +51,7 @@ const KeyboardAccessory = forwardRef<
     if (Platform.OS !== 'ios') return null;
 
     const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     useImperativeHandle(ref, () => ({
       //  These functions exposed to the parent component through the ref.
@@ -117,13 +116,9 @@ const KeyboardAccessory = forwardRef<
           <Button
             type={'clear'}
             icon={
-              <Icon
-                name="chevron-up-outline"
-                type={'ionicon'}
+              <ChevronUp
                 color={theme.colors.kbAccessoryButtonText}
-                size={28}
                 disabled={editorState.previousDisabled}
-                disabledStyle={s.fieldNavButton}
               />
             }
             disabled={editorState.previousDisabled}
@@ -132,13 +127,9 @@ const KeyboardAccessory = forwardRef<
           <Button
             type={'clear'}
             icon={
-              <Icon
-                name="chevron-down-outline"
-                type={'ionicon'}
+              <ChevronDown
                 color={theme.colors.kbAccessoryButtonText}
-                size={28}
                 disabled={editorState.nextDisabled}
-                disabledStyle={s.fieldNavButton}
               />
             }
             disabled={editorState.nextDisabled}
@@ -163,11 +154,11 @@ const KeyboardAccessory = forwardRef<
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   container: {
     flexDirection: 'row',
     height: 45,
-    width: viewport.width,
+    width: device.screen.width,
     backgroundColor: theme.colors.viewBackground,
     borderTopColor: theme.colors.lightGray,
   },
@@ -180,13 +171,9 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     opacity: 0.4,
   },
   doneTitle: {
-    ...theme.styles.textNormal,
-    ...theme.styles.textBold,
+    ...theme.text.normal,
+    fontFamily: theme.fonts.bold,
     color: theme.colors.kbAccessoryButtonText,
-  },
-  fieldNavButton: {
-    backgroundColor: theme.colors.transparent,
-    opacity: 0.3,
   },
 }));
 

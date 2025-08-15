@@ -14,8 +14,7 @@ import {
   AnimatedRemovableItem,
   type AnimatedRemovableItemRef,
 } from '../../AnimatedRemovableItem';
-import { makeStyles } from '@rn-vui/themed';
-import { type AppTheme, useTheme } from '../../../theme';
+import { ThemeManager } from '../../../theme';
 import { type SwipeableAction } from '.';
 import { LeftAction } from './LeftAction';
 import { RightAction } from './RightAction';
@@ -39,8 +38,7 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
     ...rest
   } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const enabled = !!leftActions || !!rightActions;
 
@@ -212,8 +210,7 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
     </AnimatedRemovableItem>
   );
 };
-
-const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(() => ({
   container: {
     overflow: 'hidden',
   },

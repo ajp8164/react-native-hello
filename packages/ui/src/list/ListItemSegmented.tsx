@@ -1,9 +1,8 @@
 import { ListItem } from '.';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import { makeStyles } from '@rn-vui/themed';
 import React from 'react';
 import { View } from 'react-native';
-import { type AppTheme, useTheme } from '../theme';
+import { ThemeManager, useTheme } from '../theme';
 
 export interface ListItemSegmented extends ListItem {
   fullWidth?: boolean;
@@ -26,15 +25,19 @@ const ListItemSegmented = (props: ListItemSegmented) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const renderSegments = () => (
     <View style={[fullWidth ? s.segmentedViewFullWidth : {}]}>
       <SegmentedControl
         values={segments}
         style={[{ width: fullWidth ? '100%' : segments.length * 50 }]}
-        tintColor={segmentTintColor || theme.colors.viewAltBackground}
-        backgroundColor={segmentBackgroundColor || theme.colors.wispGray}
+        tintColor={
+          segmentTintColor || (theme.colors.viewAltBackground as string)
+        }
+        backgroundColor={
+          segmentBackgroundColor || (theme.colors.wispGray as string)
+        }
         fontStyle={s.segmentedFont}
         activeFontStyle={s.segmentedActiveFont}
         enabled={rest.disabled !== true}
@@ -66,7 +69,7 @@ const ListItemSegmented = (props: ListItemSegmented) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   container: {
     minHeight: 48,
   },
@@ -79,12 +82,12 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   segmentedFont: {
     fontSize: 12,
-    color: theme.colors.text,
+    color: theme.colors.text as string,
   },
   segmentedActiveFont: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: theme.colors.text,
+    fontFamily: theme.fonts.bold,
+    color: theme.colors.text as string,
   },
 }));
 

@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme } from '../../theme';
+import { ThemeManager, useTheme } from '../../theme';
 import type { ModalMethods, ModalProps } from './types';
 import React, {
   useCallback,
@@ -10,7 +10,6 @@ import React, {
 import { BottomSheet } from '../../BottomSheet';
 import type { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { makeStyles } from '@rn-vui/themed';
 
 type Modal = ModalMethods;
 
@@ -39,7 +38,7 @@ const Modal = React.forwardRef<Modal, ModalProps>((props, ref) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const innerRef = useRef<BottomSheetModalMethods>(null);
 
@@ -114,7 +113,7 @@ const Modal = React.forwardRef<Modal, ModalProps>((props, ref) => {
   );
 });
 
-const useStyles = makeStyles((__theme, _theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(() => ({
   container: {
     height: '100%',
   },

@@ -1,9 +1,8 @@
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { fontFamily, useTheme, viewport } from './theme';
+import { ThemeManager, useDevice, useTheme } from './theme';
 import { Picker as RNPicker } from '@react-native-picker/picker';
-import { makeStyles } from '@rn-vui/themed';
 import { isEqual } from 'lodash';
 import React, { type Key, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
@@ -63,6 +62,7 @@ const WheelPicker = ({
 }: WheelPicker) => {
   const theme = useTheme();
   const s = useStyles();
+  const device = useDevice();
 
   // const multiWheel = Array.isArray(items && items[0]);
 
@@ -151,8 +151,8 @@ const WheelPicker = ({
           label={item.label}
           value={item.value}
           key={item.value as Key}
-          color={item.color || theme.colors.text}
-          fontFamily={fontFamily}
+          color={item.color || (theme.colors.text as string)}
+          fontFamily={theme.fonts.regular}
         />
       );
     });
@@ -192,7 +192,7 @@ const WheelPicker = ({
             let iWidth: string | number =
               (itemWidth && pickerItemWidth[wheelIndex]) || '100%';
             if (typeof iWidth === 'string') {
-              iWidth = (parseFloat(iWidth) / 100) * viewport.width;
+              iWidth = (parseFloat(iWidth) / 100) * device.screen.width;
             }
             let lWidth = pickerLabelWidth[wheelIndex] || 0;
             if (typeof lWidth === 'string') {
@@ -226,7 +226,7 @@ const WheelPicker = ({
   );
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   pickerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -241,7 +241,7 @@ const useStyles = makeStyles(theme => ({
   },
   label: {
     fontSize: 22,
-    fontFamily: fontFamily,
+    fontFamily: theme.fonts.regular,
     textAlign: 'right',
     color: theme.colors.text,
   },

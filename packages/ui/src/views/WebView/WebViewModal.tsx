@@ -1,9 +1,8 @@
-import { type AppTheme, useTheme } from '../../theme';
+import { ThemeManager } from '../../theme';
 import React, { useImperativeHandle, useRef, useState } from 'react';
 
 import { type BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { Modal } from '../../modals';
-import { makeStyles } from '@rn-vui/themed';
 import { type WebViewModalMethods, type WebViewModalProps } from './types';
 import { WebView } from './WebView';
 
@@ -13,8 +12,7 @@ const WebViewModal = React.forwardRef<WebViewModal, WebViewModalProps>(
   (props, ref) => {
     const { snapPoints = ['92%'] } = props;
 
-    const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     const [url, setUrl] = useState('');
     const innerRef = useRef<BottomSheetModalMethods>(null);
@@ -42,7 +40,7 @@ const WebViewModal = React.forwardRef<WebViewModal, WebViewModalProps>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   modalBackground: {
     backgroundColor: theme.colors.stickyWhite,
   },

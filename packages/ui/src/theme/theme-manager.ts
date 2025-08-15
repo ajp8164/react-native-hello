@@ -16,10 +16,3 @@ export const ThemeManager = new ThemeManagerCreator(
     autoScale: true,
   },
 );
-
-export const {
-  ThemeProvider: MkThemeProvider,
-  useTheme: useMkTheme,
-  useDevice: useMkDevice,
-  useScale: useMkScale,
-} = ThemeManager;

@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme } from '../theme';
+import { ThemeManager, useTheme } from '../theme';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
@@ -7,7 +7,6 @@ import { DateTime } from 'luxon';
 import type { ISODateString } from '@react-native-hello/common';
 import { Platform, View, type ViewStyle } from 'react-native';
 import { ListItem } from './ListItem';
-import { makeStyles } from '@rn-vui/themed';
 import { CollapsibleView } from '../CollapsibleView';
 import Animated, {
   useAnimatedStyle,
@@ -47,7 +46,7 @@ const ListItemDateTime = (props: Props) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const first = rest.position?.includes('first') ? 'first' : undefined;
   const isIOS = Platform.OS === 'ios';
@@ -114,7 +113,7 @@ const ListItemDateTime = (props: Props) => {
               {...(isIOS && {
                 // iOS only options
                 accentColor,
-                themeVariant: theme.mode,
+                themeVariant: ThemeManager.name,
               })}
               {...(!isIOS &&
                 {
@@ -136,7 +135,7 @@ const ListItemDateTime = (props: Props) => {
               {...(isIOS && {
                 // iOS only options
                 accentColor,
-                themeVariant: theme.mode,
+                themeVariant: ThemeManager.name,
               })}
               {...(!isIOS &&
                 {
@@ -157,7 +156,7 @@ const ListItemDateTime = (props: Props) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   collapsibleBorder: {
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
@@ -169,7 +168,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     flexDirection: 'row',
   },
   valueStyle: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
   },
 }));
 

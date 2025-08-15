@@ -1,7 +1,6 @@
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 
 import { type ColorValue, Text, View, type ViewStyle } from 'react-native';
-import { makeStyles } from '@rn-vui/themed';
 import React from 'react';
 
 interface Chip {
@@ -16,7 +15,7 @@ const Chip = (props: Chip) => {
   const { color, style, text, textColor, visible = true } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   return (
     <View style={style}>
@@ -37,9 +36,9 @@ const Chip = (props: Chip) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   text: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     paddingHorizontal: 10,
     marginBottom: 6,
     marginTop: 5,

@@ -1,9 +1,9 @@
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager } from './theme';
 import { type TextStyle, View, type ViewStyle } from 'react-native';
 
 import { Divider as RNEDivider } from '@rn-vui/base';
 import React from 'react';
-import { makeStyles } from '@rn-vui/themed';
+import { useTheme } from './theme';
 
 interface Divider {
   color?: string;
@@ -29,7 +29,7 @@ const Divider = ({
   width,
 }: Divider) => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   return (
     <RNEDivider
@@ -40,7 +40,7 @@ const Divider = ({
         light ? s.light : {},
         subHeaderStyle,
       ]}
-      color={color || s.color.color}
+      color={color || (theme.colors.lightGray as string)}
       orientation={orientation}
       style={[!!width && { marginBottom: 20 }, s.style, style]}
       width={width}
@@ -49,28 +49,25 @@ const Divider = ({
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   children: {
     position: 'absolute',
     right: 0,
     zIndex: 1,
   },
-  color: {
-    color: theme.colors.divider,
-  },
   light: {
     ...theme.styles.textDim,
   },
   note: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     textTransform: 'none',
     lineHeight: 20,
     marginBottom: 15,
     marginTop: -15,
   },
   subheader: {
-    ...theme.styles.textNormal,
-    ...theme.styles.textBold,
+    ...theme.text.normal,
+    fontFamily: theme.fonts.bold,
     textTransform: 'uppercase',
     marginBottom: 10,
     marginHorizontal: 5,

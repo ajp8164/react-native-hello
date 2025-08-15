@@ -1,8 +1,7 @@
 import React, { type ReactNode } from 'react';
 import { type ViewStyle } from 'react-native';
 import RNCollapsible from 'react-native-collapsible';
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager } from './theme';
 
 interface Props {
   children: ReactNode | ReactNode[];
@@ -14,8 +13,7 @@ interface Props {
 const CollapsibleView = (props: Props) => {
   const { children, duration, expanded = true, style } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   return (
     <RNCollapsible
@@ -27,7 +25,7 @@ const CollapsibleView = (props: Props) => {
   );
 };
 
-const useStyles = makeStyles((_theme, __theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(() => ({
   collapsible: {
     padding: 0,
     marginVertical: 0,

@@ -1,5 +1,4 @@
-import { type AppTheme, useTheme } from '../theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager, useTheme } from '../theme';
 import { ActivityIndicator, Text, View } from 'react-native';
 import type { ToastConfigParams } from 'react-native-toast-message';
 import React from 'react';
@@ -7,7 +6,7 @@ import { CircleAlert, ThumbsUp, Wifi } from 'lucide-react-native';
 
 export const useAppToastConfig = () => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   return {
     activity: ({ text1 }: ToastConfigParams<string>) => (
@@ -37,7 +36,7 @@ export const useAppToastConfig = () => {
   };
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   container: {
     width: '60%',
     height: 40,
@@ -45,7 +44,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: theme.styles.button.borderRadius,
-    backgroundColor: theme.colors.secondary,
+    backgroundColor: theme.colors.lightGray,
     flexDirection: 'row',
   },
   errorContainer: {
@@ -58,7 +57,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     backgroundColor: theme.colors.warning,
   },
   text: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     color: theme.colors.textInv,
     marginLeft: 7,
   },

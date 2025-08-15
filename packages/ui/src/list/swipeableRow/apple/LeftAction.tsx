@@ -1,7 +1,6 @@
-import { makeStyles } from '@rn-vui/themed';
 import { type SwipeableAction } from '.';
 import { Text, type TextStyle, View, type ViewStyle } from 'react-native';
-import { type AppTheme, useTheme } from '../../../theme';
+import { ThemeManager } from '../../../theme';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -24,8 +23,7 @@ interface LeftAction {
 const LeftAction = (props: LeftAction) => {
   const { buttonWidth, config, dragX, swipeableRef } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -57,7 +55,7 @@ const LeftAction = (props: LeftAction) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   action: {
     flex: 1,
     justifyContent: 'center',
@@ -66,7 +64,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     alignItems: 'center',
   },
   text: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     color: theme.colors.stickyWhite,
   },
 }));

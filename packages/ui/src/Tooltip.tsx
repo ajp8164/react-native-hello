@@ -1,6 +1,5 @@
-import { makeStyles } from '@rn-vui/themed';
 import React, { type ReactNode, useState } from 'react';
-import { type AppTheme, useTheme, viewport } from './theme';
+import { ThemeManager, useDevice, useTheme } from './theme';
 import {
   Tooltip as RNTooltip,
   type TooltipProps as RNETooltipProps,
@@ -14,7 +13,8 @@ interface Tooltip extends RNETooltipProps {
 
 const Tooltip = ({ ...props }: Tooltip) => {
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
+  const device = useDevice();
 
   const [open, setOpen] = useState(false);
 
@@ -33,7 +33,7 @@ const Tooltip = ({ ...props }: Tooltip) => {
         </View>
       }
       containerStyle={s.container}
-      width={viewport.width * 0.6}
+      width={device.screen.width * 0.6}
       backgroundColor={'#4e5270'}
       overlayColor={theme.colors.transparent}
       withPointer={true}
@@ -43,9 +43,9 @@ const Tooltip = ({ ...props }: Tooltip) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   container: {
-    width: viewport.width * 0.6,
+    width: device.screen.width * 0.6,
     height: 130,
     borderRadius: 12,
   },
@@ -55,7 +55,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     width: '100%',
   },
   text: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     alignSelf: 'flex-start',
     textAlign: 'left',
   },

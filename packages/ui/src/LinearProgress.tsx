@@ -1,5 +1,4 @@
-import { type AppTheme, useTheme } from './theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager, useTheme } from './theme';
 import React, { type ReactElement } from 'react';
 import { Text, View } from 'react-native';
 import { LinearProgress as RNELinearProgress } from '@rn-vui/base';
@@ -24,14 +23,14 @@ const LinearProgress = (props: LinearProgress) => {
   } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   return (
     <View style={s.progressContainer}>
       <RNELinearProgress
         style={s.progress}
-        color={trackColor || theme.colors.button}
-        trackColor={`${trackColor || theme.colors.button}30`}
+        color={trackColor || (theme.colors.button as string)}
+        trackColor={`${trackColor || (theme.colors.button as string)}30`}
         variant={'determinate'}
         value={percent}
       />
@@ -51,14 +50,14 @@ const LinearProgress = (props: LinearProgress) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   progress: {
     marginVertical: 10,
     borderRadius: 10,
     height: 7,
   },
   progressAmount: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     ...theme.styles.textDim,
   },
   progressContainer: {

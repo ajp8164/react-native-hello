@@ -1,12 +1,11 @@
-import { type AppTheme, useTheme } from '../../theme';
+import { ThemeManager, useTheme } from '../../theme';
 import React, { useImperativeHandle } from 'react';
 import type { ScannerViewMethods, ScannerViewProps } from './types';
 
-import { Button } from '@rn-vui/base';
 import { Camera } from 'react-native-camera-kit';
 import { View } from 'react-native';
 import lodash from 'lodash';
-import { makeStyles } from '@rn-vui/themed';
+import { Button } from '../..';
 
 type ScannerView = ScannerViewMethods;
 
@@ -16,7 +15,7 @@ const ScannerView = React.forwardRef<ScannerView, ScannerViewProps>(
       props;
 
     const theme = useTheme();
-    const s = useStyles(theme);
+    const s = useStyles();
 
     useImperativeHandle(ref, () => ({
       //  These functions exposed to the parent component through the ref.
@@ -61,7 +60,7 @@ const ScannerView = React.forwardRef<ScannerView, ScannerViewProps>(
   },
 );
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   buttonContainer: {
     position: 'absolute',
     bottom: 60,

@@ -12,7 +12,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import type { ColorValue, TextStyle, ViewStyle } from 'react-native';
 import {
   PanGestureHandler,
@@ -21,22 +21,11 @@ import {
 import React, { type ReactNode, useState } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
-import { makeStyles } from '@rn-vui/themed';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
 type AnimatedGHContext = {
   completed: boolean;
-};
-
-type Extra = {
-  backTextColor: ColorValue;
-  height: number;
-  padding: number;
-  textColor: ColorValue;
-  trackColor: ColorValue;
-  width: number;
-  swipableDimensions: number;
 };
 
 interface SwipeButtonInterface {
@@ -85,6 +74,7 @@ const SwipeButton = ({
   const hSwipeRange = width - 2 * padding - swipableDimensions;
 
   const theme = useTheme();
+  const s = useStyles();
 
   backTextColor = backTextColor || theme.styles.buttonTitle.color || '#ffffff';
   textColor = textColor || theme.styles.buttonTitle.color || '#ffffff';
@@ -97,17 +87,37 @@ const SwipeButton = ({
   trackEndColor =
     trackEndColor || theme.styles.button.backgroundColor || '#c0c0c0';
 
-  const extra: Extra = {
-    backTextColor,
-    height,
-    padding,
-    textColor,
-    trackColor,
-    width,
-    swipableDimensions,
+  const swipeable = {
+    ...s.swipeable,
+    left: padding,
+    height: swipableDimensions,
+    width: swipableDimensions,
+    borderRadius: swipableDimensions,
   };
-  theme.styles.extra = extra;
-  const s = useStyles(theme);
+
+  const swipeContainer = {
+    ...s.swipeContainer,
+    height,
+    width,
+    backgroundColor: trackColor,
+    borderRadius: height,
+    padding,
+  };
+
+  const swipeText = {
+    ...s.swipeText,
+    color: textColor,
+  };
+
+  const backSwipeText = {
+    ...s.backSwipeText,
+    color: backTextColor,
+  };
+  const colorWave = {
+    ...s.colorWave,
+    height,
+    borderRadius: height,
+  };
 
   // Animated value for X translation
   const X = useSharedValue(0);
@@ -226,37 +236,32 @@ const SwipeButton = ({
 
   return (
     <Animated.View
-      style={[s.swipeContainer, AnimatedStyles.swipeContainer, containerStyle]}>
+      style={[swipeContainer, AnimatedStyles.swipeContainer, containerStyle]}>
       <AnimatedLinearGradient
-        style={[AnimatedStyles.colorWave, s.colorWave]}
+        style={[AnimatedStyles.colorWave, colorWave]}
         colors={[trackStartColor as string, trackEndColor as string]}
         start={{ x: 0.0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
       />
       <PanGestureHandler onGestureEvent={animatedGestureHandler}>
         <Animated.View
-          style={[s.swipeable, AnimatedStyles.swipeable, thumbStyle]}>
+          style={[swipeable, AnimatedStyles.swipeable, thumbStyle]}>
           {thumbComponent}
         </Animated.View>
       </PanGestureHandler>
-      <Animated.Text style={[s.swipeText, AnimatedStyles.swipeText, textStyle]}>
+      <Animated.Text style={[swipeText, AnimatedStyles.swipeText, textStyle]}>
         {text}
       </Animated.Text>
       <Animated.Text
-        style={[s.backSwipeText, AnimatedStyles.backSwipeText, backTextStyle]}>
+        style={[backSwipeText, AnimatedStyles.backSwipeText, backTextStyle]}>
         {backText}
       </Animated.Text>
     </Animated.View>
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   swipeContainer: {
-    height: theme.styles.extra.height,
-    width: theme.styles.extra.width,
-    backgroundColor: theme.styles.extra.trackColor,
-    borderRadius: theme.styles.extra.height,
-    padding: theme.styles.extra.padding,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -265,29 +270,21 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   colorWave: {
     position: 'absolute',
     left: 0,
-    height: theme.styles.extra.height,
-    borderRadius: theme.styles.extra.height,
   },
   swipeable: {
     position: 'absolute',
-    left: theme.styles.extra.padding,
-    height: theme.styles.extra.swipableDimensions,
-    width: theme.styles.extra.swipableDimensions,
-    borderRadius: theme.styles.extra.swipableDimensions,
     zIndex: 3,
   },
   swipeText: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     alignSelf: 'center',
     zIndex: 2,
-    color: theme.styles.extra.textColor,
     position: 'absolute',
   },
   backSwipeText: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     alignSelf: 'center',
     zIndex: 2,
-    color: theme.styles.extra.backTextColor,
     position: 'absolute',
   },
 }));

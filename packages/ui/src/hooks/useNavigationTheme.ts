@@ -1,4 +1,7 @@
-import { type Theme, DefaultTheme as RNDefaultTheme } from '@react-navigation/native';
+import {
+  type Theme,
+  DefaultTheme as RNDefaultTheme,
+} from '@react-navigation/native';
 import { useTheme } from '../theme';
 
 export const useNavigationTheme = (): Theme => {
@@ -8,7 +11,7 @@ export const useNavigationTheme = (): Theme => {
     ...RNDefaultTheme,
     colors: {
       ...RNDefaultTheme.colors,
-      background: theme.colors.viewBackground,
+      background: theme.colors.viewBackground as string,
     },
   };
 };

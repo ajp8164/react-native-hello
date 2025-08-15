@@ -1,4 +1,4 @@
-import { type AppTheme, useTheme } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import {
   type LayoutChangeEvent,
   Text,
@@ -6,7 +6,6 @@ import {
   type ViewStyle,
 } from 'react-native';
 import React, { useState } from 'react';
-import { makeStyles } from '@rn-vui/themed';
 import { DateTime } from 'luxon';
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -29,7 +28,7 @@ const Calendar = (props: Calendar) => {
   const { containerStyle, dayDots, subtitle, title, todayColor } = props;
 
   const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const [dayWidth, setDayWidth] = useState(0);
 
@@ -131,7 +130,7 @@ const Calendar = (props: Calendar) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   container: {},
   content: {
     width: '100%',
@@ -152,11 +151,11 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
   },
   dayName: {
     height: 30,
-    ...theme.styles.textMedium,
+    ...theme.text.normal,
     textAlign: 'center',
   },
   dayNumber: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     textAlign: 'center',
   },
   dot: {
@@ -174,14 +173,14 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     bottom: 6,
   },
   pastDate: {
-    ...theme.styles.textNormal,
+    ...theme.text.normal,
     ...theme.styles.textDim,
   },
   row: {
     flexDirection: 'row',
   },
   subtitle: {
-    ...theme.styles.textMedium,
+    ...theme.text.normal,
     ...theme.styles.textDim,
     lineHeight: 20,
     marginHorizontal: 10,
@@ -191,7 +190,7 @@ const useStyles = makeStyles((_theme, theme: AppTheme) => ({
     borderBottomColor: theme.colors.listItemBorder,
   },
   title: {
-    ...theme.styles.textHeading5,
+    ...theme.text.h5,
     marginHorizontal: 10,
   },
   today: {

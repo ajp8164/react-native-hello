@@ -7,8 +7,7 @@ import { type SwipeableAction } from '.';
 import { type LayoutChangeEvent, Text, View } from 'react-native';
 import { type SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
 import { RectButton } from 'react-native-gesture-handler';
-import { type AppTheme, useTheme, viewport } from '../../../theme';
-import { makeStyles } from '@rn-vui/themed';
+import { ThemeManager } from '../../../theme';
 import { useState } from 'react';
 import React from 'react';
 
@@ -22,8 +21,7 @@ interface RightAction {
 const RightAction = (props: RightAction) => {
   const { buttonWidth, config, dragX, swipeableRef } = props;
 
-  const theme = useTheme();
-  const s = useStyles(theme);
+  const s = useStyles();
 
   const [buttonContentWidth, setbuttonContentWidth] = useState(0);
 
@@ -66,19 +64,19 @@ const RightAction = (props: RightAction) => {
   );
 };
 
-const useStyles = makeStyles((_theme, theme: AppTheme) => ({
+const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   action: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    width: viewport.width,
+    width: device.screen.width,
   },
   actionView: {
     flex: 1,
-    width: viewport.width,
+    width: device.screen.width,
   },
   text: {
-    ...theme.styles.textSmall,
+    ...theme.text.small,
     color: theme.colors.stickyWhite,
   },
 }));

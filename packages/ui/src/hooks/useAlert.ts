@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { AlertStatusContext } from '../providers';
 import { useContext } from 'react';
-import { useTheme } from '../theme';
+import { ThemeManager } from '../theme';
 
 type AlertButton = {
   text?: string;
@@ -22,7 +22,6 @@ export type AlertConfig = {
  * will display that dialog.
  */
 export const useAlert = () => {
-  const theme = useTheme();
   const alertStatusContext = useContext(AlertStatusContext);
 
   // Return a function that presents an alert UI if and only if another alert UI is not presented.
@@ -77,7 +76,7 @@ export const useAlert = () => {
               ],
           {
             cancelable: false,
-            userInterfaceStyle: theme.mode,
+            userInterfaceStyle: ThemeManager.name,
           },
         );
       }

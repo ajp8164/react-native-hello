@@ -6,7 +6,6 @@ export * from './list';
 export * from './modals';
 export * from './providers';
 export * from './theme';
-export * from './theme-mk';
 export * from './views';
 
 export * from './AutoDismissKeyboard';
@@ -21,7 +20,6 @@ export * from './Carousel';
 export * from './CheckBox';
 export * from './Chip';
 export * from './CollapsibleView';
-export * from './ColorModeSwitch';
 export * from './ConditionalWrapper';
 export * from './DismissableKeyboardView';
 export * from './Divider';
