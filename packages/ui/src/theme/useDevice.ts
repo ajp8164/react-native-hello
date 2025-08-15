@@ -1,17 +1,21 @@
 import { type IDevice as IMKDevice } from 'react-native-theme-mk';
 import { ThemeManager, type IDevice } from '.';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Platform } from 'react-native';
+import { useContext } from 'react';
+import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
+import { HeaderHeightContext } from '@react-navigation/elements';
 
 export const useDevice = (): IDevice => {
-  const bottomTabBarHeight = useBottomTabBarHeight();
-  const data: IMKDevice = ThemeManager.useDevice();
+  const bottomTabBarHeight = useContext(BottomTabBarHeightContext);
+  const headerHeight = useContext(HeaderHeightContext);
+
+  const device: IMKDevice = ThemeManager.useDevice();
 
   return {
-    ...data,
-    bottomTabBarHeight,
+    ...device,
+    bottomTabBarHeight: bottomTabBarHeight || 49 + device.inset.bottom,
     headerBar: {
-      height: 44,
+      height: headerHeight || 44,
     },
     headerBarLarge: Platform.select({
       android: {
