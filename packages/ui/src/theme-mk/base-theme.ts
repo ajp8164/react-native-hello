@@ -1,4 +1,4 @@
-import { fonts } from './font-family';
+import { fonts } from './fonts';
 
 export const baseTheme = {
   radius: {
@@ -18,11 +18,11 @@ export const baseTheme = {
     tiny: 10,
   },
   fonts: {
-    bold: fonts.SFUITextBold,
-    semiBold: fonts.SFUITextSemiBold,
-    medium: fonts.SFUITextMedium,
-    regular: fonts.SFUITextRegular,
-    light: fonts.SFUITextLight,
+    bold: fonts.bold,
+    semiBold: fonts.semiBold,
+    medium: fonts.medium,
+    regular: fonts.regular,
+    light: fonts.light,
   },
   lineHeight: {
     H1: 36,

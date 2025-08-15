@@ -27,6 +27,7 @@
     "target": "esnext"
   },
   "exclude": [
+    "lib",
     "node_modules",
     "packages/*/lib"
   ],
