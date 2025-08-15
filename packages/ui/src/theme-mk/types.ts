@@ -12,7 +12,7 @@ export interface IThemeManagerTextStyle {
 
 export type IShadow =
   | {
-      shadowColor: string;
+      shadowColor: ColorValue | string;
       shadowOffset: {
         width: number;
         height: number;
@@ -31,63 +31,63 @@ export type IShadow =
   | undefined;
 
 export interface IColor {
-  white: ColorValue;
-  black: ColorValue;
-  stickyWhite: ColorValue;
-  stickyBlack: ColorValue;
-  transparent: ColorValue;
-  darkGray: ColorValue;
-  midGray: ColorValue;
-  lightGray: ColorValue;
-  subtleGray: ColorValue;
-  hintGray: ColorValue;
-  wispGray: ColorValue;
-  assertive: ColorValue;
-  error: ColorValue;
-  info: ColorValue;
-  success: ColorValue;
-  warning: ColorValue;
-  blackTransparentDarker: ColorValue;
-  blackTransparentDark: ColorValue;
-  blackTransparentMid: ColorValue;
-  blackTransparentLight: ColorValue;
-  blackTransparentSubtle: ColorValue;
-  whiteTransparentDarker: ColorValue;
-  whiteTransparentDark: ColorValue;
-  whiteTransparentMid: ColorValue;
-  whiteTransparentLight: ColorValue;
-  whiteTransparentSubtle: ColorValue;
-  button: ColorValue;
-  buttonText: ColorValue;
-  checkboxActive: ColorValue;
-  checkboxInactive: ColorValue;
-  collapsibleBackground: ColorValue;
-  datePickerAccent: ColorValue;
-  kbAccessoryButtonText: ColorValue;
-  listItem: ColorValue;
-  listItemBorder: ColorValue;
-  listItemIcon: ColorValue;
-  listItemIconNav: ColorValue;
-  listItemSubtitle: ColorValue;
-  listItemTitle: ColorValue;
-  listItemValue: ColorValue;
-  screenHeaderBackground: ColorValue;
-  screenHeaderButtonText: ColorValue;
-  screenHeaderTitle: ColorValue;
-  segmentActive: ColorValue;
-  segmentBackground: ColorValue;
-  segmentBorder: ColorValue;
-  switchOffThumb: ColorValue;
-  switchOffTrack: ColorValue;
-  switchOnThumb: ColorValue;
-  switchOnTrack: ColorValue;
-  text: ColorValue;
-  textInv: ColorValue;
-  textLink: ColorValue;
-  textPlaceholder: ColorValue;
-  viewBackground: ColorValue;
-  viewAltBackground: ColorValue;
-  viewInvBackground: ColorValue;
+  white: ColorValue | string;
+  black: ColorValue | string;
+  stickyWhite: ColorValue | string;
+  stickyBlack: ColorValue | string;
+  transparent: ColorValue | string;
+  darkGray: ColorValue | string;
+  midGray: ColorValue | string;
+  lightGray: ColorValue | string;
+  subtleGray: ColorValue | string;
+  hintGray: ColorValue | string;
+  wispGray: ColorValue | string;
+  assertive: ColorValue | string;
+  error: ColorValue | string;
+  info: ColorValue | string;
+  success: ColorValue | string;
+  warning: ColorValue | string;
+  blackTransparentDarker: ColorValue | string;
+  blackTransparentDark: ColorValue | string;
+  blackTransparentMid: ColorValue | string;
+  blackTransparentLight: ColorValue | string;
+  blackTransparentSubtle: ColorValue | string;
+  whiteTransparentDarker: ColorValue | string;
+  whiteTransparentDark: ColorValue | string;
+  whiteTransparentMid: ColorValue | string;
+  whiteTransparentLight: ColorValue | string;
+  whiteTransparentSubtle: ColorValue | string;
+  button: ColorValue | string;
+  buttonText: ColorValue | string;
+  checkboxActive: ColorValue | string;
+  checkboxInactive: ColorValue | string;
+  collapsibleBackground: ColorValue | string;
+  datePickerAccent: ColorValue | string;
+  kbAccessoryButtonText: ColorValue | string;
+  listItem: ColorValue | string;
+  listItemBorder: ColorValue | string;
+  listItemIcon: ColorValue | string;
+  listItemIconNav: ColorValue | string;
+  listItemSubtitle: ColorValue | string;
+  listItemTitle: ColorValue | string;
+  listItemValue: ColorValue | string;
+  screenHeaderBackground: ColorValue | string;
+  screenHeaderButtonText: ColorValue | string;
+  screenHeaderTitle: ColorValue | string;
+  segmentActive: ColorValue | string;
+  segmentBackground: ColorValue | string;
+  segmentBorder: ColorValue | string;
+  switchOffThumb: ColorValue | string;
+  switchOffTrack: ColorValue | string;
+  switchOnThumb: ColorValue | string;
+  switchOnTrack: ColorValue | string;
+  text: ColorValue | string;
+  textInv: ColorValue | string;
+  textLink: ColorValue | string;
+  textPlaceholder: ColorValue | string;
+  viewBackground: ColorValue | string;
+  viewAltBackground: ColorValue | string;
+  viewInvBackground: ColorValue | string;
 }
 
 export interface IFonts {
@@ -127,11 +127,11 @@ export interface ILineHeights {
 }
 
 export interface IPalette {
-  black: ColorValue;
-  white: ColorValue;
-  transparent: ColorValue;
-  primary: ColorValue;
-  secondary: ColorValue;
+  black: ColorValue | string;
+  white: ColorValue | string;
+  transparent: ColorValue | string;
+  primary: ColorValue | string;
+  secondary: ColorValue | string;
 }
 
 export interface IRadius {
