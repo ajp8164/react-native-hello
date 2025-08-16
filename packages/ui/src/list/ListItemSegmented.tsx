@@ -1,7 +1,7 @@
 import { ListItem } from '.';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import React from 'react';
-import { View, type ColorValue } from 'react-native';
+import { View } from 'react-native';
 import { ThemeManager, useTheme } from '../theme';
 
 export interface ListItemSegmented extends ListItem {
@@ -9,8 +9,8 @@ export interface ListItemSegmented extends ListItem {
   index?: number;
   onChangeIndex: (index: number) => void;
   segments: string[];
-  segmentBackgroundColor?: ColorValue;
-  segmentTintColor?: ColorValue;
+  segmentBackgroundColor?: string;
+  segmentTintColor?: string;
 }
 
 const ListItemSegmented = (props: ListItemSegmented) => {
@@ -32,12 +32,8 @@ const ListItemSegmented = (props: ListItemSegmented) => {
       <SegmentedControl
         values={segments}
         style={[{ width: fullWidth ? '100%' : segments.length * 50 }]}
-        tintColor={
-          (segmentTintColor || theme.colors.viewAltBackground) as string
-        }
-        backgroundColor={
-          (segmentBackgroundColor || theme.colors.wispGray) as string
-        }
+        tintColor={segmentTintColor || theme.colors.viewAltBackground}
+        backgroundColor={segmentBackgroundColor || theme.colors.wispGray}
         fontStyle={s.segmentedFont}
         activeFontStyle={s.segmentedActiveFont}
         enabled={rest.disabled !== true}
@@ -82,12 +78,12 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   segmentedFont: {
     fontSize: 12,
-    color: theme.colors.text as string,
+    color: theme.colors.text,
   },
   segmentedActiveFont: {
     fontSize: 12,
     fontFamily: theme.fonts.bold,
-    color: theme.colors.text as string,
+    color: theme.colors.text,
   },
 }));
 

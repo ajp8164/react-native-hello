@@ -5,7 +5,7 @@ import DateTimePicker, {
 import React, { useEffect, type ReactElement } from 'react';
 import { DateTime } from 'luxon';
 import type { ISODateString } from '@react-native-hello/common';
-import { Platform, View, type ColorValue, type ViewStyle } from 'react-native';
+import { Platform, View, type ViewStyle } from 'react-native';
 import { ListItem } from './ListItem';
 import { CollapsibleView } from '../CollapsibleView';
 import Animated, {
@@ -18,7 +18,7 @@ import { ChevronDown } from 'lucide-react-native';
 type Mode = 'date' | 'time' | 'datetime' | 'custom';
 
 interface Props extends ListItem {
-  accentColor?: ColorValue;
+  accentColor?: string;
   customContent?: ReactElement;
   datePickerContainerStyle?: ViewStyle;
   expanded?: boolean;

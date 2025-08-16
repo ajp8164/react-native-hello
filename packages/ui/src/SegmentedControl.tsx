@@ -27,8 +27,8 @@ const SegmentedControl = (props: SegmentedControl) => {
         <View style={[s.border, s.borderClip]} />
         <RNSegmentedControl
           selectedIndex={selectedIndex}
-          backgroundColor={theme.colors.segmentBackground as string}
-          tintColor={theme.colors.segmentActive as string}
+          backgroundColor={theme.colors.segmentBackground}
+          tintColor={theme.colors.segmentActive}
           activeFontStyle={{ ...s.itemText, ...s.activeItemText }}
           fontStyle={s.itemText}
           style={[s.control, rest.style]}

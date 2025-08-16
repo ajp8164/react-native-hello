@@ -1,10 +1,9 @@
-import { type ColorValue } from 'react-native';
 import { type IDevice as IMKDevice, type IStyle } from 'react-native-theme-mk';
 
 export { type IStyle } from 'react-native-theme-mk';
 
 export interface IThemeManagerTextStyle {
-  color: ColorValue;
+  color: string;
   fontFamily: string;
   fontSize: number;
   lineHeight: number;
@@ -12,7 +11,7 @@ export interface IThemeManagerTextStyle {
 
 export type IShadow =
   | {
-      shadowColor: ColorValue;
+      shadowColor: string;
       shadowOffset: {
         width: number;
         height: number;
@@ -31,63 +30,63 @@ export type IShadow =
   | undefined;
 
 export interface IColor {
-  white: ColorValue;
-  black: ColorValue;
-  stickyWhite: ColorValue;
-  stickyBlack: ColorValue;
-  transparent: ColorValue;
-  darkGray: ColorValue;
-  midGray: ColorValue;
-  lightGray: ColorValue;
-  subtleGray: ColorValue;
-  hintGray: ColorValue;
-  wispGray: ColorValue;
-  assertive: ColorValue;
-  error: ColorValue;
-  info: ColorValue;
-  success: ColorValue;
-  warning: ColorValue;
-  blackTransparentDarker: ColorValue;
-  blackTransparentDark: ColorValue;
-  blackTransparentMid: ColorValue;
-  blackTransparentLight: ColorValue;
-  blackTransparentSubtle: ColorValue;
-  whiteTransparentDarker: ColorValue;
-  whiteTransparentDark: ColorValue;
-  whiteTransparentMid: ColorValue;
-  whiteTransparentLight: ColorValue;
-  whiteTransparentSubtle: ColorValue;
-  button: ColorValue;
-  buttonText: ColorValue;
-  checkboxActive: ColorValue;
-  checkboxInactive: ColorValue;
-  collapsibleBackground: ColorValue;
-  datePickerAccent: ColorValue;
-  kbAccessoryButtonText: ColorValue;
-  listItem: ColorValue;
-  listItemBorder: ColorValue;
-  listItemIcon: ColorValue;
-  listItemIconNav: ColorValue;
-  listItemSubtitle: ColorValue;
-  listItemTitle: ColorValue;
-  listItemValue: ColorValue;
-  screenHeaderBackground: ColorValue;
-  screenHeaderButtonText: ColorValue;
-  screenHeaderTitle: ColorValue;
-  segmentActive: ColorValue;
-  segmentBackground: ColorValue;
-  segmentBorder: ColorValue;
-  switchOffThumb: ColorValue;
-  switchOffTrack: ColorValue;
-  switchOnThumb: ColorValue;
-  switchOnTrack: ColorValue;
-  text: ColorValue;
-  textInv: ColorValue;
-  textLink: ColorValue;
-  textPlaceholder: ColorValue;
-  viewBackground: ColorValue;
-  viewAltBackground: ColorValue;
-  viewInvBackground: ColorValue;
+  white: string;
+  black: string;
+  stickyWhite: string;
+  stickyBlack: string;
+  transparent: string;
+  darkGray: string;
+  midGray: string;
+  lightGray: string;
+  subtleGray: string;
+  hintGray: string;
+  wispGray: string;
+  assertive: string;
+  error: string;
+  info: string;
+  success: string;
+  warning: string;
+  blackTransparentDarker: string;
+  blackTransparentDark: string;
+  blackTransparentMid: string;
+  blackTransparentLight: string;
+  blackTransparentSubtle: string;
+  whiteTransparentDarker: string;
+  whiteTransparentDark: string;
+  whiteTransparentMid: string;
+  whiteTransparentLight: string;
+  whiteTransparentSubtle: string;
+  button: string;
+  buttonText: string;
+  checkboxActive: string;
+  checkboxInactive: string;
+  collapsibleBackground: string;
+  datePickerAccent: string;
+  kbAccessoryButtonText: string;
+  listItem: string;
+  listItemBorder: string;
+  listItemIcon: string;
+  listItemIconNav: string;
+  listItemSubtitle: string;
+  listItemTitle: string;
+  listItemValue: string;
+  screenHeaderBackground: string;
+  screenHeaderButtonText: string;
+  screenHeaderTitle: string;
+  segmentActive: string;
+  segmentBackground: string;
+  segmentBorder: string;
+  switchOffThumb: string;
+  switchOffTrack: string;
+  switchOnThumb: string;
+  switchOnTrack: string;
+  text: string;
+  textInv: string;
+  textLink: string;
+  textPlaceholder: string;
+  viewBackground: string;
+  viewAltBackground: string;
+  viewInvBackground: string;
 }
 
 export interface IDevice extends IMKDevice {
@@ -133,11 +132,11 @@ export interface ILineHeights {
 }
 
 export interface IPalette {
-  black: ColorValue;
-  white: ColorValue;
-  transparent: ColorValue;
-  primary: ColorValue;
-  secondary: ColorValue;
+  black: string;
+  white: string;
+  transparent: string;
+  primary: string;
+  secondary: string;
 }
 
 export interface IRadius {

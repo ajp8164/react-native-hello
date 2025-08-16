@@ -16,9 +16,7 @@ const BlurBackground = React.memo(
         style={[s.background, style]}
         blurAmount={10}
         blurType={'dark'}
-        reducedTransparencyFallbackColor={
-          theme.colors.blackTransparentMid as string
-        }
+        reducedTransparencyFallbackColor={theme.colors.blackTransparentMid}
         {...props}
       />
     );

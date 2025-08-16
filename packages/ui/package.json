@@ -37,8 +37,7 @@
     "@react-native-hello/common": "^0.0.15",
     "@react-native-hello/core": "^0.0.17",
     "@rn-vui/base": "^5.1.7",
-    "@rn-vui/themed": "^5.1.7",
-    "react-native-theme-mk": "^0.3.2"
+    "@rn-vui/themed": "^5.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -90,6 +89,7 @@
     "react-native-reanimated-carousel": "^4.0.2",
     "react-native-share": "^12.0.3",
     "react-native-svg": "^15.11.1",
+    "react-native-theme-mk": "https://github.com/Maksym5248/react-native-theme-mk.git#fix/device-info",
     "react-native-toast-message": "^2.2.1",
     "react-native-video": "^6.16.1",
     "react-native-vision-camera": "^4.7.1",

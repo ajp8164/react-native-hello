@@ -11,7 +11,7 @@ export const useNavigationTheme = (): Theme => {
     ...RNDefaultTheme,
     colors: {
       ...RNDefaultTheme.colors,
-      background: theme.colors.viewBackground as string,
+      background: theme.colors.viewBackground,
     },
   };
 };

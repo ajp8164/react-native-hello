@@ -13,7 +13,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { ThemeManager, useTheme } from './theme';
-import type { ColorValue, TextStyle, ViewStyle } from 'react-native';
+import type { TextStyle, ViewStyle } from 'react-native';
 import {
   PanGestureHandler,
   type PanGestureHandlerGestureEvent,
@@ -31,21 +31,21 @@ type AnimatedGHContext = {
 interface SwipeButtonInterface {
   backText?: string;
   backTextStyle?: TextStyle | TextStyle[];
-  backTextColor?: ColorValue;
+  backTextColor?: string;
   containerStyle?: ViewStyle | ViewStyle[];
   onToggle: (value: boolean) => void;
   height?: number;
   padding?: number;
   text?: string;
   textStyle?: TextStyle | TextStyle[];
-  textColor?: ColorValue;
+  textColor?: string;
   thumbComponent?: ReactNode;
-  thumbStartColor?: ColorValue;
+  thumbStartColor?: string;
   thumbStyle?: ViewStyle | ViewStyle[];
-  thumbEndColor?: ColorValue;
-  trackColor?: ColorValue;
-  trackStartColor?: ColorValue;
-  trackEndColor?: ColorValue;
+  thumbEndColor?: string;
+  trackColor?: string;
+  trackStartColor?: string;
+  trackEndColor?: string;
   width?: number;
 }
 
@@ -76,16 +76,24 @@ const SwipeButton = ({
   const theme = useTheme();
   const s = useStyles();
 
-  backTextColor = backTextColor || theme.styles.buttonTitle.color || '#ffffff';
-  textColor = textColor || theme.styles.buttonTitle.color || '#ffffff';
+  backTextColor =
+    backTextColor || (theme.styles.buttonTitle.color as string) || '#ffffff';
+  textColor =
+    textColor || (theme.styles.buttonTitle.color as string) || '#ffffff';
   thumbStartColor =
-    thumbStartColor || theme.styles.buttonTitle.color || '#ffffff';
-  thumbEndColor = thumbEndColor || theme.styles.buttonTitle.color || '#ffffff';
-  trackColor = trackColor || theme.styles.button.backgroundColor || '#c0c0c0';
+    thumbStartColor || (theme.styles.buttonTitle.color as string) || '#ffffff';
+  thumbEndColor =
+    thumbEndColor || (theme.styles.buttonTitle.color as string) || '#ffffff';
+  trackColor =
+    trackColor || (theme.styles.button.backgroundColor as string) || '#c0c0c0';
   trackStartColor =
-    trackStartColor || theme.styles.button.backgroundColor || '#c0c0c0';
+    trackStartColor ||
+    (theme.styles.button.backgroundColor as string) ||
+    '#c0c0c0';
   trackEndColor =
-    trackEndColor || theme.styles.button.backgroundColor || '#c0c0c0';
+    trackEndColor ||
+    (theme.styles.button.backgroundColor as string) ||
+    '#c0c0c0';
 
   const swipeable = {
     ...s.swipeable,
@@ -185,7 +193,7 @@ const SwipeButton = ({
         backgroundColor: interpolateColor(
           X.value,
           [0, width - swipableDimensions - padding],
-          [thumbStartColor as string, thumbEndColor as string],
+          [thumbStartColor, thumbEndColor],
         ),
         transform: [{ translateX: X.value }],
       };
@@ -239,7 +247,7 @@ const SwipeButton = ({
       style={[swipeContainer, AnimatedStyles.swipeContainer, containerStyle]}>
       <AnimatedLinearGradient
         style={[AnimatedStyles.colorWave, colorWave]}
-        colors={[trackStartColor as string, trackEndColor as string]}
+        colors={[trackStartColor, trackEndColor]}
         start={{ x: 0.0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
       />

@@ -23,8 +23,8 @@ const CheckBox = ({ checked, containerStyle, onPress, ...rest }: CheckBox) => {
       checked={checked}
       checkedIcon={<SquareCheckBig color={theme.colors.listItemIcon} />}
       uncheckedIcon={<Square color={theme.colors.listItemIcon} />}
-      checkedColor={theme.colors.checkboxActive as string}
-      uncheckedColor={theme.colors.checkboxInactive as string}
+      checkedColor={theme.colors.checkboxActive}
+      uncheckedColor={theme.colors.checkboxInactive}
       containerStyle={[s.checkbox, containerStyle]}
       onPress={onPress}
       {...rest}

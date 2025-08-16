@@ -6,7 +6,6 @@ import {
 } from 'lucide-react-native';
 import React, { type ReactElement } from 'react';
 import {
-  type ColorValue,
   Pressable,
   StyleSheet,
   Text,
@@ -18,7 +17,7 @@ import Animated from 'react-native-reanimated';
 import { ThemeManager, useTheme, type IThemeManagerSchema } from '../theme';
 
 interface ListItem {
-  bottomDividerColor?: ColorValue;
+  bottomDividerColor?: string;
   bottomDividerForceHide?: boolean;
   bottomDividerLeft?: number;
   bottomDividerRight?: number;
@@ -103,8 +102,7 @@ const ListItem = (props: ListItem) => {
   const theme = useTheme();
   const s = useStyles();
 
-  const _bottomDividerColor =
-    bottomDividerColor || (s.border.borderColor as string);
+  const _bottomDividerColor = bottomDividerColor || s.border.borderColor;
   const _bottomDividerLeft = bottomDividerLeft || (s.border.left as number);
   const _bottomDividerRight = bottomDividerRight || (s.border.right as number);
 

@@ -1,13 +1,13 @@
 import { ThemeManager, useTheme } from './theme';
 
-import { type ColorValue, Text, View, type ViewStyle } from 'react-native';
+import { Text, View, type ViewStyle } from 'react-native';
 import React from 'react';
 
 interface Chip {
-  color?: ColorValue;
+  color?: string;
   style?: ViewStyle | ViewStyle[];
   text?: string;
-  textColor?: ColorValue;
+  textColor?: string;
   visible?: boolean;
 }
 

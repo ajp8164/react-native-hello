@@ -39,7 +39,7 @@ const ModalHeader = (props: ModalHeader) => {
       <Text style={s.title}>{title}</Text>
       {buttonLeftVisible && (
         <Button
-          title={buttonLeftIsElement ? undefined : (buttonLeftLabel as string)}
+          title={buttonLeftIsElement ? undefined : buttonLeftLabel}
           icon={
             buttonLeftIsElement ? (buttonLeftLabel as ReactElement) : undefined
           }
@@ -52,9 +52,7 @@ const ModalHeader = (props: ModalHeader) => {
       )}
       {buttonRightVisible && (
         <Button
-          title={
-            buttonRightIsElement ? undefined : (buttonRightLabel as string)
-          }
+          title={buttonRightIsElement ? undefined : buttonRightLabel}
           icon={
             buttonRightIsElement
               ? (buttonRightLabel as ReactElement)

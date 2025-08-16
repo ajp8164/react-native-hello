@@ -5,7 +5,7 @@ import { ThemeManager, useDevice, useTheme } from './theme';
 import { Picker as RNPicker } from '@react-native-picker/picker';
 import { isEqual } from 'lodash';
 import React, { type Key, useEffect, useState } from 'react';
-import { Text, View, type ColorValue } from 'react-native';
+import { Text, View } from 'react-native';
 
 type PickerInternalValue = string | Date;
 type PickerInternalOnChangeValue = {
@@ -22,7 +22,7 @@ export enum PickerMode {
 export type WheelPickerItem = {
   label: string;
   value: string | number;
-  color?: ColorValue;
+  color?: string;
 };
 
 export type WheelPickerWidth = string | number;
@@ -151,7 +151,7 @@ const WheelPicker = ({
           label={item.label}
           value={item.value}
           key={item.value as Key}
-          color={(item.color || theme.colors.text) as string}
+          color={item.color || theme.colors.text}
           fontFamily={theme.fonts.regular}
         />
       );

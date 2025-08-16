@@ -33,8 +33,8 @@ const ListItemCheckBox = (props: ListItemCheckBox) => {
             )
           }
           uncheckedIcon={uncheckedIcon ? uncheckedIcon : <></>}
-          checkedColor={theme.colors.checkboxActive as string}
-          uncheckedColor={theme.colors.checkboxInactive as string}
+          checkedColor={theme.colors.checkboxActive}
+          uncheckedColor={theme.colors.checkboxInactive}
           disabled={disabled}
           containerStyle={{ backgroundColor: theme.colors.transparent }}
           onPress={() => onChange(true)}

@@ -1,11 +1,10 @@
 import { type ReactElement } from 'react';
-import type { ColorValue } from 'react-native';
 
 export * from './AppleSwipeableRow';
 
 export interface SwipeableAction {
   ButtonComponent?: ReactElement;
-  color: ColorValue;
+  color: string;
   confirmation?: () => Promise<boolean>;
   onPress: () => void;
   op?: 'remove';

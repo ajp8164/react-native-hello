@@ -1,17 +1,12 @@
 import { ThemeManager } from './theme';
-import {
-  type ColorValue,
-  type TextStyle,
-  View,
-  type ViewStyle,
-} from 'react-native';
+import { type TextStyle, View, type ViewStyle } from 'react-native';
 
 import { Divider as RNEDivider } from '@rn-vui/base';
 import React from 'react';
 import { useTheme } from './theme';
 
 interface Divider {
-  color?: ColorValue;
+  color?: string;
   orientation?: 'vertical' | 'horizontal' | undefined;
   rightComponent?: JSX.Element | null;
   subHeaderStyle?: TextStyle;
@@ -45,7 +40,7 @@ const Divider = ({
         light ? s.light : {},
         subHeaderStyle,
       ]}
-      color={(color || theme.colors.lightGray) as string}
+      color={color || theme.colors.lightGray}
       orientation={orientation}
       style={[!!width && { marginBottom: 20 }, s.style, style]}
       width={width}
