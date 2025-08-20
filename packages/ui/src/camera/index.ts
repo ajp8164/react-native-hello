@@ -1,2 +1,2 @@
 export * from './useCamera';
-export * from './useCameraContext';
+export * from './CameraProvider';
