@@ -16,10 +16,7 @@ export function AlertStatusProvider({
   const alertInProgress = useRef(false).current;
 
   return (
-    <AlertStatusContext.Provider
-      value={{
-        alertInProgress,
-      }}>
+    <AlertStatusContext.Provider value={{ alertInProgress }}>
       {children}
     </AlertStatusContext.Provider>
   );

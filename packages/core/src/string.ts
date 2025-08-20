@@ -1,13 +1,4 @@
 /**
- * Convert to uppercase the first letter of the first word in a string.
- * @param string
- * @returns
- */
-const capitalize = (string: string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-/**
  * Return a short string with an ellipsis.
  * @param text - the string to trim
  * @param length - the maximum length of the string (not including the ellipsis length)
@@ -28,4 +19,4 @@ const ellipsis = (text: string, length: number, endLength?: number) => {
   }
 };
 
-export { capitalize, ellipsis };
+export { ellipsis };
