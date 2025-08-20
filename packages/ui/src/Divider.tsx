@@ -52,7 +52,8 @@ const Divider = ({
 const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   children: {
     position: 'absolute',
-    right: 0,
+    top: 10,
+    right: -5,
     zIndex: 1,
   },
   light: {
@@ -74,7 +75,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   style: {
     borderBottomWidth: 0,
-    marginTop: 25,
+    paddingTop: 25,
   },
 }));
 
