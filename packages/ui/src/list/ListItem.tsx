@@ -55,13 +55,13 @@ interface ListItem {
 const getRightContent = (key: string, theme: IThemeManagerSchema) => {
   switch (key) {
     case 'chevron-down':
-      return <ChevronDown color={theme.colors.listItemIconNav} />;
+      return <ChevronDown color={theme.colors.listItemIconNav} size={33} />;
     case 'chevron-right':
-      return <ChevronRight color={theme.colors.listItemIconNav} />;
+      return <ChevronRight color={theme.colors.listItemIconNav} size={33} />;
     case 'chevron-up':
-      return <ChevronUp color={theme.colors.listItemIconNav} />;
+      return <ChevronUp color={theme.colors.listItemIconNav} size={33} />;
     case 'info':
-      return <Info color={theme.colors.listItemIconNav} />;
+      return <Info color={theme.colors.listItemIconNav} size={28} />;
     default:
       return undefined;
   }
