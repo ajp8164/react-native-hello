@@ -38,12 +38,12 @@ export const baseTheme = {
     tiny: 16,
   },
   spacing: {
-    XXS: 8,
-    XS: 12,
-    S: 16,
-    M: 24,
-    L: 32,
-    XL: 40,
+    XXS: 1,
+    XS: 2,
+    S: 4,
+    M: 8,
+    L: 12,
+    XL: 24,
     XXL: 48,
   },
 };
