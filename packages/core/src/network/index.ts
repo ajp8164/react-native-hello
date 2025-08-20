@@ -1,1 +1,2 @@
-export * from './useNetworkContext';
+export * from './useNetwork';
+export * from './NetworkProvider';

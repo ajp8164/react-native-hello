@@ -1,9 +1,9 @@
-import { useNetworkContext } from '@react-native-hello/core';
+import { useNetwork } from '@react-native-hello/core';
 import Toast from 'react-native-toast-message';
 import { useToastProps } from '.';
 
 export const useEnsureNetwork = () => {
-  const network = useNetworkContext();
+  const network = useNetwork();
   const appToastProps = useToastProps();
 
   const ensureNetwork = <T>(callback: () => T) => {
