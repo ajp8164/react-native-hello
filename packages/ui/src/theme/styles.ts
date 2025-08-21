@@ -35,6 +35,20 @@ export const createElementsStyles = ({
   buttonDisabled: {
     opacity: 0.4,
   },
+  buttonClear: {
+    backgroundColor: theme.colors.transparent,
+    borderWidth: 0,
+  },
+  buttonClearTitle: {
+    fontSize: theme.fontSize.normal,
+    fontWeight: '400',
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.button,
+  },
+  buttonClearDisabled: {
+    backgroundColor: theme.colors.transparent,
+    opacity: 0.4,
+  },
   buttonOutline: {
     backgroundColor: theme.colors.transparent,
     borderColor: theme.colors.button,

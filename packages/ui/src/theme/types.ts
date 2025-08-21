@@ -163,6 +163,9 @@ export interface IStyles {
   button: IStyle;
   buttonTitle: IStyle;
   buttonDisabled: IStyle;
+  buttonClear: IStyle;
+  buttonClearTitle: IStyle;
+  buttonClearDisabled: IStyle;
   buttonOutline: IStyle;
   buttonOutlineTitle: IStyle;
   buttonOutlineDisabled: IStyle;
