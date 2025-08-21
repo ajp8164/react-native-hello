@@ -64,8 +64,8 @@ const ModalHeader = ({
           style={{
             height:
               size === 'large'
-                ? device.inset.top + Number(device.headerBarLarge.height)
-                : device.inset.top + Number(device.headerBar.height),
+                ? device.insets.top + Number(device.headerBarLarge.height)
+                : device.insets.top + Number(device.headerBar.height),
           }}
         />
       )}

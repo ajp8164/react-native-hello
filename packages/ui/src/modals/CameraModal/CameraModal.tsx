@@ -194,7 +194,7 @@ const CameraModal = React.forwardRef<CameraModal, CameraModalProps>(
 const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   headerContainer: {
     position: 'absolute',
-    top: device.inset.top - 20,
+    top: device.insets.top - 20,
     zIndex: 1,
     width: '100%',
   },

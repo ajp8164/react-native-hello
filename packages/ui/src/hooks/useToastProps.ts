@@ -11,7 +11,7 @@ export const useToastProps = () => {
       position: 'bottom',
       autoHide: true,
       visibilityTime: 3000,
-      bottomOffset: device.bottomTabBarHeight + 15,
+      bottomOffset: device.bottomTabBarHeight + device.insets.bottom + 15,
     } as ToastShowParams,
   };
 };

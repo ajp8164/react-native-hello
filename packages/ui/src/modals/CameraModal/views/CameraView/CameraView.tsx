@@ -344,7 +344,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   captureButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: device.inset.bottom,
+    bottom: device.insets.bottom,
   },
   button: {
     marginBottom: 15,

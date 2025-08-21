@@ -13,7 +13,7 @@ export const useDevice = (): IDevice => {
 
   return {
     ...device,
-    bottomTabBarHeight: bottomTabBarHeight || 49 + device.inset.bottom,
+    bottomTabBarHeight: bottomTabBarHeight || 49,
     headerBar: {
       height: headerHeight || 44,
     },

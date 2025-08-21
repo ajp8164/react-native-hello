@@ -125,7 +125,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme, device }) => ({
   actionButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: device.inset.bottom + 30,
+    bottom: device.insets.bottom + 30,
     width: actionButtonSize,
     height: actionButtonSize,
     borderRadius: actionButtonSize / 2,

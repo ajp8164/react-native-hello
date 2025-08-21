@@ -14,7 +14,7 @@ export const themeBase: IBaseThemeSchema = {
     stickyBlack: palette.black,
     transparent: palette.transparent,
 
-    darkGray: '#ffffffde',
+    darkGray: '#878787',
     midGray: '#787878',
     lightGray: '#787878',
     subtleGray: '#101010',
