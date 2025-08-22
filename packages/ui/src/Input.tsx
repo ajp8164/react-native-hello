@@ -18,8 +18,9 @@ import {
   type MaskedTextInputRef,
 } from 'react-native-advanced-input-mask';
 import type { FakeCurrencyInputProps } from 'react-native-currency-input';
+import { TextInput as RNGHTextInput } from 'react-native-gesture-handler';
 
-export type InputMethods = TextInput & MaskedTextInputRef;
+export type InputMethods = TextInput & RNGHTextInput & MaskedTextInputRef;
 
 interface Input
   extends Omit<
@@ -68,6 +69,8 @@ const Input = React.forwardRef<InputMethods, Input>(
       setMessageHeight(event.nativeEvent.layout.height);
     };
 
+    const TextInputComponent = insideModal ? BottomSheetTextInput : TextInput;
+
     let _label = label;
     if (!value) {
       _label = undefined;
@@ -75,60 +78,52 @@ const Input = React.forwardRef<InputMethods, Input>(
 
     return (
       <View style={containerStyle}>
-        {insideModal === true ? (
-          <BottomSheetTextInput
-            style={[s.textInput, inputStyle]}
-            onChangeText={text => onChangeText(text, text)}
-            {...rest}
-          />
-        ) : (
-          <View style={[s.inputContainer, inputContainerStyle]}>
-            {mask && rtlNumber ? (
-              <MaskedNumberInput
-                ref={ref}
-                {...rest}
-                style={{
-                  ...s.textInput,
-                  ...inputStyle,
-                  ...(_label ? { paddingTop: 20 } : null),
-                }}
-                mask={mask}
-                value={value}
-                onChangeText={onChangeText}
-              />
-            ) : mask && !rtlNumber ? (
-              <MaskedTextInput
-                ref={ref}
-                {...rest}
-                style={{
-                  ...s.textInput,
-                  ...inputStyle,
-                  ...(_label ? { paddingTop: 20 } : null),
-                }}
-                mask={mask}
-                value={value}
-                onChangeText={onChangeText}
-              />
-            ) : (
-              <TextInput
-                ref={ref}
-                {...rest}
-                style={{
-                  ...s.textInput,
-                  ...inputStyle,
-                  ...(_label ? { paddingTop: 20 } : null),
-                }}
-                value={value}
-                onChangeText={text => onChangeText(text, text)}
-              />
-            )}
-            {_label && (
-              <Animated.View style={s.labelContainer} entering={FadeInDown}>
-                <Text style={s.label}>{_label}</Text>
-              </Animated.View>
-            )}
-          </View>
-        )}
+        <View style={[s.inputContainer, inputContainerStyle]}>
+          {mask && rtlNumber ? (
+            <MaskedNumberInput
+              ref={ref}
+              {...rest}
+              style={{
+                ...s.textInput,
+                ...inputStyle,
+                ...(_label ? { paddingTop: 20 } : null),
+              }}
+              mask={mask}
+              value={value}
+              onChangeText={onChangeText}
+            />
+          ) : mask && !rtlNumber ? (
+            <MaskedTextInput
+              ref={ref}
+              {...rest}
+              style={{
+                ...s.textInput,
+                ...inputStyle,
+                ...(_label ? { paddingTop: 20 } : null),
+              }}
+              mask={mask}
+              value={value}
+              onChangeText={onChangeText}
+            />
+          ) : (
+            <TextInputComponent
+              ref={ref}
+              {...rest}
+              style={{
+                ...s.textInput,
+                ...inputStyle,
+                ...(_label ? { paddingTop: 20 } : null),
+              }}
+              value={value}
+              onChangeText={text => onChangeText(text, text)}
+            />
+          )}
+          {_label && (
+            <Animated.View style={s.labelContainer} entering={FadeInDown}>
+              <Text style={s.label}>{_label}</Text>
+            </Animated.View>
+          )}
+        </View>
         {(errorMessage || infoMessage) && (
           <Text
             style={[
