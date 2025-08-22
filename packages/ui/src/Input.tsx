@@ -7,10 +7,10 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { ThemeManager } from './theme';
+import { ThemeManager, useTheme } from './theme';
 import React, { useState, type ReactNode } from 'react';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeOut } from 'react-native-reanimated';
 import MaskedNumberInput from './MaskedNumberInput';
 import {
   MaskedTextInput,
@@ -21,6 +21,8 @@ import type { FakeCurrencyInputProps } from 'react-native-currency-input';
 import { TextInput as RNGHTextInput } from 'react-native-gesture-handler';
 
 export type InputMethods = TextInput & RNGHTextInput & MaskedTextInputRef;
+
+const defaultHeight = 48;
 
 interface Input
   extends Omit<
@@ -35,7 +37,7 @@ interface Input
   mask?: string; // Adheres to format described by react-native-advanced-input-mask
   messageStyle?: TextStyle | TextStyle[];
   inputContainerStyle?: ViewStyle | ViewStyle[];
-  inputStyle?: TextStyle | TextStyle[];
+  inputStyle?: TextStyle;
   onChangeText: (formatted: string, unformatted: string) => void;
   rtlNumber?: boolean;
   value: string;
@@ -61,6 +63,7 @@ const Input = React.forwardRef<InputMethods, Input>(
     }: Input,
     ref,
   ) => {
+    const theme = useTheme();
     const s = useStyles();
 
     const [messageHeight, setMessageHeight] = useState<number | undefined>();
@@ -70,6 +73,9 @@ const Input = React.forwardRef<InputMethods, Input>(
     };
 
     const TextInputComponent = insideModal ? BottomSheetTextInput : TextInput;
+
+    // Set a height if not specified.
+    inputStyle = { height: defaultHeight, ...inputStyle };
 
     let _label = label;
     if (!value) {
@@ -83,11 +89,7 @@ const Input = React.forwardRef<InputMethods, Input>(
             <MaskedNumberInput
               ref={ref}
               {...rest}
-              style={{
-                ...s.textInput,
-                ...inputStyle,
-                ...(_label ? { paddingTop: 20 } : null),
-              }}
+              style={{ ...s.textInput, ...inputStyle }}
               mask={mask}
               value={value}
               onChangeText={onChangeText}
@@ -96,11 +98,7 @@ const Input = React.forwardRef<InputMethods, Input>(
             <MaskedTextInput
               ref={ref}
               {...rest}
-              style={{
-                ...s.textInput,
-                ...inputStyle,
-                ...(_label ? { paddingTop: 20 } : null),
-              }}
+              style={{ ...s.textInput, ...inputStyle }}
               mask={mask}
               value={value}
               onChangeText={onChangeText}
@@ -109,17 +107,24 @@ const Input = React.forwardRef<InputMethods, Input>(
             <TextInputComponent
               ref={ref}
               {...rest}
-              style={{
-                ...s.textInput,
-                ...inputStyle,
-                ...(_label ? { top: 10 } : null),
-              }}
+              style={{ ...s.textInput, ...inputStyle }}
               value={value}
               onChangeText={text => onChangeText(text, text)}
             />
           )}
           {_label && (
-            <Animated.View style={s.labelContainer} entering={FadeInDown}>
+            <Animated.View
+              style={[
+                s.labelContainer,
+                {
+                  top:
+                    -((inputStyle.height! as number) + theme.lineHeight.small) /
+                    2,
+                  backgroundColor: inputStyle.backgroundColor,
+                },
+              ]}
+              entering={FadeInDown}
+              exiting={FadeOut}>
               <Text style={s.label}>{_label}</Text>
             </Animated.View>
           )}
@@ -151,12 +156,13 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   labelContainer: {
     position: 'absolute',
-    top: -10,
-    left: 6,
+    left: 10,
+    paddingHorizontal: 5,
+    borderRadius: 5,
   },
   message: {
     ...theme.text.small,
-    height: 17, // Needs to change if font size changes
+    height: theme.lineHeight.small,
     marginTop: 5,
     alignSelf: 'flex-start',
     position: 'absolute',
@@ -173,7 +179,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     ...theme.text.normal,
     width: '100%',
     backgroundColor: theme.colors.listItem,
-    borderRadius: 10, //theme.styles.button.borderRadius,
+    borderRadius: 10,
     paddingHorizontal: 6,
   },
 }));
