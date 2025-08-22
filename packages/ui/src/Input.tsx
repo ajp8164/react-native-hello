@@ -112,7 +112,7 @@ const Input = React.forwardRef<InputMethods, Input>(
               style={{
                 ...s.textInput,
                 ...inputStyle,
-                ...(_label ? { paddingTop: 20 } : null),
+                ...(_label ? { top: 10 } : null),
               }}
               value={value}
               onChangeText={text => onChangeText(text, text)}
@@ -151,7 +151,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   labelContainer: {
     position: 'absolute',
-    top: 0,
+    top: -10,
     left: 6,
   },
   message: {
