@@ -21,6 +21,7 @@ export interface ModalProps {
   enableGestureBehavior?: boolean;
   handleComponent?: React.FC<BottomSheetHandleProps> | null | undefined;
   handleIndicatorStyle?: ViewStyle;
+  keyboardBehavior?: 'interactive' | 'extend' | 'fillParent';
   modalParent?: boolean;
   onClose?: () => void; // Close only
   onDismiss?: () => void; // Close and unmount

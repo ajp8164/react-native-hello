@@ -24,6 +24,7 @@ const Modal = React.forwardRef<Modal, ModalProps>((props, ref) => {
     enableGestureBehavior = true,
     handleComponent,
     handleIndicatorStyle,
+    keyboardBehavior,
     modalParent = false,
     scrollContainerStyle,
     scrollEnabled = true,
@@ -87,6 +88,7 @@ const Modal = React.forwardRef<Modal, ModalProps>((props, ref) => {
       enablePanDownToClose={enablePanDownToClose}
       enableHandlePanningGesture={enableHandlePanningGesture}
       enableDynamicSizing={enableDynamicSizing}
+      keyboardBehavior={keyboardBehavior}
       touchBackdropBehavior={touchBackdropBehavior}
       backgroundStyle={[{ backgroundColor }, backgroundStyle]}
       style={style}
