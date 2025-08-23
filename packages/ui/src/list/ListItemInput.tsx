@@ -52,6 +52,7 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
           inputStyle={{
             backgroundColor: theme.colors.transparent,
             ...(container === 'right' ? { textAlign: 'right' } : {}),
+            ...s.input,
             ...inputProps.inputStyle,
             // Move the input vertically to provide room for label if present.
             height: hasValue && inputProps.label ? 30 : 20,
@@ -102,10 +103,13 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     color: theme.colors.assertive,
     position: 'absolute',
     left: 15,
-    bottom: 2,
+    bottom: 0,
   },
   leftContainer: {
     width: 125,
+  },
+  input: {
+    left: 10,
   },
   main: {
     marginHorizontal: 10,

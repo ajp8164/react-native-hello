@@ -84,7 +84,12 @@ const Input = React.forwardRef<InputMethods, Input>(
 
     return (
       <View style={containerStyle}>
-        <View style={[s.inputContainer, inputContainerStyle]}>
+        <View
+          style={[
+            s.inputContainer,
+            { height: inputStyle.height },
+            inputContainerStyle,
+          ]}>
           {mask && rtlNumber ? (
             <MaskedNumberInput
               ref={ref}
@@ -117,9 +122,7 @@ const Input = React.forwardRef<InputMethods, Input>(
               style={[
                 s.labelContainer,
                 {
-                  top:
-                    -((inputStyle.height! as number) + theme.lineHeight.small) /
-                    2,
+                  top: -theme.lineHeight.small / 2,
                   backgroundColor: inputStyle.backgroundColor,
                 },
               ]}
@@ -173,7 +176,6 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    flex: 1,
   },
   textInput: {
     ...theme.text.normal,
