@@ -1,5 +1,5 @@
 import { ThemeManager, useTheme } from '../theme';
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, type TextStyle, View } from 'react-native';
 
 import { ListItem } from './ListItem';
@@ -33,8 +33,6 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
     const theme = useTheme();
     const s = useStyles();
 
-    const [hasValue, setHasValue] = useState(!!inputProps.value);
-
     const Content = (
       <View style={s.row}>
         <Input
@@ -45,18 +43,11 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
           keyboardAppearance={ThemeManager.name}
           allowFontScaling={false}
           {...inputProps}
-          onChangeText={(formatted, unformatted) => {
-            inputProps.onChangeText(formatted, unformatted);
-            setHasValue(!!formatted);
-          }}
           inputStyle={{
             backgroundColor: theme.colors.transparent,
-            ...(container === 'right' ? { textAlign: 'right' } : {}),
             ...s.input,
             ...inputProps.inputStyle,
-            // Move the input vertically to provide room for label if present.
-            height: hasValue && inputProps.label ? 30 : 20,
-            top: hasValue && inputProps.label ? 5 : 0,
+            ...(container === 'right' ? s.inputRight : {}),
           }}
           messageStyle={{
             ...(container === 'right' ? { alignSelf: 'flex-end' } : {}),
@@ -110,15 +101,19 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   input: {
     left: 10,
+    height: 40,
+    paddingLeft: 4,
+    alignSelf: 'flex-start',
+  },
+  inputRight: {
+    textAlign: 'right',
+    height: undefined,
   },
   main: {
-    marginHorizontal: 10,
-    paddingRight: 5,
+    marginRight: 10,
     justifyContent: 'center',
   },
-  mainContainer: {
-    marginLeft: -10,
-  },
+  mainContainer: {},
   rightContainer: {
     width: 125,
   },

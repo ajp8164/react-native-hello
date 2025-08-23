@@ -7,7 +7,7 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { ThemeManager, useTheme } from './theme';
+import { ThemeManager } from './theme';
 import React, { useState, type ReactNode } from 'react';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import Animated, { FadeInDown, FadeOut } from 'react-native-reanimated';
@@ -63,7 +63,6 @@ const Input = React.forwardRef<InputMethods, Input>(
     }: Input,
     ref,
   ) => {
-    const theme = useTheme();
     const s = useStyles();
 
     const [messageHeight, setMessageHeight] = useState<number | undefined>();
@@ -121,10 +120,7 @@ const Input = React.forwardRef<InputMethods, Input>(
             <Animated.View
               style={[
                 s.labelContainer,
-                {
-                  top: -theme.lineHeight.small / 2,
-                  backgroundColor: inputStyle.backgroundColor,
-                },
+                { backgroundColor: inputStyle.backgroundColor },
               ]}
               entering={FadeInDown}
               exiting={FadeOut}>
@@ -159,6 +155,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   labelContainer: {
     position: 'absolute',
+    top: -theme.lineHeight.small / 2,
     left: 10,
     paddingHorizontal: 5,
     borderRadius: 5,
@@ -179,10 +176,11 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   textInput: {
     ...theme.text.normal,
+    lineHeight: undefined, // Prevent text wrap
     width: '100%',
     backgroundColor: theme.colors.listItem,
     borderRadius: 10,
-    paddingHorizontal: 6,
+    paddingHorizontal: 14,
   },
 }));
 
