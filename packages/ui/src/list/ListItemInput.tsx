@@ -101,7 +101,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
   },
   input: {
     left: 10,
-    height: 40,
+    height: 34,
     paddingLeft: 4,
     alignSelf: 'flex-start',
   },
