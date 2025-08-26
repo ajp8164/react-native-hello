@@ -46,6 +46,7 @@ interface ListItemSwipeable extends ListItem {
   showEditor?: boolean;
   swipeableActionsLeft?: SwipeableAction[];
   swipeableActionsRight?: SwipeableAction[];
+  swipeEnabled?: boolean;
 }
 
 export interface ListItemSwipeableMethods {
@@ -68,6 +69,7 @@ const ListItemSwipeable = React.forwardRef<
     showEditor = false,
     swipeableActionsLeft,
     swipeableActionsRight,
+    swipeEnabled = true,
     ...rest
   } = props;
 
@@ -232,6 +234,7 @@ const ListItemSwipeable = React.forwardRef<
           rest.ghost ? s.ghost : {},
         ]}
         buttonWidth={buttonWidth}
+        enabled={swipeEnabled}
         leftActions={swipeableActionsLeft}
         rightActions={swipeableActionsRight}
         onSwipeableWillOpen={direction => {
