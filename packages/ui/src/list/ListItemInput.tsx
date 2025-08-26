@@ -1,5 +1,5 @@
 import { ThemeManager, useTheme } from '../theme';
-import React from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import { Text, type TextStyle, View } from 'react-native';
 
 import { ListItem } from './ListItem';
@@ -33,10 +33,14 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
     const theme = useTheme();
     const s = useStyles();
 
+    const inputRef = useRef<InputMethods>(null);
+
+    useImperativeHandle(ref, () => inputRef.current as InputMethods);
+
     const Content = (
       <View style={s.row}>
         <Input
-          ref={ref}
+          ref={inputRef}
           containerStyle={container === 'main' ? s.container : {}}
           placeholderTextColor={theme.colors.textPlaceholder}
           selectionColor={theme.colors.text}
@@ -74,6 +78,7 @@ const ListItemInput = React.forwardRef<ListItemInputMethods, ListItemInput>(
         <ListItem
           title={title}
           {...rest}
+          onPress={() => inputRef.current?.focus()}
           leftContent={container === 'left' ? Content : undefined}
           rightContent={container === 'right' ? Content : undefined}
           mainContent={container === 'main' ? Content : undefined}
