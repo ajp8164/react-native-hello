@@ -11,6 +11,7 @@ export interface ListItemSegmented extends ListItem {
   segments: string[];
   segmentBackgroundColor?: string;
   segmentTintColor?: string;
+  segmentWidth?: number;
 }
 
 const ListItemSegmented = (props: ListItemSegmented) => {
@@ -21,6 +22,7 @@ const ListItemSegmented = (props: ListItemSegmented) => {
     segments,
     segmentBackgroundColor,
     segmentTintColor,
+    segmentWidth = 50,
     ...rest
   } = props;
 
@@ -31,7 +33,7 @@ const ListItemSegmented = (props: ListItemSegmented) => {
     <View style={[fullWidth ? s.segmentedViewFullWidth : {}]}>
       <SegmentedControl
         values={segments}
-        style={[{ width: fullWidth ? '100%' : segments.length * 50 }]}
+        style={[{ width: fullWidth ? '100%' : segments.length * segmentWidth }]}
         tintColor={segmentTintColor || theme.colors.viewAltBackground}
         backgroundColor={segmentBackgroundColor || theme.colors.wispGray}
         fontStyle={s.segmentedFont}
