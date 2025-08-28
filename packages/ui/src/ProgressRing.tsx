@@ -7,23 +7,25 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useEffect } from 'react';
-import { ThemeManager, useTheme } from './theme';
+import { ThemeManager } from './theme';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface ProgressRing {
   arc?: number;
-  color?: string;
+  color1?: string;
+  color2?: string;
   containerStyle?: ViewStyle;
   contentStyle?: ViewStyle;
   footNote?: string;
   label?: string;
   progress: number;
-  radius: number;
+  radius?: number;
   range?: number[];
   ringContainerStyle?: ViewStyle;
+  animationDuration?: number;
   startAngle?: number;
-  strokeWidth: number;
+  strokeWidth?: number;
   title?: string;
   titleStyle?: TextStyle;
   value?: string;
@@ -34,18 +36,20 @@ interface ProgressRing {
 
 const ProgressRing = (props: ProgressRing) => {
   const {
-    arc = 0.6,
-    color,
+    arc = 1,
+    color1,
+    color2,
     containerStyle,
     contentStyle,
     footNote,
     label,
     progress,
-    radius,
+    radius = 100,
     range,
     ringContainerStyle,
-    startAngle = 162,
-    strokeWidth,
+    animationDuration = 1500,
+    startAngle = -90,
+    strokeWidth = 10,
     title,
     titleStyle,
     value,
@@ -54,7 +58,6 @@ const ProgressRing = (props: ProgressRing) => {
     InfoComponent,
   } = props;
 
-  const theme = useTheme();
   const s = useStyles();
 
   const innerRadius = radius - strokeWidth / 2;
@@ -62,7 +65,7 @@ const ProgressRing = (props: ProgressRing) => {
   const fill = useSharedValue(0);
 
   useEffect(() => {
-    fill.value = withTiming(progress, { duration: 1500 });
+    fill.value = withTiming(progress, { duration: animationDuration });
   }, [progress]);
 
   const animatedProps = useAnimatedProps(() => ({
@@ -80,11 +83,10 @@ const ProgressRing = (props: ProgressRing) => {
               cx={radius}
               cy={radius}
               fill={'transparent'}
-              stroke={color}
+              stroke={color1}
               strokeWidth={strokeWidth}
               strokeDasharray={[circumference * arc]}
               strokeLinecap={'round'}
-              opacity={0.2}
               transform={`rotate(${startAngle} ${radius} ${radius})`}
             />
             {/* Foreground */}
@@ -94,7 +96,7 @@ const ProgressRing = (props: ProgressRing) => {
               cx={radius}
               cy={radius}
               fill={'transparent'}
-              stroke={progress > 0 ? color : theme.colors.transparent}
+              stroke={color2}
               strokeWidth={strokeWidth}
               strokeDasharray={[circumference * progress * arc]}
               strokeLinecap={'round'}
@@ -133,7 +135,10 @@ const ProgressRing = (props: ProgressRing) => {
               <Text style={s.rangeHigh}>{range[1]}</Text>
               {label && (
                 <Text
-                  style={[s.label, { color, backgroundColor: `${color}33` }]}>
+                  style={[
+                    s.label,
+                    { color: color1, backgroundColor: `${color1}33` },
+                  ]}>
                   {label}
                 </Text>
               )}
