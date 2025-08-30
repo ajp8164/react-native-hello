@@ -65,6 +65,7 @@
   "peerDependencies": {
     "@expo/react-native-action-sheet": "^4.1.1",
     "@gorhom/bottom-sheet": "^5.0.6",
+    "@quidone/react-native-wheel-picker": "^1.6.1",
     "@react-native-camera-roll/camera-roll": "^7.10.1",
     "@react-native-community/blur": "^4.4.1",
     "@react-native-community/datetimepicker": "^8.2.0",

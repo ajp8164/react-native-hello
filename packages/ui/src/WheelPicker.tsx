@@ -1,11 +1,13 @@
+import React, { useEffect, useState } from 'react';
+import { Text, View, type ViewStyle, type TextStyle } from 'react-native';
+
+import RNWheelPicker, { DatePicker } from '@quidone/react-native-wheel-picker';
+import { type OnlyDateFormat } from '@quidone/react-native-wheel-picker/dest/typescript/date/date';
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { ThemeManager, useDevice, useTheme } from './theme';
-import { Picker as RNPicker } from '@react-native-picker/picker';
+import { ThemeManager, useDevice } from '@react-native-hello/ui';
 import { isEqual } from 'lodash';
-import React, { type Key, useEffect, useState } from 'react';
-import { Text, View, type TextStyle } from 'react-native';
 
 type PickerInternalValue = string | Date;
 type PickerInternalOnChangeValue = {
@@ -16,13 +18,13 @@ type PickerInternalOnChangeValue = {
 
 export enum PickerMode {
   Date = 'Date',
+  DateBeta = 'DateBeta',
   Custom = 'Custom',
 }
 
 export type WheelPickerItem = {
   label: string;
   value: string | number;
-  color?: string;
 };
 
 export type WheelPickerWidth = string | number;
@@ -30,13 +32,16 @@ export type WheelPickerWidth = string | number;
 export interface WheelPicker {
   mode?: PickerMode;
   items?: WheelPickerItem[] | WheelPickerItem[][];
+  itemHeight?: number;
   itemStyle?: TextStyle | TextStyle[];
   itemWidth?: WheelPickerWidth | WheelPickerWidth[];
   labels?: string | string[];
   labelStyle?: TextStyle | TextStyle[];
   labelWidth?: WheelPickerWidth | WheelPickerWidth[];
+  overlayStyle?: ViewStyle | ViewStyle[];
   placeholder?: string | WheelPickerItem | WheelPickerItem[];
   value?: Date | string | string[];
+  visibleItemCount?: number;
   wheelVisible?: boolean | boolean[];
   onValueChange: (
     wheelIndex: number,
@@ -48,27 +53,26 @@ export interface WheelPicker {
 const defaultPlaceholder: WheelPickerItem = {
   label: 'Select an item...',
   value: 'placeholder',
-  color: '#9EA0A4',
 };
 
 const WheelPicker = ({
   mode = PickerMode.Custom,
   items,
+  itemHeight = 35,
   itemStyle,
   itemWidth,
   labels,
   labelStyle,
   labelWidth,
+  overlayStyle,
   placeholder = defaultPlaceholder,
   value,
+  visibleItemCount,
   wheelVisible = true,
   onValueChange,
 }: WheelPicker) => {
-  const theme = useTheme();
   const s = useStyles();
   const device = useDevice();
-
-  // const multiWheel = Array.isArray(items && items[0]);
 
   const [pickerItems, setPickerItems] = useState<WheelPickerItem[][]>(
     (Array.isArray(items && items[0]) ? items : [items]) as WheelPickerItem[][],
@@ -148,24 +152,16 @@ const WheelPicker = ({
     }
   }, []);
 
-  const renderPickerItems = (items: WheelPickerItem[]) => {
-    return items.map(item => {
-      return (
-        <RNPicker.Item
-          label={item.label}
-          value={item.value}
-          key={item.value as Key}
-          color={item.color || theme.colors.text}
-          fontFamily={theme.fonts.regular}
-        />
-      );
-    });
-  };
-
   const onDateValueChange = (_event: DateTimePickerEvent, date?: Date) => {
     const now = Date();
     setPickerValue([date || now]);
     onValueChange(0, date || now, 0);
+  };
+
+  const onDateValueChangeBeta = (event: { date: OnlyDateFormat }) => {
+    const now = Date();
+    setPickerValue([event.date || now]);
+    onValueChange(0, event.date || now, 0);
   };
 
   const onChange = ({
@@ -183,9 +179,19 @@ const WheelPicker = ({
     <View>
       {mode === PickerMode.Date ? (
         <DateTimePicker
-          display="spinner"
+          display={'spinner'}
           onChange={onDateValueChange}
           value={pickerValue[0] as Date}
+        />
+      ) : mode === PickerMode.DateBeta ? (
+        <DatePicker
+          date={pickerValue[0] as string}
+          onDateChanged={onDateValueChangeBeta}
+          enableScrollByTapOnItem={true}
+          itemTextStyle={itemStyle}
+          overlayItemStyle={[s.overlay, overlayStyle]}
+          itemHeight={itemHeight}
+          visibleItemCount={visibleItemCount}
         />
       ) : (
         <View style={s.pickerContainer}>
@@ -215,14 +221,22 @@ const WheelPicker = ({
                   </View>
                 ) : null}
                 <View style={{ width: iWidth }}>
-                  <RNPicker
-                    itemStyle={[itemStyle]}
-                    onValueChange={(value, index) =>
-                      onChange({ wheelIndex, value, index })
+                  <RNWheelPicker
+                    data={wheel}
+                    value={pickerValue[wheelIndex] as string | number}
+                    onValueChanged={({ item: { value }, index }) =>
+                      onChange({
+                        wheelIndex,
+                        value: value as PickerInternalValue,
+                        index,
+                      })
                     }
-                    selectedValue={pickerValue[wheelIndex]}>
-                    {renderPickerItems(wheel)}
-                  </RNPicker>
+                    enableScrollByTapOnItem={true}
+                    itemTextStyle={itemStyle}
+                    overlayItemStyle={[s.overlay, overlayStyle]}
+                    itemHeight={itemHeight}
+                    visibleItemCount={visibleItemCount}
+                  />
                 </View>
               </View>
             );
@@ -251,6 +265,11 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     fontFamily: theme.fonts.regular,
     textAlign: 'right',
     color: theme.colors.text,
+  },
+  overlay: {
+    backgroundColor: theme.colors.stickyBlack,
+    opacity: 0.15,
+    marginBottom: 16,
   },
 }));
 
