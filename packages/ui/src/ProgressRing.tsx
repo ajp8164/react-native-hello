@@ -19,6 +19,7 @@ interface ProgressRing {
   contentStyle?: ViewStyle;
   footNote?: string;
   label?: string;
+  lineCap?: 'butt' | 'square' | 'round';
   progress: number;
   radius?: number;
   range?: number[];
@@ -43,6 +44,7 @@ const ProgressRing = (props: ProgressRing) => {
     contentStyle,
     footNote,
     label,
+    lineCap = 'butt',
     progress,
     radius = 100,
     range,
@@ -64,19 +66,22 @@ const ProgressRing = (props: ProgressRing) => {
   const circumference = 2 * Math.PI * innerRadius;
   const fill = useSharedValue(0);
 
+  // Progress is positive for clockwise, negative for counter-clockwise.
+  const sign = progress < 0 ? -1 : 1;
+
   useEffect(() => {
     fill.value = withTiming(progress, { duration: animationDuration });
   }, [progress]);
 
   const animatedProps = useAnimatedProps(() => ({
-    strokeDasharray: [circumference * fill.value, circumference],
+    strokeDasharray: [sign * circumference * fill.value, circumference],
   }));
 
   return (
     <View style={[{ height: radius * 2 }, containerStyle]}>
       <View style={[s.container, ringContainerStyle]}>
         <View style={[{ width: radius * 2, height: radius * 2 }]}>
-          <SVG style={{ flex: 1 }}>
+          <SVG style={{ flex: 1, transform: [{ scaleX: sign }] }}>
             {/* Background */}
             <Circle
               r={innerRadius}
@@ -86,7 +91,7 @@ const ProgressRing = (props: ProgressRing) => {
               stroke={color1}
               strokeWidth={strokeWidth}
               strokeDasharray={[circumference * arc]}
-              strokeLinecap={'round'}
+              strokeLinecap={lineCap}
               transform={`rotate(${startAngle} ${radius} ${radius})`}
             />
             {/* Foreground */}
@@ -99,7 +104,7 @@ const ProgressRing = (props: ProgressRing) => {
               stroke={color2}
               strokeWidth={strokeWidth}
               strokeDasharray={[circumference * progress * arc]}
-              strokeLinecap={'round'}
+              strokeLinecap={lineCap}
               transform={`rotate(${startAngle} ${radius} ${radius})`}
               originX={radius}
               originY={radius}
@@ -116,17 +121,7 @@ const ProgressRing = (props: ProgressRing) => {
         )}
       </View>
       {InfoComponent ? (
-        <>
-          <View
-            style={{
-              width: '100%',
-              position: 'absolute',
-              bottom: 0,
-              borderWidth: 0,
-            }}>
-            {InfoComponent}
-          </View>
-        </>
+        <View style={s.infoComponent}>{InfoComponent}</View>
       ) : (
         <>
           {range ? (
@@ -167,6 +162,12 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     alignSelf: 'center',
     top: 35,
     textAlign: 'center',
+  },
+  infoComponent: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    borderWidth: 0,
   },
   label: {
     ...theme.text.normal,
