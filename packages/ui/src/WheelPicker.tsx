@@ -6,7 +6,7 @@ import { type OnlyDateFormat } from '@quidone/react-native-wheel-picker/dest/typ
 import DateTimePicker, {
   type DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { ThemeManager, useDevice } from '@react-native-hello/ui';
+import { ThemeManager, useDevice } from './theme';
 import { isEqual } from 'lodash';
 
 type PickerInternalValue = string | Date;
