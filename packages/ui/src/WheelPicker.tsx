@@ -5,7 +5,7 @@ import { ThemeManager, useDevice, useTheme } from './theme';
 import { Picker as RNPicker } from '@react-native-picker/picker';
 import { isEqual } from 'lodash';
 import React, { type Key, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, type TextStyle } from 'react-native';
 
 type PickerInternalValue = string | Date;
 type PickerInternalOnChangeValue = {
@@ -30,8 +30,10 @@ export type WheelPickerWidth = string | number;
 export interface WheelPicker {
   mode?: PickerMode;
   items?: WheelPickerItem[] | WheelPickerItem[][];
+  itemStyle?: TextStyle | TextStyle[];
   itemWidth?: WheelPickerWidth | WheelPickerWidth[];
   labels?: string | string[];
+  labelStyle?: TextStyle | TextStyle[];
   labelWidth?: WheelPickerWidth | WheelPickerWidth[];
   placeholder?: string | WheelPickerItem | WheelPickerItem[];
   value?: Date | string | string[];
@@ -52,8 +54,10 @@ const defaultPlaceholder: WheelPickerItem = {
 const WheelPicker = ({
   mode = PickerMode.Custom,
   items,
+  itemStyle,
   itemWidth,
   labels,
+  labelStyle,
   labelWidth,
   placeholder = defaultPlaceholder,
   value,
@@ -205,11 +209,14 @@ const WheelPicker = ({
                 style={[s.wheelContainer, { width: tWidth }]}>
                 {pickerLabels ? (
                   <View style={[s.labelContainer, { width: lWidth }]}>
-                    <Text style={s.label}>{pickerLabels[wheelIndex]}</Text>
+                    <Text style={[s.label, labelStyle]}>
+                      {pickerLabels[wheelIndex]}
+                    </Text>
                   </View>
                 ) : null}
                 <View style={{ width: iWidth }}>
                   <RNPicker
+                    itemStyle={[itemStyle]}
                     onValueChange={(value, index) =>
                       onChange({ wheelIndex, value, index })
                     }
