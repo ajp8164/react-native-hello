@@ -37,7 +37,8 @@
     "@react-native-hello/common": "^0.0.16",
     "@react-native-hello/core": "^0.0.19",
     "@rn-vui/base": "^5.1.7",
-    "@rn-vui/themed": "^5.1.7"
+    "@rn-vui/themed": "^5.1.7",
+    "react-native-calendars": "^1.1313.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
