@@ -7,6 +7,7 @@ export interface IThemeManagerTextStyle {
   fontFamily: string;
   fontSize: number;
   lineHeight: number;
+  letterSpacing: number;
 }
 
 export type IShadow =
@@ -197,6 +198,7 @@ export interface IBaseThemeSchema {
   radius: IRadius;
   colors: IColor;
   fonts: IFonts;
+  letterSpacing: ILineHeights;
   lineHeight: ILineHeights;
   spacing: ISpacings;
   fontSize: IFontSizes;
