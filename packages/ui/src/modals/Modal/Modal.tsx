@@ -61,22 +61,8 @@ const Modal = React.forwardRef<Modal, ModalProps>((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     //  These functions exposed to the parent component through the ref.
-    close,
-    dismiss,
-    present,
+    ...(innerRef.current as BottomSheetModalMethods),
   }));
-
-  const close = () => {
-    innerRef.current?.close();
-  };
-
-  const dismiss = () => {
-    innerRef.current?.dismiss();
-  };
-
-  const present = () => {
-    innerRef.current?.present();
-  };
 
   return (
     <BottomSheet
