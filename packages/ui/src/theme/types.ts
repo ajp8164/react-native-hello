@@ -141,7 +141,9 @@ export interface IPalette {
 }
 
 export interface IRadius {
+  S: number;
   M: number;
+  L: number;
 }
 
 export interface IShadows {
