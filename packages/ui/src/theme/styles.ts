@@ -12,7 +12,7 @@ export const createElementsStyles = ({
 
   button: {
     backgroundColor: theme.colors.button,
-    borderRadius: 10,
+    borderRadius: theme.radius.M,
     height: 48,
     paddingHorizontal: 15,
     width: '100%',

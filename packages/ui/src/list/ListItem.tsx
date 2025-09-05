@@ -239,8 +239,8 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     overflow: 'hidden',
   },
   first: {
-    borderTopLeftRadius: theme.styles.button.borderRadius,
-    borderTopRightRadius: theme.styles.button.borderRadius,
+    borderTopLeftRadius: theme.radius.M,
+    borderTopRightRadius: theme.radius.M,
   },
   focus: {
     borderColor: theme.colors.listItemIcon,
@@ -257,8 +257,8 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     minHeight: 60,
   },
   last: {
-    borderBottomLeftRadius: theme.styles.button.borderRadius,
-    borderBottomEndRadius: theme.styles.button.borderRadius,
+    borderBottomLeftRadius: theme.radius.M,
+    borderBottomEndRadius: theme.radius.M,
   },
   leftContent: {
     justifyContent: 'center',

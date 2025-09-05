@@ -43,7 +43,7 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: theme.styles.button.borderRadius,
+    borderRadius: theme.radius.M,
     backgroundColor: theme.colors.lightGray,
     flexDirection: 'row',
   },

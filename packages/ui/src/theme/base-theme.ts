@@ -2,7 +2,9 @@ import { fonts } from './fonts';
 
 export const baseTheme = {
   radius: {
-    M: 2,
+    S: 5,
+    M: 10,
+    L: 24,
   },
   fontSize: {
     H1: 45,

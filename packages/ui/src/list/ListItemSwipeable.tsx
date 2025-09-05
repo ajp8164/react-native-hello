@@ -296,8 +296,8 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     backgroundColor: theme.colors.white,
   },
   first: {
-    borderTopLeftRadius: 10, //theme.styles.button.borderRadius,
-    borderTopRightRadius: 10, //theme.styles.button.borderRadius,
+    borderTopLeftRadius: theme.radius.M,
+    borderTopRightRadius: theme.radius.M,
   },
   focus: {
     borderColor: theme.colors.listItemIcon,
@@ -310,8 +310,8 @@ const useStyles = ThemeManager.createStyleSheet(({ theme }) => ({
     overflow: 'visible',
   },
   last: {
-    borderBottomLeftRadius: 10, //theme.styles.button.borderRadius,
-    borderBottomEndRadius: 10, //theme.styles.button.borderRadius,
+    borderBottomLeftRadius: theme.radius.M,
+    borderBottomEndRadius: theme.radius.M,
   },
   noBorderRadius: {
     borderTopRightRadius: 0,
