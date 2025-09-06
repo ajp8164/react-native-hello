@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, View, type ViewStyle } from 'react-native';
 import type { SwipeableMethods } from 'react-native-gesture-handler/lib/typescript/components/ReanimatedSwipeable';
 import { ListItem } from './ListItem';
 import {
@@ -108,9 +108,11 @@ const ListItemSwipeable = React.forwardRef<
     paddingRight: editButtonX.value,
   }));
 
-  const listItemRightValueContentAnimatedStyles = useAnimatedStyle(() => ({
-    opacity: 1 - editModeOpacity.value,
-  }));
+  const listItemRightValueContentAnimatedStyles = useAnimatedStyle<ViewStyle>(
+    () => ({
+      opacity: 1 - editModeOpacity.value,
+    }),
+  );
 
   // Used to uniquely identify this list item in the list editor (if being used).
   const listItemId = useRef(uuidv4());
@@ -263,14 +265,14 @@ const ListItemSwipeable = React.forwardRef<
               ...rest.containerStyle,
               ...s.noBorderRadius,
             }}
-            rightContentStyle={{
-              ...listItemRightValueContentAnimatedStyles,
-              ...rest.rightContentStyle,
-            }}
-            valueStyle={{
-              ...listItemRightValueContentAnimatedStyles,
-              ...rest.valueStyle,
-            }}
+            rightContentStyle={[
+              listItemRightValueContentAnimatedStyles,
+              rest.rightContentStyle ? rest.rightContentStyle : {},
+            ]}
+            valueStyle={[
+              listItemRightValueContentAnimatedStyles,
+              rest.valueStyle,
+            ]}
           />
         </Animated.View>
         {drag && renderDragHandle()}

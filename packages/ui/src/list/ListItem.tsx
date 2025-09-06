@@ -7,6 +7,7 @@ import {
 import React, { type ReactElement } from 'react';
 import {
   Pressable,
+  type StyleProp,
   StyleSheet,
   Text,
   type TextStyle,
@@ -39,7 +40,7 @@ interface ListItem {
     | 'chevron-right'
     | 'chevron-up'
     | 'info';
-  rightContentStyle?: ViewStyle;
+  rightContentStyle?: StyleProp<ViewStyle>;
   subtitle?: string | null | ReactElement;
   subtitleLines?: number;
   subtitleStyle?: TextStyle | TextStyle[];
@@ -47,7 +48,7 @@ interface ListItem {
   titleLines?: number;
   titleStyle?: TextStyle | TextStyle[];
   value?: string | null | ReactElement;
-  valueStyle?: TextStyle | TextStyle[];
+  valueStyle?: StyleProp<TextStyle>;
   onPress?: () => void;
   onPressRight?: () => void;
 }
