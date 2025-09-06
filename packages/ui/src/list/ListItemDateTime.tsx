@@ -97,7 +97,7 @@ const ListItemDateTime = (props: Props) => {
             <ChevronDown color={theme.colors.listItemIconNav} />
           </Animated.View>
         }
-        valueStyle={{ ...s.valueStyle, ...rest.valueStyle }}
+        valueStyle={[s.valueStyle, rest.valueStyle]}
       />
       <CollapsibleView
         expanded={expanded}
