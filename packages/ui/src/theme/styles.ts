@@ -67,7 +67,7 @@ export const createElementsStyles = ({
   buttonScreenHeader: {
     backgroundColor: theme.colors.transparent,
     height: 40,
-    paddingHorizontal: 0,
+    paddingHorizontal: 5,
     minWidth: 0,
     justifyContent: 'flex-start',
   },
@@ -87,7 +87,7 @@ export const createElementsStyles = ({
   buttonScreenHeaderDisabled: {
     backgroundColor: theme.colors.transparent,
     height: 40,
-    paddingHorizontal: 0,
+    paddingHorizontal: 5,
     minWidth: 0,
     justifyContent: 'flex-start',
     opacity: 0.4,
