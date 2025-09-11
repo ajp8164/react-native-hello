@@ -40,7 +40,7 @@ export const baseTheme = {
     tiny: 0,
   },
   lineHeight: {
-    H1: 36,
+    H1: 46,
     H2: 32,
     H3: 28,
     H4: 26,
