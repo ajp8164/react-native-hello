@@ -7,14 +7,24 @@ import { ListItem } from './ListItem';
 interface ListItemCheckBox extends ListItem {
   disabled?: boolean;
   checked: boolean;
+  checkedColor?: string;
   checkedIcon?: JSX.Element;
   onChange: (value: boolean) => void;
+  uncheckedColor?: string;
   uncheckedIcon?: JSX.Element;
 }
 
 const ListItemCheckBox = (props: ListItemCheckBox) => {
-  const { checkedIcon, checked, disabled, onChange, uncheckedIcon, ...rest } =
-    props;
+  const {
+    checkedColor,
+    checkedIcon,
+    checked,
+    disabled,
+    onChange,
+    uncheckedColor,
+    uncheckedIcon,
+    ...rest
+  } = props;
 
   const theme = useTheme();
   const s = useStyles();
@@ -33,8 +43,8 @@ const ListItemCheckBox = (props: ListItemCheckBox) => {
             )
           }
           uncheckedIcon={uncheckedIcon ? uncheckedIcon : <></>}
-          checkedColor={theme.colors.checkboxActive}
-          uncheckedColor={theme.colors.checkboxInactive}
+          checkedColor={checkedColor || theme.colors.checkboxActive}
+          uncheckedColor={uncheckedColor || theme.colors.checkboxInactive}
           disabled={disabled}
           containerStyle={{ backgroundColor: theme.colors.transparent }}
           onPress={() => onChange(true)}
