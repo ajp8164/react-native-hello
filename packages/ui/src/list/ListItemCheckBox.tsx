@@ -39,7 +39,7 @@ const ListItemCheckBox = (props: ListItemCheckBox) => {
             checkedIcon ? (
               checkedIcon
             ) : (
-              <Check color={theme.colors.listItemIcon} />
+              <Check color={checkedColor || theme.colors.listItemIcon} />
             )
           }
           uncheckedIcon={uncheckedIcon ? uncheckedIcon : <></>}
