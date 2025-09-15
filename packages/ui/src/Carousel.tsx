@@ -28,11 +28,18 @@ export type CarouselProps = Omit<
   hidePagination?: boolean;
   pages: JSX.Element[];
   paginationContainer?: ViewStyle | ViewStyle[];
+  CustomPagination?: JSX.Element | null;
 } & (TParallaxModeProps | TStackModeProps);
 
 const Carousel = React.forwardRef<CarouselMethods, CarouselProps>(
   (props, ref) => {
-    const { hidePagination, pages, paginationContainer, ...rest } = props;
+    const {
+      hidePagination,
+      pages,
+      paginationContainer,
+      CustomPagination,
+      ...rest
+    } = props;
 
     const s = useStyles();
 
@@ -82,7 +89,7 @@ const Carousel = React.forwardRef<CarouselMethods, CarouselProps>(
           renderItem={({ item }: CarouselRenderItemInfo<JSX.Element>) => item}
           {...rest}
         />
-        {!hidePagination ? (
+        {!hidePagination && CustomPagination === undefined ? (
           <Pagination.Basic
             size={8}
             progress={progress}
@@ -93,6 +100,9 @@ const Carousel = React.forwardRef<CarouselMethods, CarouselProps>(
             onPress={onPressPagination}
           />
         ) : null}
+        {!hidePagination && CustomPagination !== undefined
+          ? CustomPagination
+          : null}
       </View>
     );
   },
