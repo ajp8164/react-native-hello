@@ -25,7 +25,7 @@ interface AppleStyleSwipeableRow
   buttonWidth?: number;
   children?: ReactNode;
   containerStyle?: ViewStyle | ViewStyle[];
-  enableRemoveableRow?: boolean;
+  disableRemoveableRow?: boolean;
   leftActions?: SwipeableAction[];
   rightActions?: SwipeableAction[];
 }
@@ -35,7 +35,7 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
     buttonWidth = 64,
     containerStyle,
     children,
-    enableRemoveableRow = true,
+    disableRemoveableRow,
     leftActions,
     rightActions,
     ...rest
@@ -182,7 +182,7 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
 
   return (
     <ConditionalWrapper
-      condition={enableRemoveableRow}
+      condition={!disableRemoveableRow}
       wrapper={children => (
         <AnimatedRemovableItem ref={animatedRemovableItemRef}>
           {children}
