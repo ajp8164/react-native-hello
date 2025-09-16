@@ -39,6 +39,7 @@ interface ListItemSwipeable extends ListItem {
   drag?: () => void; // The drag() method from react-native-draggable-flat-list.
   dragIsActive?: boolean; // From react-native-draggable-flat-list.
   editAction?: EditAction;
+  enableRemoveableRow?: boolean;
   listEditor?: ListEditorMethods | null;
   listGroup?: string;
   onSwipeableWillClose?: (direction: 'left' | 'right') => void;
@@ -62,6 +63,7 @@ const ListItemSwipeable = React.forwardRef<
     drag,
     dragIsActive,
     editAction,
+    enableRemoveableRow,
     listEditor,
     listGroup = 'default',
     onSwipeableWillOpen,
@@ -235,6 +237,7 @@ const ListItemSwipeable = React.forwardRef<
           rest.focus ? s.focus : {},
           rest.ghost ? s.ghost : {},
         ]}
+        enableRemoveableRow={enableRemoveableRow}
         buttonWidth={buttonWidth}
         enabled={swipeEnabled}
         leftActions={swipeableActionsLeft}

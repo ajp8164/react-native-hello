@@ -18,12 +18,14 @@ import { ThemeManager } from '../../../theme';
 import { type SwipeableAction } from '.';
 import { LeftAction } from './LeftAction';
 import { RightAction } from './RightAction';
+import { ConditionalWrapper } from '../../../ConditionalWrapper';
 
 interface AppleStyleSwipeableRow
   extends Partial<React.ComponentProps<typeof Swipeable>> {
   buttonWidth?: number;
   children?: ReactNode;
   containerStyle?: ViewStyle | ViewStyle[];
+  enableRemoveableRow?: boolean;
   leftActions?: SwipeableAction[];
   rightActions?: SwipeableAction[];
 }
@@ -33,6 +35,7 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
     buttonWidth = 64,
     containerStyle,
     children,
+    enableRemoveableRow = true,
     leftActions,
     rightActions,
     ...rest
@@ -178,7 +181,13 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
   );
 
   return (
-    <AnimatedRemovableItem ref={animatedRemovableItemRef}>
+    <ConditionalWrapper
+      condition={enableRemoveableRow}
+      wrapper={children => (
+        <AnimatedRemovableItem ref={animatedRemovableItemRef}>
+          {children}
+        </AnimatedRemovableItem>
+      )}>
       <View style={[s.container]}>
         <Swipeable
           ref={swipeableRow}
@@ -207,7 +216,7 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
           {children}
         </Swipeable>
       </View>
-    </AnimatedRemovableItem>
+    </ConditionalWrapper>
   );
 };
 const useStyles = ThemeManager.createStyleSheet(() => ({
