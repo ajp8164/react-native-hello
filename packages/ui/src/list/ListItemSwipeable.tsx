@@ -130,12 +130,6 @@ const ListItemSwipeable = React.forwardRef<
     };
   }, [listEditor]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     listEditor?.remove(listGroup, listItemId.current);
-  //   };
-  // }, []);
-
   // Force a re-render when the button component changes.
   useEffect(() => {
     setRerender(!rerender);
