@@ -101,7 +101,7 @@ const ListItemSwipeable = React.forwardRef<
   }));
 
   const editButtonAnimatedStyles = useAnimatedStyle(() => ({
-    left: editButtonX.value - editButtonWidth, // <--
+    left: editButtonX.value - editButtonWidth,
     opacity: editModeOpacity.value,
   }));
 
@@ -125,13 +125,16 @@ const ListItemSwipeable = React.forwardRef<
     if (listEditor) {
       listEditor?.add(swipeableRef.current, listGroup, listItemId.current);
     }
-  }, [listEditor]);
-
-  useEffect(() => {
     return () => {
       listEditor?.remove(listGroup, listItemId.current);
     };
-  }, []);
+  }, [listEditor]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     listEditor?.remove(listGroup, listItemId.current);
+  //   };
+  // }, []);
 
   // Force a re-render when the button component changes.
   useEffect(() => {
@@ -239,7 +242,7 @@ const ListItemSwipeable = React.forwardRef<
         ]}
         disableRemoveableRow={disableRemoveableRow}
         buttonWidth={buttonWidth}
-        enabled={swipeEnabled}
+        enabled={!showEditor && swipeEnabled}
         leftActions={swipeableActionsLeft}
         rightActions={swipeableActionsRight}
         onSwipeableWillOpen={direction => {
@@ -252,8 +255,14 @@ const ListItemSwipeable = React.forwardRef<
           if (onSwipeableWillClose) onSwipeableWillClose(direction);
           swiping.value = false;
         }}
-        onSwipeableOpen={() => (swiping.value = false)}
-        onSwipeableClose={() => (swiping.value = false)}>
+        onSwipeableOpen={() => {
+          swiping.value = false;
+          listEditor?.onItemOpen(listGroup, listItemId.current);
+        }}
+        onSwipeableClose={() => {
+          swiping.value = false;
+          listEditor?.onItemClose(listGroup, listItemId.current);
+        }}>
         {editAction && renderEditButton()}
         <Animated.View style={listItemAnimatedStyles}>
           <ListItem

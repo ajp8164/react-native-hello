@@ -43,8 +43,6 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
 
   const s = useStyles();
 
-  const enabled = !!leftActions || !!rightActions;
-
   const swipeableRow = useRef<SwipeableMethods>(null);
 
   const [actionsLeft, setActionsLeft] = useState<SwipeableAction[]>([]);
@@ -191,7 +189,6 @@ const AppleStyleSwipeableRow = (props: AppleStyleSwipeableRow) => {
       <View style={[s.container]}>
         <Swipeable
           ref={swipeableRow}
-          enabled={enabled}
           containerStyle={containerStyle}
           friction={2}
           leftThreshold={140}
