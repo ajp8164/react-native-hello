@@ -119,16 +119,36 @@ const ListItemSwipeable = React.forwardRef<
   // Used to uniquely identify this list item in the list editor (if being used).
   const listItemId = useRef(uuidv4());
 
-  // Add ourself to the list editor if specified. When this component unmounts (is deleted)
-  // it is removed from the list editor.
+  // For actions that remove this list item modify the callers onPress to remove by adding
+  // a call into the list editor to remove it's reference.
+  const wrappedActionsLeft = swipeableActionsLeft?.map(action =>
+    action.op === 'remove'
+      ? {
+          ...action,
+          onPress: () => {
+            action.onPress?.(); // Callers onPress()
+            listEditor?.remove(listGroup, listItemId.current);
+          },
+        }
+      : action,
+  );
+
+  const wrappedActionsRight = swipeableActionsRight?.map(action =>
+    action.op === 'remove'
+      ? {
+          ...action,
+          onPress: () => {
+            action.onPress?.(); // Callers onPress()
+            listEditor?.remove(listGroup, listItemId.current);
+          },
+        }
+      : action,
+  );
+
+  // If a list editor is defined, add a reference to this list item.
   useEffect(() => {
-    if (listEditor) {
-      listEditor?.add(swipeableRef.current, listGroup, listItemId.current);
-    }
-    return () => {
-      listEditor?.remove(listGroup, listItemId.current);
-    };
-  }, [listEditor]);
+    listEditor?.add(swipeableRef.current, listGroup, listItemId.current);
+  }, []);
 
   // Force a re-render when the button component changes.
   useEffect(() => {
@@ -237,8 +257,8 @@ const ListItemSwipeable = React.forwardRef<
         disableRemoveableRow={disableRemoveableRow}
         buttonWidth={buttonWidth}
         enabled={!showEditor && swipeEnabled}
-        leftActions={swipeableActionsLeft}
-        rightActions={swipeableActionsRight}
+        leftActions={wrappedActionsLeft}
+        rightActions={wrappedActionsRight}
         onSwipeableWillOpen={direction => {
           listEditor?.onItemWillOpen(listGroup, listItemId.current);
           if (onSwipeableWillOpen) onSwipeableWillOpen(direction);
