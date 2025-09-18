@@ -131,7 +131,6 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
       // Need to allow the editor resets to run first.
       setTimeout(() => {
         stateEnabled.current = true;
-        stateEnabledBySwipe.current = false; //TEST ONLY - is this needed?
         onChangeState?.(getState());
       }, 200); // Greater than the animation time for open/close
     };
@@ -180,10 +179,6 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
     // Remove the reference from the editor. Automatically exit edit mode if
     // there are no more references in the group.
     const remove = (group: string, id: string) => {
-      // This function may be called on unmount of a swipeable. This check avoids
-      // a unmount/mount loop making sure the editor is enabled (open for user interation).
-      if (!stateEnabled.current) return;
-
       const index = liRef.current[group].findIndex(li => li.id === id);
       if (index >= 0) {
         liRef.current[group].splice(index, 1);
@@ -194,6 +189,12 @@ const ListEditor = React.forwardRef<ListEditorMethods, ListEditor>(
       if (stateEnabledBySwipe.current && !stateShow.current) {
         // Editor not shown but is enabled, remove item and disable
         stateEnabled.current = false;
+        stateEnabledBySwipe.current = false;
+        onChangeState?.(getState());
+      } else if (stateShow.current && liRef.current[group].length === 0) {
+        stateEnabled.current = false;
+        stateEnabledBySwipe.current = false;
+        stateShow.current = false;
         onChangeState?.(getState());
       }
     };
