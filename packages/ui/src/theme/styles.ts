@@ -71,6 +71,12 @@ export const createElementsStyles = ({
     minWidth: 0,
     justifyContent: 'flex-start',
   },
+  buttonScreenHeaderContainerLeft: {
+    left: -12,
+  },
+  buttonScreenHeaderContainerRight: {
+    right: -12,
+  },
   buttonScreenHeaderTitle: {
     color: theme.colors.screenHeaderButtonText,
     fontSize: theme.fontSize.normal,

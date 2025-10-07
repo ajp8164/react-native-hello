@@ -173,6 +173,8 @@ export interface IStyles {
   buttonOutlineTitle: IStyle;
   buttonOutlineDisabled: IStyle;
   buttonScreenHeader: IStyle;
+  buttonScreenHeaderContainerLeft: IStyle;
+  buttonScreenHeaderContainerRight: IStyle;
   buttonScreenHeaderTitle: IStyle;
   buttonScreenHeaderDisabled: IStyle;
   buttonSmall: IStyle;
