@@ -72,10 +72,10 @@ export const createElementsStyles = ({
     justifyContent: 'flex-start',
   },
   buttonScreenHeaderContainerLeft: {
-    left: -12,
+    left: -5,
   },
   buttonScreenHeaderContainerRight: {
-    right: -12,
+    right: -5,
   },
   buttonScreenHeaderTitle: {
     color: theme.colors.screenHeaderButtonText,
