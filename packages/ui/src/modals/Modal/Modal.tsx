@@ -10,7 +10,6 @@ import React, {
 import { BottomSheet } from '../../BottomSheet';
 import type { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { View } from 'react-native';
 
 type Modal = ModalMethods;
 
@@ -43,7 +42,6 @@ const Modal = React.forwardRef<Modal, ModalProps>((props, ref) => {
   const s = useStyles();
 
   const innerRef = useRef<BottomSheetModalMethods>(null);
-  const hostRef = useRef<View>(null);
 
   const enablePanDownToClose = enableGestureBehavior;
   const enableHandlePanningGesture = enableGestureBehavior;
@@ -67,42 +65,39 @@ const Modal = React.forwardRef<Modal, ModalProps>((props, ref) => {
   }));
 
   return (
-    <View
-      ref={hostRef}
-      style={[{ flex: 1, backgroundColor: 'transparent' }, style]}>
-      <BottomSheet
-        innerRef={innerRef}
-        modalParent={modalParent}
-        snapPoints={snapPoints}
-        activeOffsetX={[-50, 50]} // See https://github.com/gorhom/react-native-bottom-sheet/issues/770
-        activeOffsetY={[-5, 5]}
-        enablePanDownToClose={enablePanDownToClose}
-        enableHandlePanningGesture={enableHandlePanningGesture}
-        enableDynamicSizing={enableDynamicSizing}
-        keyboardBehavior={keyboardBehavior}
-        touchBackdropBehavior={touchBackdropBehavior}
-        backgroundStyle={[{ backgroundColor }, backgroundStyle]}
-        detached={detached}
-        bottomInset={bottomInset}
-        handleComponent={handleComponent}
-        handleIndicatorStyle={[
-          { backgroundColor: handleIndicator },
-          handleIndicatorStyle,
-        ]}
-        onClose={onClose}
-        onDismiss={onDismiss}>
-        {scrollEnabled ? (
-          <BottomSheetScrollView
-            scrollEnabled={scrollEnabled}
-            contentContainerStyle={[s.container, scrollContainerStyle]}
-            showsVerticalScrollIndicator={false}>
-            {children}
-          </BottomSheetScrollView>
-        ) : (
-          children
-        )}
-      </BottomSheet>
-    </View>
+    <BottomSheet
+      innerRef={innerRef}
+      modalParent={modalParent}
+      snapPoints={snapPoints}
+      activeOffsetX={[-50, 50]} // See https://github.com/gorhom/react-native-bottom-sheet/issues/770
+      activeOffsetY={[-5, 5]}
+      enablePanDownToClose={enablePanDownToClose}
+      enableHandlePanningGesture={enableHandlePanningGesture}
+      enableDynamicSizing={enableDynamicSizing}
+      keyboardBehavior={keyboardBehavior}
+      touchBackdropBehavior={touchBackdropBehavior}
+      backgroundStyle={[{ backgroundColor }, backgroundStyle]}
+      style={style}
+      detached={detached}
+      bottomInset={bottomInset}
+      handleComponent={handleComponent}
+      handleIndicatorStyle={[
+        { backgroundColor: handleIndicator },
+        handleIndicatorStyle,
+      ]}
+      onClose={onClose}
+      onDismiss={onDismiss}>
+      {scrollEnabled ? (
+        <BottomSheetScrollView
+          scrollEnabled={scrollEnabled}
+          contentContainerStyle={[s.container, scrollContainerStyle]}
+          showsVerticalScrollIndicator={false}>
+          {children}
+        </BottomSheetScrollView>
+      ) : (
+        children
+      )}
+    </BottomSheet>
   );
 });
 
