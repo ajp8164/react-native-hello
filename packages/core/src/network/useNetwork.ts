@@ -1,6 +1,26 @@
-import { useContext } from 'react';
-import { NetworkContext } from './NetworkProvider';
+import NetInfo, { type NetInfoState } from '@react-native-community/netinfo';
+import { createContext, useEffect, useState } from 'react';
+
+export type NetworkContext = {
+  state: NetInfoState | undefined;
+};
+
+export const NetworkContext = createContext<NetworkContext>({
+  state: undefined,
+});
 
 export const useNetwork = (): NetworkContext => {
-  return useContext(NetworkContext);
+  const [state, setState] = useState<NetInfoState>();
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(changedState => {
+      setState(changedState);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  return {
+    state,
+  };
 };
